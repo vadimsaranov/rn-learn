@@ -1,4 +1,4 @@
-import { City } from '../core/City';
+import { City } from '@/core/City';
 import { useEffect, useState } from 'react';
 
 export const useFetchCity = (cityName: string) => {
