@@ -2,7 +2,7 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { ActivityIndicator, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { CityAdditionalInfo } from './CityAdditionalInfo';
-import { useFetchCity } from '@/app/(home)/hooks/useFetchCity';
+import useFetchCity from '@/app/(home)/hooks/useFetchCity';
 
 interface CityListItemProps {
   cityName: string;
