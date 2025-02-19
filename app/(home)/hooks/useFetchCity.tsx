@@ -1,6 +1,5 @@
 import { City } from '@/core/City';
-import { useContext, useEffect, useState } from 'react';
-import { CitiesContext } from '../_layout';
+import { useEffect, useState } from 'react';
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
 const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
 
@@ -15,10 +14,10 @@ const citiesList = [
   'City of Sydney',
   'Sao Paulo',
 ];
-export default function useFetchCities(enabled = true) {
+export default function useFetchCities() {
   const [loading, setLoading] = useState(false);
 
-  const { cities, setCities } = useContext(CitiesContext);
+  const [cities, setCities] = useState<City[]>([]);
 
   const fetchCity = async (cityName: string) => {
     try {
@@ -67,7 +66,7 @@ export default function useFetchCities(enabled = true) {
   };
 
   useEffect(() => {
-    enabled && fetchCities();
+    fetchCities();
   }, []);
 
   return { loading, data: cities, getCityByName };

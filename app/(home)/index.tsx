@@ -1,12 +1,12 @@
 import { CityListItem } from '@/components/CityListItem';
 import { City } from '@/core/City';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useContext, useMemo } from 'react';
 import { FlatList, ListRenderItem, StyleSheet, Text } from 'react-native';
-import useFetchCities from './hooks/useFetchCity';
 import { Loader } from '@/components/Loader';
+import { CitiesContext } from './_layout';
 
 export default function CitiesListScreen() {
-  const { data, loading } = useFetchCities();
+  const { cities, loading } = useContext(CitiesContext);
 
   const renderItem: ListRenderItem<City> = useCallback(
     ({ item: city }) => <CityListItem city={city} />,
@@ -24,7 +24,7 @@ export default function CitiesListScreen() {
   return (
     <FlatList
       style={styles.container}
-      data={data}
+      data={cities}
       renderItem={renderItem}
       ListEmptyComponent={listEmptyComponent}
     />

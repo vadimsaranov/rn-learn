@@ -1,13 +1,14 @@
 import { CityListItem } from '@/components/CityListItem';
 import { useLocalSearchParams } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
-import useFetchCities from './hooks/useFetchCity';
+import { useContext } from 'react';
+import { CitiesContext } from './_layout';
 
 export default function WeatherDetailsScreen() {
   const searchParams = useLocalSearchParams();
   const cityName = searchParams.cityName as string;
-  const { getCityByName } = useFetchCities(false);
 
+  const { getCityByName } = useContext(CitiesContext);
   const city = getCityByName(cityName);
 
   if (!city) {
