@@ -1,17 +1,16 @@
 import { City } from '@/core/City';
 import { useEffect, useState } from 'react';
-
-export const useFetchCity = (cityName: string) => {
+const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
+const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
+export default function useFetchCity(cityName: string) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<City | undefined>();
 
   const fetchCity = async () => {
-    const baseUrl = process.env.EXPO_PUBLIC_API_URL;
-    const apiKey = process.env.EXPO_PUBLIC_API_KEY;
     try {
       setLoading(true);
       const response = await (
-        await fetch(`${baseUrl}weather?q=${cityName}&appid=${apiKey}`)
+        await fetch(`${BASE_URL}weather?q=${cityName}&appid=${API_KEY}`)
       ).json();
       const city: City = {
         icon: response.weather[0].icon,
@@ -35,4 +34,4 @@ export const useFetchCity = (cityName: string) => {
   }, []);
 
   return { loading, data };
-};
+}
