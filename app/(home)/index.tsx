@@ -1,27 +1,35 @@
 import { CityListItem } from '@/components/CityListItem';
-import { useCallback } from 'react';
-import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
+import { City } from '@/core/City';
+import { useCallback, useMemo } from 'react';
+import { FlatList, ListRenderItem, StyleSheet, Text } from 'react-native';
+import useFetchCities from './hooks/useFetchCity';
+import { Loader } from '@/components/Loader';
 
 export default function CitiesListScreen() {
-  const renderItem: ListRenderItem<string> = useCallback(
-    ({ item: cityName }) => <CityListItem cityName={cityName} />,
+  const { data, loading } = useFetchCities();
+
+  const renderItem: ListRenderItem<City> = useCallback(
+    ({ item: city }) => <CityListItem city={city} />,
     [],
   );
 
-  return <FlatList style={styles.container} data={cities} renderItem={renderItem} />;
-}
+  const listEmptyComponent = useMemo(() => {
+    return <Text>No data found</Text>;
+  }, []);
 
-const cities = [
-  'San Jose',
-  'London',
-  'New York',
-  'Paris',
-  'Hong Kong',
-  'Singapore',
-  'Beijing',
-  'City of Sydney',
-  'Sao Paulo',
-];
+  if (loading) {
+    return <Loader />;
+  }
+
+  return (
+    <FlatList
+      style={styles.container}
+      data={data}
+      renderItem={renderItem}
+      ListEmptyComponent={listEmptyComponent}
+    />
+  );
+}
 
 const styles = StyleSheet.create({
   container: {

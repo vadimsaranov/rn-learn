@@ -1,14 +1,27 @@
 import { City } from '@/core/City';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { CitiesContext } from '../_layout';
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
 const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
-export default function useFetchCity(cityName: string) {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<City | undefined>();
 
-  const fetchCity = async () => {
+const citiesList = [
+  'San Jose',
+  'London',
+  'New York',
+  'Paris',
+  'Hong Kong',
+  'Singapore',
+  'Beijing',
+  'City of Sydney',
+  'Sao Paulo',
+];
+export default function useFetchCities(enabled = true) {
+  const [loading, setLoading] = useState(false);
+
+  const { cities, setCities } = useContext(CitiesContext);
+
+  const fetchCity = async (cityName: string) => {
     try {
-      setLoading(true);
       const response = await (
         await fetch(`${BASE_URL}weather?q=${cityName}&appid=${API_KEY}`)
       ).json();
@@ -22,16 +35,40 @@ export default function useFetchCity(cityName: string) {
         cloudCover: response.clouds.all,
         wind: response.wind.speed,
       };
-      setData(city);
+      return city;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchCities = async () => {
+    try {
+      setLoading(true);
+      const result: City[] = [];
+      const promises = citiesList.map(async (cityName) => {
+        const city = await fetchCity(cityName);
+        if (city) {
+          result.push(city);
+        }
+      });
+
+      await Promise.all(promises);
+      setCities(result);
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
   };
+
+  const getCityByName = (cityName: string) => {
+    const city = cities.find((c) => c.name === cityName);
+    return city;
+  };
+
   useEffect(() => {
-    fetchCity();
+    enabled && fetchCities();
   }, []);
 
-  return { loading, data };
+  return { loading, data: cities, getCityByName };
 }
