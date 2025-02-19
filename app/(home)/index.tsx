@@ -1,14 +1,14 @@
 import { CityListItem } from '@/components/CityListItem';
-import { ScrollView, StyleSheet } from 'react-native';
+import { useCallback } from 'react';
+import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
 
 export default function CitiesListScreen() {
-  return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {cities.map((item, index) => (
-        <CityListItem cityName={item} key={index} />
-      ))}
-    </ScrollView>
+  const renderItem: ListRenderItem<string> = useCallback(
+    ({ item: cityName }) => <CityListItem cityName={cityName} />,
+    [],
   );
+
+  return <FlatList style={styles.container} data={cities} renderItem={renderItem} />;
 }
 
 const cities = [
