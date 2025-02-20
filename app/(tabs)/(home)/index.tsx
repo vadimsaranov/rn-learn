@@ -5,7 +5,7 @@ import { FlatList, ListRenderItem, StyleSheet, Text } from 'react-native';
 import { Loader } from '@/components/Loader';
 import { CitiesContext } from './context/CitiesContext';
 
-export default function CitiesListScreen() {
+export default function HomeScreen() {
   const { cities, loading } = useContext(CitiesContext);
 
   const renderItem: ListRenderItem<City> = useCallback(
