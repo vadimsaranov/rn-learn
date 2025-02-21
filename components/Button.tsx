@@ -4,9 +4,9 @@ interface ButtonProps extends TouchableOpacityProps {
   title: string;
   children?: ReactNode;
 }
-export const Button = ({ title, children, ...otherProps }: ButtonProps) => {
+export const Button = ({ title, children, disabled, ...otherProps }: ButtonProps) => {
   return (
-    <TouchableOpacity {...otherProps} style={styles.container}>
+    <TouchableOpacity {...otherProps} style={[styles.container, disabled && styles.disabled]}>
       <Text>{title}</Text>
       {children}
     </TouchableOpacity>
@@ -23,5 +23,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 4,
+    backgroundColor: '#f8f8f8',
+  },
+  disabled: {
+    opacity: 0.4,
   },
 });
