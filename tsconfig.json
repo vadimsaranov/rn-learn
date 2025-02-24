@@ -4,9 +4,10 @@
     "strict": true,
     "paths": {
       "@components/*": ["./components/*"],
-      "@context/*": ["./app/context/*"],
-      "@hooks/*": ["./app/hooks/*"],
-      "@core/*": ["./core/*"]
+      "@context/*": ["./context/*"],
+      "@hooks/*": ["./hooks/*"],
+      "@core/*": ["./core/*"],
+      "@store/*": ["./store/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
