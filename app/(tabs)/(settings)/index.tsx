@@ -1,6 +1,6 @@
-import useSession from '@/app/context/AuthContext';
-import { AppInformation } from '@/components/AppInformation';
-import { Button } from '@/components/Button';
+import { AppInformation } from '@components/AppInformation';
+import { Button } from '@components/Button';
+import useSession from '@context/AuthContext';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import * as Linking from 'expo-linking';
 import { useCallback } from 'react';

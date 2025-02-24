@@ -1,7 +1,7 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Redirect, Tabs } from 'expo-router';
-import { Loader } from '@/components/Loader';
-import useSession from '@/app/context/AuthContext';
+import { Loader } from '@components/Loader';
+import useSession from '@context/AuthContext';
 
 const TABS_SCREEN_OPTIONS = { tabBarActiveTintColor: 'blue', headerShown: false };
 

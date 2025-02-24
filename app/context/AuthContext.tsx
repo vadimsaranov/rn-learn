@@ -1,5 +1,5 @@
+import useStorageState from '@hooks/useStorageState';
 import { useContext, createContext, type PropsWithChildren, useMemo } from 'react';
-import useStorageState from '../hooks/useStorageState';
 
 type AuthContextType = {
   signIn: (token: string, saveUser: boolean) => void;
