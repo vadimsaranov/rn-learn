@@ -40,8 +40,6 @@ export default function Login() {
       } else {
         dispatch(updateSession({ loggedIn: true, token: 'token' }));
       }
-      console.log('replacing');
-
       router.replace('/');
     }
   }, [loginValues, rememberMe, dispatch]);
