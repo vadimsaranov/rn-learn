@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
 import { StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import useSession from './context/AuthContext';
-import { Button } from '@/components/Button';
+import { Button } from '@components/Button';
 import { router } from 'expo-router';
+import useSession from '@context/AuthContext';
 
 type InputValues = {
   email: string;

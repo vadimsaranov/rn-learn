@@ -1,8 +1,8 @@
-import { CityListItem } from '@/components/CityListItem';
+import { CityListItem } from '@components/CityListItem';
 import { useLocalSearchParams } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 import { useContext } from 'react';
-import { CitiesContext } from './context/CitiesContext';
+import { CitiesContext } from '@context/CitiesContext';
 
 export default function WeatherDetailsScreen() {
   const searchParams = useLocalSearchParams();

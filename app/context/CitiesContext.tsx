@@ -1,4 +1,4 @@
-import { City } from '@/core/City';
+import { City } from '@core/City';
 import { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
 const API_KEY = process.env.EXPO_PUBLIC_API_KEY;

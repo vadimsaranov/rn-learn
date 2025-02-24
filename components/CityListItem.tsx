@@ -1,8 +1,8 @@
-import { City } from '@/core/City';
+import { CityAdditionalInfo } from '@components/CityAdditionalInfo';
+import { City } from '@core/City';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import { CityAdditionalInfo } from './CityAdditionalInfo';
 
 interface CityListItemProps {
   city: City;
@@ -11,7 +11,7 @@ interface CityListItemProps {
 export const CityListItem = ({ city, fullInfo = false }: CityListItemProps) => {
   const onCityPress = () => {
     if (!fullInfo) {
-      router.navigate({ pathname: '/(home)/details', params: { cityName: city.name } });
+      router.navigate({ pathname: '/details', params: { cityName: city.name } });
     }
   };
 

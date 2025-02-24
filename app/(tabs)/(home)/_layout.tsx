@@ -1,5 +1,5 @@
+import CitiesContextProvider from '@context/CitiesContext';
 import { Stack } from 'expo-router';
-import CitiesContextProvider from './context/CitiesContext';
 
 const HOME_LAYOUT_SCREEN_OPTIONS = {
   headerStyle: { backgroundColor: '#f1f1f1' },
