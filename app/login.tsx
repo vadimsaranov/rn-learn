@@ -56,7 +56,7 @@ export default function Login() {
           style={styles.textInput}
           secureTextEntry
         />
-        {error && <Text style={{ color: 'red' }}>{error}</Text>}
+        {!!error && <Text style={styles.warningText}>{error}</Text>}
         <View style={styles.rememberMeBlock}>
           <Switch value={rememberMe} onValueChange={setRememberMe} />
           <Text>Remember me</Text>
@@ -91,5 +91,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 16,
+  },
+  warningText: {
+    color: 'red',
   },
 });
