@@ -1,11 +1,10 @@
-import { Stack } from 'expo-router';
-
-const ROOT_STACK_OPTIONS = { headerShown: false };
+import { Slot } from 'expo-router';
+import { SessionProvider } from './context/AuthContext';
 
 export default function RootLayout() {
   return (
-    <Stack screenOptions={ROOT_STACK_OPTIONS}>
-      <Stack.Screen name="(tabs)" />
-    </Stack>
+    <SessionProvider>
+      <Slot />
+    </SessionProvider>
   );
 }

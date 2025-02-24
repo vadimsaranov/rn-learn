@@ -1,9 +1,10 @@
+import useSession from '@/app/context/AuthContext';
 import { AppInformation } from '@/components/AppInformation';
 import { Button } from '@/components/Button';
-import { FontAwesome, AntDesign } from '@expo/vector-icons';
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import * as Linking from 'expo-linking';
 import { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
-import * as Linking from 'expo-linking';
 
 const CONTACT_BUTTON_TITLE = 'Contact Us';
 const LOGOUT_BUTTON_TITLE = 'Logout';
@@ -14,6 +15,8 @@ const PHONE_SCHEMA = 'tel:+123456789';
 const SMS_SCHEMA = 'sms:+123456789';
 
 export default function SettingsTab() {
+  const { signOut } = useSession();
+
   const openLink = useCallback(async (url: string) => {
     try {
       const canOpenUrl = await Linking.canOpenURL(url);
@@ -39,7 +42,7 @@ export default function SettingsTab() {
         </Button>
       </View>
       <View style={styles.bottomContainer}>
-        <Button title={LOGOUT_BUTTON_TITLE}>
+        <Button title={LOGOUT_BUTTON_TITLE} onPress={signOut}>
           <AntDesign size={20} name={'logout'} color={ICON_COLOR} />
         </Button>
         <AppInformation />
