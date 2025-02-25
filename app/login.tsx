@@ -1,12 +1,11 @@
 import { Button } from '@components/Button';
+import { BiometricsContext } from '@context/BiometricsContext';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useBiometrics } from '@hooks/useBiometrics';
 import { updateAuth } from '@store/slices/authSlice';
-import { biometricsSelector } from '@store/slices/biometricsSlice';
 import { updateSession } from '@store/slices/sessionSlice';
-import { useAppDispatch, useAppSelector } from '@store/store';
+import { useAppDispatch } from '@store/store';
 import { router } from 'expo-router';
-import { useCallback, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -22,13 +21,12 @@ const hardCodedUser = {
 
 export default function Login() {
   const dispatch = useAppDispatch();
-  const { loginWithBiometrics } = useBiometrics();
 
-  const { enrolled } = useAppSelector(biometricsSelector);
+  const { enrolled, loginWithBiometrics } = useContext(BiometricsContext);
 
   const [rememberMe, setRememberMe] = useState(false);
 
-  const [loginValues, setLoginValues] = useState<InputValues>(hardCodedUser);
+  const [loginValues, setLoginValues] = useState<InputValues>({ email: '', password: '' });
 
   const [error, setError] = useState('');
 

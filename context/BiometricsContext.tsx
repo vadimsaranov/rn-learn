@@ -1,12 +1,34 @@
-import { updateAuth } from '@store/slices/authSlice';
-import { updateBiometrics } from '@store/slices/biometricsSlice';
-import { updateSession } from '@store/slices/sessionSlice';
-import { useAppDispatch } from '@store/store';
+import { createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState } from 'react';
 import * as LocalAuthentication from 'expo-local-authentication';
+import { useAppDispatch } from '@store/store';
+import { updateAuth } from '@store/slices/authSlice';
+import { updateSession } from '@store/slices/sessionSlice';
 import { router } from 'expo-router';
-import { useEffect } from 'react';
 
-export const useBiometrics = () => {
+type BiometricsContextType = {
+  enrolled: boolean;
+  setEnrolled: Dispatch<SetStateAction<boolean>>;
+  loginWithBiometrics: (rememberUser: boolean) => void;
+  promptBiometrics: () => void;
+  loading: boolean;
+};
+
+interface BiometricsContextProps {
+  children: ReactNode | undefined;
+}
+
+export const BiometricsContext = createContext<BiometricsContextType>({
+  enrolled: false,
+  setEnrolled: () => undefined,
+  loginWithBiometrics: () => undefined,
+  promptBiometrics: () => undefined,
+  loading: true,
+});
+
+export const BiometricsContextProvider = ({ children }: BiometricsContextProps) => {
+  const [enrolled, setEnrolled] = useState<BiometricsContextType['enrolled']>(false);
+  const [loading, setLoading] = useState(true);
+
   const dispatch = useAppDispatch();
 
   const promptBiometrics = async () => {
@@ -19,10 +41,10 @@ export const useBiometrics = () => {
           promptMessage: 'Set up biometrics',
         });
         if (authentication.success) {
-          dispatch(updateBiometrics({ enrolled: true }));
+          setEnrolled(true);
         }
         if (!authentication.success && authentication.error) {
-          dispatch(updateBiometrics({ enrolled: false }));
+          setEnrolled(false);
         }
       }
     } catch (error) {
@@ -35,9 +57,10 @@ export const useBiometrics = () => {
   };
 
   const checkSavedBiometrics = async () => {
+    setLoading(true);
     const result = await LocalAuthentication.isEnrolledAsync();
-
-    dispatch(updateBiometrics({ enrolled: result }));
+    setEnrolled(result);
+    setLoading(false);
   };
 
   const loginWithBiometrics = async (rememberUser: boolean) => {
@@ -59,5 +82,10 @@ export const useBiometrics = () => {
     checkSavedBiometrics();
   }, []);
 
-  return { promptBiometrics, loginWithBiometrics };
+  return (
+    <BiometricsContext.Provider
+      value={{ enrolled, setEnrolled, loginWithBiometrics, promptBiometrics, loading }}>
+      {children}
+    </BiometricsContext.Provider>
+  );
 };
