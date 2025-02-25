@@ -1,10 +1,13 @@
 import { AppInformation } from '@components/AppInformation';
 import { Button } from '@components/Button';
-import useSession from '@context/AuthContext';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import { resetAuthSlice } from '@store/slices/authSlice';
+import { resetSessionSlice } from '@store/slices/sessionSlice';
+import { userSelector } from '@store/slices/userSlice';
+import { useAppDispatch, useAppSelector } from '@store/store';
 import * as Linking from 'expo-linking';
 import { useCallback } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 const CONTACT_BUTTON_TITLE = 'Contact Us';
 const LOGOUT_BUTTON_TITLE = 'Logout';
@@ -15,7 +18,13 @@ const PHONE_SCHEMA = 'tel:+123456789';
 const SMS_SCHEMA = 'sms:+123456789';
 
 export default function SettingsTab() {
-  const { signOut } = useSession();
+  const { email } = useAppSelector(userSelector);
+  const dispatch = useAppDispatch();
+
+  const signOut = useCallback(() => {
+    dispatch(resetAuthSlice());
+    dispatch(resetSessionSlice());
+  }, [dispatch]);
 
   const openLink = useCallback(async (url: string) => {
     try {
@@ -30,8 +39,9 @@ export default function SettingsTab() {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.email}>Email: {email}</Text>
       <View style={styles.buttonsContainer}>
-        <Button onPress={async () => openLink(MAIL_SCHEMA)} title={CONTACT_BUTTON_TITLE}>
+        <Button onPress={() => openLink(MAIL_SCHEMA)} title={CONTACT_BUTTON_TITLE}>
           <AntDesign size={20} name="mail" color={ICON_COLOR} />
         </Button>
         <Button onPress={() => openLink(PHONE_SCHEMA)} title={CONTACT_BUTTON_TITLE}>
@@ -58,6 +68,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  email: { fontSize: 17 },
+
   buttonsContainer: {
     gap: 8,
   },

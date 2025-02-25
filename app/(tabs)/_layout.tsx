@@ -1,7 +1,8 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { authSelector } from '@store/slices/authSlice';
+import { sessionSelector } from '@store/slices/sessionSlice';
+import { useAppSelector } from '@store/store';
 import { Redirect, Tabs } from 'expo-router';
-import { Loader } from '@components/Loader';
-import useSession from '@context/AuthContext';
 
 const TABS_SCREEN_OPTIONS = { tabBarActiveTintColor: 'blue', headerShown: false };
 
@@ -16,13 +17,10 @@ const SETTING_TAB_OPTIONS = {
 };
 
 export default function TabLayout() {
-  const { isLoading, session } = useSession();
+  const { loggedIn } = useAppSelector(authSelector);
+  const { loggedIn: session } = useAppSelector(sessionSelector);
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (!session) {
+  if (!loggedIn && !session) {
     return <Redirect href={'/login'} />;
   }
   return (

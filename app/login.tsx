@@ -3,7 +3,9 @@ import { StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '@components/Button';
 import { router } from 'expo-router';
-import useSession from '@context/AuthContext';
+import { useAppDispatch } from '@store/store';
+import { updateAuth } from '@store/slices/authSlice';
+import { updateSession } from '@store/slices/sessionSlice';
 
 type InputValues = {
   email: string;
@@ -16,7 +18,7 @@ const hardCodedUser = {
 };
 
 export default function Login() {
-  const { signIn } = useSession();
+  const dispatch = useAppDispatch();
   const [rememberMe, setRememberMe] = useState(false);
 
   const [loginValues, setLoginValues] = useState<InputValues>({ email: '', password: '' });
@@ -33,10 +35,14 @@ export default function Login() {
         setError('');
       }, 2000);
     } else {
-      signIn('token', rememberMe);
+      if (rememberMe) {
+        dispatch(updateAuth({ loggedIn: true, token: 'token' }));
+      } else {
+        dispatch(updateSession({ loggedIn: true, token: 'token' }));
+      }
       router.replace('/');
     }
-  }, [signIn, loginValues, rememberMe]);
+  }, [loginValues, rememberMe, dispatch]);
 
   const onInputValuesChange = useCallback((value: string, key: keyof InputValues) => {
     setLoginValues((prevState) => ({ ...prevState, [key]: value }));
