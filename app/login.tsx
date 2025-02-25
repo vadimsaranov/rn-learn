@@ -80,10 +80,7 @@ export default function Login() {
           disabled={!(loginValues.email || loginValues.password)}
         />
         {!!enrolled && (
-          <Button
-            onPress={() => loginWithBiometrics(rememberMe)}
-            title="Login with biometrics"
-            disabled={!(loginValues.email || loginValues.password)}>
+          <Button onPress={() => loginWithBiometrics(rememberMe)} title="Login with biometrics">
             <MaterialIcons name="touch-app" size={24} color="black" />
           </Button>
         )}
