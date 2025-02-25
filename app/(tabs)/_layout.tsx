@@ -1,8 +1,13 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import useAppStateCheck from '@hooks/useAppStateCheck';
+import { useBiometrics } from '@hooks/useBiometrics';
 import { authSelector } from '@store/slices/authSlice';
+import { updateBiometrics } from '@store/slices/biometricsSlice';
 import { sessionSelector } from '@store/slices/sessionSlice';
-import { useAppSelector } from '@store/store';
+import { useAppDispatch, useAppSelector } from '@store/store';
 import { Redirect, Tabs } from 'expo-router';
+import { useCallback, useEffect, useState } from 'react';
+import { AppStateStatus } from 'react-native';
 
 const TABS_SCREEN_OPTIONS = { tabBarActiveTintColor: 'blue', headerShown: false };
 
@@ -17,8 +22,26 @@ const SETTING_TAB_OPTIONS = {
 };
 
 export default function TabLayout() {
+  const { promptBiometrics } = useBiometrics();
+
+  const dispatch = useAppDispatch();
+
   const { loggedIn } = useAppSelector(authSelector);
   const { loggedIn: session } = useAppSelector(sessionSelector);
+
+  const [appStateStatus, setAppStateStatus] = useState<AppStateStatus | undefined>(undefined);
+  useAppStateCheck({ setAppStateStatus });
+
+  const onAppStateChange = useCallback(() => {
+    if (appStateStatus === 'active') {
+      dispatch(updateBiometrics({ enrolled: false }));
+      promptBiometrics();
+    }
+  }, [appStateStatus]);
+
+  useEffect(() => {
+    onAppStateChange();
+  }, [onAppStateChange]);
 
   if (!loggedIn && !session) {
     return <Redirect href={'/login'} />;

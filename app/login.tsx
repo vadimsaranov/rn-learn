@@ -1,11 +1,14 @@
+import { Button } from '@components/Button';
+import { MaterialIcons } from '@expo/vector-icons';
+import { useBiometrics } from '@hooks/useBiometrics';
+import { updateAuth } from '@store/slices/authSlice';
+import { biometricsSelector } from '@store/slices/biometricsSlice';
+import { updateSession } from '@store/slices/sessionSlice';
+import { useAppDispatch, useAppSelector } from '@store/store';
+import { router } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Button } from '@components/Button';
-import { router } from 'expo-router';
-import { useAppDispatch } from '@store/store';
-import { updateAuth } from '@store/slices/authSlice';
-import { updateSession } from '@store/slices/sessionSlice';
 
 type InputValues = {
   email: string;
@@ -19,9 +22,13 @@ const hardCodedUser = {
 
 export default function Login() {
   const dispatch = useAppDispatch();
+  const { loginWithBiometrics } = useBiometrics();
+
+  const { enrolled } = useAppSelector(biometricsSelector);
+
   const [rememberMe, setRememberMe] = useState(false);
 
-  const [loginValues, setLoginValues] = useState<InputValues>({ email: '', password: '' });
+  const [loginValues, setLoginValues] = useState<InputValues>(hardCodedUser);
 
   const [error, setError] = useState('');
 
@@ -68,11 +75,21 @@ export default function Login() {
           <Text>Remember me</Text>
         </View>
       </View>
-      <Button
-        onPress={onButtonPress}
-        title="Login"
-        disabled={!(loginValues.email && loginValues.password)}
-      />
+      <View style={styles.bottomButtons}>
+        <Button
+          onPress={onButtonPress}
+          title="Login"
+          disabled={!(loginValues.email || loginValues.password)}
+        />
+        {!!enrolled && (
+          <Button
+            onPress={() => loginWithBiometrics(rememberMe)}
+            title="Login with biometrics"
+            disabled={!(loginValues.email || loginValues.password)}>
+            <MaterialIcons name="touch-app" size={24} color="black" />
+          </Button>
+        )}
+      </View>
     </SafeAreaView>
   );
 }
@@ -100,5 +117,9 @@ const styles = StyleSheet.create({
   },
   warningText: {
     color: 'red',
+  },
+  bottomButtons: {
+    gap: 16,
+    marginBottom: 16,
   },
 });

@@ -1,11 +1,11 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { userReducer } from '@store/slices/userSlice';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { persistReducer, persistStore } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { authReducer } from '@store/slices/authSlice';
+import { biometricsReducer } from '@store/slices/biometricsSlice';
 import { sessionReducer } from '@store/slices/sessionSlice';
+import { userReducer } from '@store/slices/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { persistReducer, persistStore } from 'redux-persist';
 
 const persistConfig = {
   key: 'root',
@@ -17,6 +17,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   auth: authReducer,
   session: sessionReducer,
+  biometrics: biometricsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
