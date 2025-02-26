@@ -1,4 +1,6 @@
 import { City } from '@core/City';
+import { citiesSelector } from '@store/slices/citiesSlice';
+import { useAppSelector } from '@store/store';
 import { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
 const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
@@ -14,6 +16,8 @@ const citiesList = [
   'City of Sydney',
   'Sao Paulo',
 ];
+
+export const IconNamesList = ['01d', '02d', '03d', '04d', '09d', '10d', '11d', '13d', '50d'];
 
 type CitiesContextType = {
   cities: City[];
@@ -32,6 +36,8 @@ interface CitiesContextProps {
 }
 
 export default function CitiesContextProvider({ children }: CitiesContextProps) {
+  const { cities: localCities } = useAppSelector(citiesSelector);
+
   const [loading, setLoading] = useState(false);
   const [cities, setCities] = useState<City[]>([]);
   const fetchCities = async () => {
@@ -46,7 +52,7 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
       });
 
       await Promise.all(promises);
-      setCities(result);
+      setCities([...result, ...localCities]);
     } catch (error) {
       console.log(error);
     } finally {
@@ -85,7 +91,7 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
 
   useEffect(() => {
     fetchCities();
-  }, []);
+  }, [localCities]);
 
   const data = useMemo<CitiesContextType>(() => {
     return { cities, getCityByName, loading };

@@ -5,11 +5,11 @@ export interface City {
   icon: string;
   humidity: number;
   pressure: number;
-  wind: number;
-  cloudCover: number;
+  wind?: number;
+  cloudCover?: number;
 }
 
-interface Weather {
+export interface Weather {
   description: string;
   icon: string;
   id: number;
