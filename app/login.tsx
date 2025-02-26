@@ -1,11 +1,13 @@
-import { useCallback, useState } from 'react';
-import { StyleSheet, Switch, Text, TextInput, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '@components/Button';
-import { router } from 'expo-router';
-import { useAppDispatch } from '@store/store';
+import { BiometricsContext } from '@context/BiometricsContext';
+import { MaterialIcons } from '@expo/vector-icons';
 import { updateAuth } from '@store/slices/authSlice';
 import { updateSession } from '@store/slices/sessionSlice';
+import { useAppDispatch } from '@store/store';
+import { router } from 'expo-router';
+import { useCallback, useContext, useState } from 'react';
+import { StyleSheet, Switch, Text, TextInput, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type InputValues = {
   email: string;
@@ -19,6 +21,9 @@ const hardCodedUser = {
 
 export default function Login() {
   const dispatch = useAppDispatch();
+
+  const { enrolled, loginWithBiometrics } = useContext(BiometricsContext);
+
   const [rememberMe, setRememberMe] = useState(false);
 
   const [loginValues, setLoginValues] = useState<InputValues>({ email: '', password: '' });
@@ -68,11 +73,18 @@ export default function Login() {
           <Text>Remember me</Text>
         </View>
       </View>
-      <Button
-        onPress={onButtonPress}
-        title="Login"
-        disabled={!(loginValues.email && loginValues.password)}
-      />
+      <View style={styles.bottomButtons}>
+        <Button
+          onPress={onButtonPress}
+          title="Login"
+          disabled={!(loginValues.email || loginValues.password)}
+        />
+        {!!enrolled && (
+          <Button onPress={() => loginWithBiometrics(rememberMe)} title="Login with biometrics">
+            <MaterialIcons name="touch-app" size={24} color="black" />
+          </Button>
+        )}
+      </View>
     </SafeAreaView>
   );
 }
@@ -100,5 +112,9 @@ const styles = StyleSheet.create({
   },
   warningText: {
     color: 'red',
+  },
+  bottomButtons: {
+    gap: 16,
+    marginBottom: 16,
   },
 });

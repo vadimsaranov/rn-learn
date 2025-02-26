@@ -6,7 +6,10 @@ interface ButtonProps extends TouchableOpacityProps {
 }
 export const Button = ({ title, children, disabled, ...otherProps }: ButtonProps) => {
   return (
-    <TouchableOpacity {...otherProps} style={[styles.container, disabled && styles.disabled]}>
+    <TouchableOpacity
+      {...otherProps}
+      disabled={disabled}
+      style={[styles.container, disabled && styles.disabled]}>
       <Text>{title}</Text>
       {children}
     </TouchableOpacity>

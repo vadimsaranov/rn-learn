@@ -1,8 +1,13 @@
+import { Button } from '@components/Button';
+import { BiometricsContext } from '@context/BiometricsContext';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import useAppStateCheck from '@hooks/useAppStateCheck';
 import { authSelector } from '@store/slices/authSlice';
 import { sessionSelector } from '@store/slices/sessionSlice';
 import { useAppSelector } from '@store/store';
 import { Redirect, Tabs } from 'expo-router';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { AppStateStatus, StyleSheet, View } from 'react-native';
 
 const TABS_SCREEN_OPTIONS = { tabBarActiveTintColor: 'blue', headerShown: false };
 
@@ -17,11 +22,46 @@ const SETTING_TAB_OPTIONS = {
 };
 
 export default function TabLayout() {
+  const {
+    promptBiometrics,
+    setEnrolled: updateBiometrics,
+    enrolled: biometricsEnrolled,
+    loading: biometricsLoading,
+  } = useContext(BiometricsContext);
+
   const { loggedIn } = useAppSelector(authSelector);
   const { loggedIn: session } = useAppSelector(sessionSelector);
 
+  const [appStateStatus, setAppStateStatus] = useState<AppStateStatus | undefined>(undefined);
+  useAppStateCheck({ setAppStateStatus });
+
+  const onAppStateChange = useCallback(() => {
+    if (appStateStatus === 'active') {
+      updateBiometrics(false);
+      promptBiometrics();
+    }
+  }, [appStateStatus, promptBiometrics, updateBiometrics]);
+
+  useEffect(() => {
+    onAppStateChange();
+  }, [onAppStateChange]);
+
+  useEffect(() => {
+    if (!biometricsLoading && !biometricsEnrolled) {
+      promptBiometrics();
+    }
+  }, [biometricsEnrolled, biometricsLoading, promptBiometrics]);
+
   if (!loggedIn && !session) {
     return <Redirect href={'/login'} />;
+  }
+
+  if (!biometricsEnrolled) {
+    return (
+      <View style={styles.biometrics}>
+        <Button title="Unlock screen" onPress={promptBiometrics} />
+      </View>
+    );
   }
   return (
     <Tabs screenOptions={TABS_SCREEN_OPTIONS}>
@@ -30,3 +70,11 @@ export default function TabLayout() {
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  biometrics: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 16,
+  },
+});

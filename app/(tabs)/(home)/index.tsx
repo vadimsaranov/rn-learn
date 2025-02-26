@@ -1,9 +1,9 @@
 import { CityListItem } from '@components/CityListItem';
+import { Loader } from '@components/Loader';
+import { CitiesContext } from '@context/CitiesContext';
 import { City } from '@core/City';
 import { useCallback, useContext, useMemo } from 'react';
 import { FlatList, ListRenderItem, StyleSheet, Text } from 'react-native';
-import { Loader } from '@components/Loader';
-import { CitiesContext } from '@context/CitiesContext';
 
 export default function HomeScreen() {
   const { cities, loading } = useContext(CitiesContext);
