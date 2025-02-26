@@ -16,8 +16,10 @@ export default function useAppStateCheck(props: useAppStateCheckProps) {
   );
 
   useEffect(() => {
-    let eventListener: NativeEventSubscription;
-    eventListener = AppState.addEventListener('change', handleAppStateChange);
+    const eventListener: NativeEventSubscription = AppState.addEventListener(
+      'change',
+      handleAppStateChange,
+    );
 
     return () => {
       eventListener.remove();

@@ -1,4 +1,13 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState } from 'react';
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import * as LocalAuthentication from 'expo-local-authentication';
 import { useAppDispatch } from '@store/store';
 import { updateAuth } from '@store/slices/authSlice';
@@ -31,7 +40,7 @@ export const BiometricsContextProvider = ({ children }: BiometricsContextProps) 
 
   const dispatch = useAppDispatch();
 
-  const promptBiometrics = async () => {
+  const promptBiometrics = useCallback(async () => {
     try {
       const isSupported = await checkBiometricsCompatibility();
 
@@ -50,42 +59,50 @@ export const BiometricsContextProvider = ({ children }: BiometricsContextProps) 
     } catch (error) {
       console.log(error, 'error');
     }
-  };
+  }, []);
 
-  const checkBiometricsCompatibility = async () => {
+  const checkBiometricsCompatibility = useCallback(async () => {
     return await LocalAuthentication.hasHardwareAsync();
-  };
-
-  const checkSavedBiometrics = async () => {
+  }, []);
+  const checkSavedBiometrics = useCallback(async () => {
     setLoading(true);
     const result = await LocalAuthentication.isEnrolledAsync();
     setEnrolled(result);
     setLoading(false);
-  };
+  }, []);
 
-  const loginWithBiometrics = async (rememberUser: boolean) => {
-    const authentication = await LocalAuthentication.authenticateAsync({
-      biometricsSecurityLevel: 'strong',
-      promptMessage: 'Set up biometrics',
-    });
-    if (authentication.success) {
-      if (rememberUser) {
-        dispatch(updateAuth({ loggedIn: true, token: 'token' }));
-      } else {
-        dispatch(updateSession({ loggedIn: true, token: 'token' }));
+  const loginWithBiometrics = useCallback(
+    async (rememberUser: boolean) => {
+      const authentication = await LocalAuthentication.authenticateAsync({
+        biometricsSecurityLevel: 'strong',
+        promptMessage: 'Set up biometrics',
+      });
+      if (authentication.success) {
+        if (rememberUser) {
+          dispatch(updateAuth({ loggedIn: true, token: 'token' }));
+        } else {
+          dispatch(updateSession({ loggedIn: true, token: 'token' }));
+        }
+        router.replace('/');
       }
-      router.replace('/');
-    }
-  };
+    },
+    [dispatch],
+  );
 
   useEffect(() => {
     checkSavedBiometrics();
   }, []);
 
-  return (
-    <BiometricsContext.Provider
-      value={{ enrolled, setEnrolled, loginWithBiometrics, promptBiometrics, loading }}>
-      {children}
-    </BiometricsContext.Provider>
+  const value = useMemo<BiometricsContextType>(
+    () => ({
+      enrolled,
+      setEnrolled,
+      loginWithBiometrics,
+      promptBiometrics,
+      loading,
+    }),
+    [enrolled, loading, loginWithBiometrics, promptBiometrics],
   );
+
+  return <BiometricsContext.Provider value={value}>{children}</BiometricsContext.Provider>;
 };
