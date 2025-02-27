@@ -56,6 +56,18 @@ const WeatherSchema: ZodType<FormData> = z.object({
     }),
 });
 
+const inputsList = [
+  { inputName: 'cityName', placolder: 'City name' },
+  { inputName: 'weatherType', placolder: 'Weather type' },
+  { inputName: 'icon', placolder: 'Choose image' },
+  { inputName: 'temperature', placolder: 'Temperature' },
+  { inputName: 'humidity', placolder: 'Humidity' },
+  { inputName: 'pressure', placolder: 'Pressure' },
+  { inputName: 'windSpeed', placolder: 'Wind speed' },
+  { inputName: 'cloudCover', placolder: 'City name' },
+  { inputName: 'cityName', placolder: 'Cloud cover' },
+];
+
 export default function NewWeatherCity() {
   const dispatch = useAppDispatch();
   const searchParams = useLocalSearchParams();
@@ -108,80 +120,34 @@ export default function NewWeatherCity() {
 
   return (
     <View style={styles.container}>
-      <ControlledInput
-        errors={errors}
-        name="cityName"
-        control={control}
-        placeholder="City name"
-        rules={{
-          required: true,
-        }}
-      />
+      {inputsList.map((item, index) =>
+        item.inputName === 'icon' ? (
+          <View key={index}>
+            <Button title="Choose image" onPress={() => router.navigate('/chooseWeatherIcon')} />
 
-      <ControlledInput
-        errors={errors}
-        name="weatherType"
-        control={control}
-        placeholder="Weather type"
-        rules={{
-          required: true,
-        }}
-      />
+            {!searchParams.selectedIcon && (
+              <Text style={styles.iconLabel}>{NO_ICON_ERROR_TEXT}</Text>
+            )}
 
-      <Button title="Choose image" onPress={() => router.navigate('/chooseWeatherIcon')} />
-
-      {!searchParams.selectedIcon && <Text style={styles.iconLabel}>{NO_ICON_ERROR_TEXT}</Text>}
-
-      {!!searchParams.selectedIcon && (
-        <Image
-          source={{ uri: `https://openweathermap.org/img/wn/${searchParams.selectedIcon}@2x.png` }}
-          style={styles.image}
-        />
+            {!!searchParams.selectedIcon && (
+              <Image
+                source={{
+                  uri: `https://openweathermap.org/img/wn/${searchParams.selectedIcon}@2x.png`,
+                }}
+                style={styles.image}
+              />
+            )}
+          </View>
+        ) : (
+          <ControlledInput
+            key={index}
+            errors={errors}
+            name={item.inputName as keyof FormData}
+            control={control}
+            placeholder={item.placolder}
+          />
+        ),
       )}
-
-      <ControlledInput
-        errors={errors}
-        name="temperature"
-        control={control}
-        placeholder="Temperature"
-        rules={{
-          required: true,
-        }}
-      />
-
-      <ControlledInput
-        errors={errors}
-        name="humidity"
-        control={control}
-        placeholder="Humidity"
-        rules={{
-          required: true,
-        }}
-      />
-
-      <ControlledInput
-        errors={errors}
-        name="pressure"
-        control={control}
-        placeholder="Pressure"
-        rules={{
-          required: true,
-        }}
-      />
-
-      <ControlledInput
-        errors={errors}
-        name="windSpeed"
-        control={control}
-        placeholder="Wind speed"
-      />
-
-      <ControlledInput
-        errors={errors}
-        name="cloudCover"
-        control={control}
-        placeholder="Cloud cover"
-      />
 
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />
     </View>

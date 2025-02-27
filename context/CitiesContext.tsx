@@ -52,7 +52,7 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
       });
 
       await Promise.all(promises);
-      setCities([...result, ...localCities]);
+      setCities(result);
     } catch (error) {
       console.log(error);
     } finally {
@@ -62,10 +62,11 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
 
   const getCityByName = useCallback(
     (cityName: string) => {
-      const city = cities.find((c) => c.name === cityName);
+      const allCities = [...cities, ...localCities];
+      const city = allCities.find((c) => c.name === cityName);
       return city;
     },
-    [cities],
+    [cities, localCities],
   );
 
   const fetchCity = async (cityName: string) => {
@@ -91,11 +92,11 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
 
   useEffect(() => {
     fetchCities();
-  }, [localCities]);
+  }, []);
 
   const data = useMemo<CitiesContextType>(() => {
-    return { cities, getCityByName, loading };
-  }, [cities, getCityByName, loading]);
+    return { cities: [...cities, ...localCities], getCityByName, loading };
+  }, [cities, getCityByName, loading, localCities]);
 
   return <CitiesContext.Provider value={data}>{children}</CitiesContext.Provider>;
 }
