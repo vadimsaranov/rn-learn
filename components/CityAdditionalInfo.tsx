@@ -3,8 +3,8 @@ import { StyleSheet, Text, View } from 'react-native';
 interface CityAdditionalInfoProps {
   humidity: number;
   pressure: number;
-  windSpeed: number;
-  cloudCover: number;
+  windSpeed?: number;
+  cloudCover?: number;
 }
 export const CityAdditionalInfo = ({
   humidity,
@@ -22,14 +22,18 @@ export const CityAdditionalInfo = ({
         <Text>Pressure</Text>
         <Text style={styles.greyText}>{pressure} hPa </Text>
       </View>
-      <View style={styles.block}>
-        <Text>Wind Speed</Text>
-        <Text style={styles.greyText}>{windSpeed} mph</Text>
-      </View>
-      <View style={styles.block}>
-        <Text>Cloud Cover</Text>
-        <Text style={styles.greyText}>{cloudCover}%</Text>
-      </View>
+      {!!windSpeed && (
+        <View style={styles.block}>
+          <Text>Wind Speed</Text>
+          <Text style={styles.greyText}>{windSpeed} mph</Text>
+        </View>
+      )}
+      {!!cloudCover && (
+        <View style={styles.block}>
+          <Text>Cloud Cover</Text>
+          <Text style={styles.greyText}>{cloudCover}%</Text>
+        </View>
+      )}
     </View>
   );
 };

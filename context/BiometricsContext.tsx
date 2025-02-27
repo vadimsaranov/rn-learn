@@ -13,6 +13,7 @@ import { useAppDispatch } from '@store/store';
 import { updateAuth } from '@store/slices/authSlice';
 import { updateSession } from '@store/slices/sessionSlice';
 import { router } from 'expo-router';
+import * as Device from 'expo-device';
 
 type BiometricsContextType = {
   enrolled: boolean;
@@ -41,6 +42,10 @@ export const BiometricsContextProvider = ({ children }: BiometricsContextProps) 
   const dispatch = useAppDispatch();
 
   const promptBiometrics = useCallback(async () => {
+    if (!Device.isDevice) {
+      setEnrolled(true);
+      return;
+    }
     try {
       const isSupported = await checkBiometricsCompatibility();
 

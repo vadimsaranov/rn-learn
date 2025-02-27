@@ -18,7 +18,13 @@ export const CityListItem = ({ city, fullInfo = false }: CityListItemProps) => {
   return (
     <View>
       <Pressable style={styles.container} onPress={onCityPress}>
-        <Image src={`https://openweathermap.org/img/wn/${city.icon}@2x.png`} style={styles.image} />
+        <Image
+          source={{
+            uri: `https://openweathermap.org/img/wn/${city.icon}@2x.png`,
+            cache: 'only-if-cached',
+          }}
+          style={styles.image}
+        />
         <View style={styles.flex}>
           <Text style={styles.cityName}>{city?.name}</Text>
           <Text style={styles.cityWeather}>{city?.weather.main}</Text>

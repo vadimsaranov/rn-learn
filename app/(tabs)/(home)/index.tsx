@@ -1,8 +1,11 @@
+import { Button } from '@components/Button';
 import { CityListItem } from '@components/CityListItem';
 import { Loader } from '@components/Loader';
 import { CitiesContext } from '@context/CitiesContext';
 import { City } from '@core/City';
-import { useCallback, useContext, useMemo } from 'react';
+import { AntDesign } from '@expo/vector-icons';
+import { router } from 'expo-router';
+import { useCallback, useContext } from 'react';
 import { FlatList, ListRenderItem, StyleSheet, Text } from 'react-native';
 
 export default function HomeScreen() {
@@ -13,8 +16,16 @@ export default function HomeScreen() {
     [],
   );
 
-  const listEmptyComponent = useMemo(() => {
+  const listEmptyComponent = useCallback(() => {
     return <Text>No data found</Text>;
+  }, []);
+
+  const listHeaderComponent = useCallback(() => {
+    return (
+      <Button onPress={() => router.navigate({ pathname: '/newWeatherCity' })} title={'Add new'}>
+        <AntDesign size={20} name="plus" />
+      </Button>
+    );
   }, []);
 
   if (loading) {
@@ -26,6 +37,7 @@ export default function HomeScreen() {
       style={styles.container}
       data={cities}
       renderItem={renderItem}
+      ListHeaderComponent={listHeaderComponent}
       ListEmptyComponent={listEmptyComponent}
     />
   );
