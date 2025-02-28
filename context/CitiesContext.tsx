@@ -71,22 +71,23 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
 
   const fetchCity = async (cityName: string) => {
     try {
-      const response = await (
-        await fetch(`${BASE_URL}weather?q=${cityName}&appid=${API_KEY}`)
-      ).json();
+      const res = await fetch(`${BASE_URL}weather?q=${cityName}&appid=${API_KEY}`);
+
+      const result = await res.json();
+
       const city: City = {
-        icon: response.weather[0].icon,
-        name: response.name,
-        temp: response.main.temp,
-        weather: response.weather[0],
-        humidity: response.main.humidity,
-        pressure: response.main.pressure,
-        cloudCover: response.clouds.all,
-        wind: response.wind.speed,
+        icon: result.weather[0].icon,
+        name: result.name,
+        temp: result.main.temp,
+        weather: result.weather[0],
+        humidity: result.main.humidity,
+        pressure: result.main.pressure,
+        cloudCover: result.clouds.all,
+        wind: result.wind.speed,
       };
       return city;
-    } catch (error) {
-      console.log(error);
+    } catch {
+      throw new Error('City not found');
     }
   };
 
