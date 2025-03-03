@@ -5,9 +5,10 @@ import { updateCities } from '@store/slices/citiesSlice';
 import { useAppDispatch } from '@store/store';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useForm } from 'react-hook-form';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z, ZodType } from 'zod';
+import { Text } from '@components/Text';
 
 const NO_ICON_ERROR_TEXT = 'Please select an icon';
 

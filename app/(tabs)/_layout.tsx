@@ -1,5 +1,7 @@
 import { Button } from '@components/Button';
+import { Colors } from '@constants/Colors';
 import { BiometricsContext } from '@context/BiometricsContext';
+import { ThemeContext } from '@context/ThemeContext';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import useAppStateCheck from '@hooks/useAppStateCheck';
 import { authSelector } from '@store/slices/authSlice';
@@ -8,8 +10,6 @@ import { useAppSelector } from '@store/store';
 import { Redirect, Tabs } from 'expo-router';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { AppStateStatus, StyleSheet, View } from 'react-native';
-
-const TABS_SCREEN_OPTIONS = { tabBarActiveTintColor: 'blue', headerShown: false };
 
 const HOME_TAB_OPTIONS = {
   title: 'Home',
@@ -22,6 +22,14 @@ const SETTING_TAB_OPTIONS = {
 };
 
 export default function TabLayout() {
+  const { theme } = useContext(ThemeContext);
+
+  const TABS_SCREEN_OPTIONS = {
+    headerShown: false,
+    tabBarActiveTintColor: Colors[theme].tabBarActiveTint,
+    headerTitleStyle: { color: Colors[theme].background },
+  };
+
   const {
     promptBiometrics,
     setEnrolled: updateBiometrics,

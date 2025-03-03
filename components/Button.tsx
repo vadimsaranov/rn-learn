@@ -1,10 +1,16 @@
-import { ReactNode } from 'react';
-import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native';
+import { Text } from '@components/Text';
+import { Colors } from '@constants/Colors';
+import { Theme, ThemeContext } from '@context/ThemeContext';
+import { ReactNode, useContext } from 'react';
+import { StyleSheet, TouchableOpacity, TouchableOpacityProps } from 'react-native';
 interface ButtonProps extends TouchableOpacityProps {
   title: string;
   children?: ReactNode;
 }
 export const Button = ({ title, children, disabled, ...otherProps }: ButtonProps) => {
+  const { theme } = useContext(ThemeContext);
+  const styles = themedStyles(theme);
+
   return (
     <TouchableOpacity
       {...otherProps}
@@ -16,19 +22,20 @@ export const Button = ({ title, children, disabled, ...otherProps }: ButtonProps
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    borderWidth: 1,
-    borderColor: '#b8b8b8',
-    padding: 8,
-    borderRadius: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 4,
-    backgroundColor: '#f8f8f8',
-  },
-  disabled: {
-    opacity: 0.4,
-  },
-});
+const themedStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      borderWidth: 1,
+      borderColor: Colors[theme].buttonBorder,
+      padding: 8,
+      borderRadius: 12,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 4,
+      backgroundColor: Colors[theme].background,
+    },
+    disabled: {
+      opacity: 0.4,
+    },
+  });

@@ -1,16 +1,21 @@
+import { Colors } from '@constants/Colors';
 import CitiesContextProvider from '@context/CitiesContext';
+import { ThemeContext } from '@context/ThemeContext';
 import { Stack } from 'expo-router';
+import { useContext } from 'react';
 
-const HOME_LAYOUT_SCREEN_OPTIONS = {
-  headerStyle: { backgroundColor: '#f1f1f1' },
-  contentStyle: { backgroundColor: '#fff' },
-};
 const WEATHER_SCREEN_OPTIONS = { title: 'Weather' };
 const DETAILS_SCREEN_OPTIONS = { title: 'Details' };
 const ADD_WEATHER_SCREEN_OPTIONS = { title: 'Add weather' };
 const WEATHER_ICONS_SCREEN_OPTIONS = { title: 'Choose icon' };
 
 export default function HomeLayout() {
+  const { theme } = useContext(ThemeContext);
+  const HOME_LAYOUT_SCREEN_OPTIONS = {
+    headerTintColor: Colors[theme].text,
+    headerStyle: { backgroundColor: Colors[theme].background },
+    contentStyle: { backgroundColor: Colors[theme].background },
+  };
   return (
     <CitiesContextProvider>
       <Stack screenOptions={HOME_LAYOUT_SCREEN_OPTIONS}>

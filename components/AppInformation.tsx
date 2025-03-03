@@ -1,5 +1,5 @@
+import { Text } from '@components/Text';
 import * as Application from 'expo-application';
-import { Text } from 'react-native';
 
 export const AppInformation = () => {
   const { nativeBuildVersion, nativeApplicationVersion } = Application;

@@ -1,4 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Text } from '@components/Text';
+import { Colors } from '@constants/Colors';
+import { Theme, ThemeContext } from '@context/ThemeContext';
+import { useContext } from 'react';
+import { StyleSheet, View } from 'react-native';
 
 interface CityAdditionalInfoProps {
   humidity: number;
@@ -12,6 +16,9 @@ export const CityAdditionalInfo = ({
   windSpeed,
   cloudCover,
 }: CityAdditionalInfoProps) => {
+  const { theme } = useContext(ThemeContext);
+  const styles = themedStyles(theme);
+
   return (
     <View>
       <View style={styles.block}>
@@ -38,15 +45,16 @@ export const CityAdditionalInfo = ({
   );
 };
 
-const styles = StyleSheet.create({
-  block: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 8,
-    marginLeft: 12,
-    paddingRight: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#d3d3d3',
-  },
-  greyText: { color: '#8c8c8c' },
-});
+const themedStyles = (theme: Theme) =>
+  StyleSheet.create({
+    block: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingVertical: 8,
+      marginLeft: 12,
+      paddingRight: 12,
+      borderBottomWidth: 1,
+      borderBottomColor: Colors[theme].buttonBorder,
+    },
+    greyText: { color: Colors[theme].grey },
+  });
