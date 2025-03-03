@@ -23,12 +23,14 @@ type CitiesContextType = {
   cities: City[];
   getCityByName: (cityName: string) => City | undefined;
   loading: boolean;
+  loadNextPage: () => void;
 };
 
 export const CitiesContext = createContext<CitiesContextType>({
   cities: [],
   getCityByName: () => undefined,
   loading: false,
+  loadNextPage: () => {},
 });
 
 interface CitiesContextProps {
@@ -40,6 +42,7 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
 
   const [loading, setLoading] = useState(false);
   const [cities, setCities] = useState<City[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const fetchCities = async () => {
     try {
       setLoading(true);
@@ -95,9 +98,26 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
     fetchCities();
   }, []);
 
+  const getAllCities = useCallback(
+    (page = 1) => {
+      const allCities = [...cities, ...localCities];
+      return allCities.slice(0, page * 10);
+    },
+    [cities, localCities],
+  );
+
+  const loadNextPage = useCallback(() => {
+    const totalPages = Math.ceil((cities.length + localCities.length) / 10);
+    const nextPage = currentPage + 1;
+    if (nextPage !== totalPages) {
+      setCurrentPage(nextPage);
+    }
+  }, [cities, localCities, currentPage]);
+
   const data = useMemo<CitiesContextType>(() => {
-    return { cities: [...cities, ...localCities], getCityByName, loading };
-  }, [cities, getCityByName, loading, localCities]);
+    const allCities = getAllCities(currentPage);
+    return { cities: allCities, getCityByName, loading, loadNextPage };
+  }, [getCityByName, loading, currentPage, getAllCities, loadNextPage]);
 
   return <CitiesContext.Provider value={data}>{children}</CitiesContext.Provider>;
 }

@@ -64,8 +64,7 @@ const inputsList = [
   { inputName: 'humidity', placolder: 'Humidity' },
   { inputName: 'pressure', placolder: 'Pressure' },
   { inputName: 'windSpeed', placolder: 'Wind speed' },
-  { inputName: 'cloudCover', placolder: 'City name' },
-  { inputName: 'cityName', placolder: 'Cloud cover' },
+  { inputName: 'cloudCover', placolder: 'Cloud cover' },
 ];
 
 export default function NewWeatherCity() {
