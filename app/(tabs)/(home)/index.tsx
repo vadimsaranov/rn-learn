@@ -9,7 +9,7 @@ import { useCallback, useContext } from 'react';
 import { FlatList, ListRenderItem, StyleSheet, Text } from 'react-native';
 
 export default function HomeScreen() {
-  const { cities, loading } = useContext(CitiesContext);
+  const { cities, loading, loadNextPage } = useContext(CitiesContext);
 
   const renderItem: ListRenderItem<City> = useCallback(
     ({ item: city }) => <CityListItem city={city} />,
@@ -39,6 +39,7 @@ export default function HomeScreen() {
       renderItem={renderItem}
       ListHeaderComponent={listHeaderComponent}
       ListEmptyComponent={listEmptyComponent}
+      onEndReached={loadNextPage}
     />
   );
 }
