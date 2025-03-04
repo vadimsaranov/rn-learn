@@ -6,8 +6,8 @@ import { Text } from '@components/Text';
 import { CitiesContext } from '@context/CitiesContext';
 import { Weather } from '@core/City';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { router, useLocalSearchParams, useNavigation } from 'expo-router';
-import { useContext, useEffect, useState } from 'react';
+import { router, useLocalSearchParams } from 'expo-router';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Image, StyleSheet, View } from 'react-native';
 import uuid from 'react-native-uuid';
@@ -72,51 +72,34 @@ const inputsList = [
 ];
 
 export default function AddOrEditCityWeather() {
-  const navigation = useNavigation();
   const searchParams = useLocalSearchParams();
 
   const cityId = searchParams.cityId as string;
-  const paramsIcon = searchParams.cityId as string;
+  const paramsIcon = searchParams.selectedIcon as string;
 
   const { getCityById, updateCity } = useContext(CitiesContext);
   const cityToEdit = getCityById(searchParams.cityId as string);
 
-  const [selectedIcon, setSelectedIcon] = useState(paramsIcon || '');
-  const [modalVisible, setModalVisible] = useState(false);
+  const selectedIcon = paramsIcon || cityToEdit?.icon || '';
 
-  useEffect(() => {
-    if (searchParams.cityId) {
-      navigation.setOptions({ title: 'Edit weather' });
-      if (cityToEdit) {
-        setValue('cityName', cityToEdit.name);
-        setValue('weatherType', cityToEdit.weather.main);
-        setValue('temperature', cityToEdit.temp.toString());
-        setValue('humidity', cityToEdit.humidity.toString());
-        setValue('pressure', cityToEdit.pressure.toString());
-        setValue('windSpeed', cityToEdit.wind?.toString() || '');
-        setValue('cloudCover', cityToEdit.cloudCover?.toString() || '');
-        setSelectedIcon(cityToEdit.icon);
-      }
-    }
-  }, []);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const {
     control,
     handleSubmit,
     formState: { errors },
     reset,
-    setValue,
     getValues,
   } = useForm<FormData>({
     resolver: zodResolver(WeatherSchema),
     defaultValues: {
-      cityName: '',
-      weatherType: '',
-      temperature: '',
-      humidity: '',
-      pressure: '',
-      windSpeed: '',
-      cloudCover: '',
+      cityName: cityToEdit?.name || '',
+      weatherType: cityToEdit?.weather.main || '',
+      temperature: cityToEdit?.temp.toString() || '',
+      humidity: cityToEdit?.humidity.toString() || '',
+      pressure: cityToEdit?.pressure.toString() || '',
+      windSpeed: cityToEdit?.wind?.toString() || '',
+      cloudCover: cityToEdit?.cloudCover?.toString() || '',
     },
   });
 
@@ -174,7 +157,7 @@ export default function AddOrEditCityWeather() {
       {inputsList.map((item, index) =>
         item.inputName === 'icon' ? (
           <View key={index}>
-            <Button title="Choose image" onPress={() => router.back()} />
+            <Button title="Choose image" onPress={() => router.navigate('/chooseWeatherIcon')} />
 
             {!selectedIcon && <Text style={styles.iconLabel}>{NO_ICON_ERROR_TEXT}</Text>}
 
