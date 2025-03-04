@@ -27,7 +27,9 @@ export default function HomeScreen() {
 
   const listHeaderComponent = useCallback(() => {
     return (
-      <Button onPress={() => router.navigate({ pathname: '/newWeatherCity' })} title={'Add new'}>
+      <Button
+        onPress={() => router.navigate({ pathname: '/addOrEditCityWeather' })}
+        title={'Add new'}>
         <AntDesign size={20} name="plus" />
       </Button>
     );
@@ -45,6 +47,7 @@ export default function HomeScreen() {
       ListHeaderComponent={listHeaderComponent}
       ListEmptyComponent={listEmptyComponent}
       onEndReached={loadNextPage}
+      keyExtractor={(item) => item.id}
     />
   );
 }

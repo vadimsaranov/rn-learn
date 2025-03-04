@@ -1,7 +1,12 @@
 import { City } from '@core/City';
 import { citiesSelector } from '@store/slices/citiesSlice';
-import { useAppSelector } from '@store/store';
+import { useAppDispatch, useAppSelector } from '@store/store';
 import { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  deleteCity as deleteCityAction,
+  updateCities as updateCitiesAction,
+} from '@store/slices/citiesSlice';
+
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
 const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
 
@@ -21,16 +26,20 @@ export const IconNamesList = ['01d', '02d', '03d', '04d', '09d', '10d', '11d', '
 
 type CitiesContextType = {
   cities: City[];
-  getCityByName: (cityName: string) => City | undefined;
+  getCityById: (cityName: string) => City | undefined;
   loading: boolean;
   loadNextPage: () => void;
+  deleteCity: (id: string) => void;
+  updateCity: (city: City) => void;
 };
 
 export const CitiesContext = createContext<CitiesContextType>({
   cities: [],
-  getCityByName: () => undefined,
+  getCityById: () => undefined,
   loading: false,
   loadNextPage: () => {},
+  deleteCity: () => {},
+  updateCity: () => {},
 });
 
 interface CitiesContextProps {
@@ -38,6 +47,7 @@ interface CitiesContextProps {
 }
 
 export default function CitiesContextProvider({ children }: CitiesContextProps) {
+  const dispatch = useAppDispatch();
   const { cities: localCities } = useAppSelector(citiesSelector);
 
   const [loading, setLoading] = useState(false);
@@ -63,10 +73,10 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
     }
   };
 
-  const getCityByName = useCallback(
-    (cityName: string) => {
+  const getCityById = useCallback(
+    (cityId: string) => {
       const allCities = [...cities, ...localCities];
-      const city = allCities.find((c) => c.name === cityName);
+      const city = allCities.find((c) => c.id === cityId);
       return city;
     },
     [cities, localCities],
@@ -79,6 +89,7 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
       const result = await res.json();
 
       const city: City = {
+        id: result.id.toString(),
         icon: result.weather[0].icon,
         name: result.name,
         temp: result.main.temp,
@@ -114,10 +125,46 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
     }
   }, [cities, localCities, currentPage]);
 
+  const deleteCity = useCallback(
+    (id: string) => {
+      const localCity = localCities.find((city) => city.id === id);
+      if (localCity) {
+        dispatch(deleteCityAction(id));
+      } else {
+        const city = cities.find((city) => city.id === id);
+
+        if (city) {
+          setCities((prevCities) => prevCities.filter((city) => city.id !== id));
+        }
+      }
+    },
+    [cities, dispatch, localCities],
+  );
+
+  const updateCity = useCallback(
+    (updatedCity: City) => {
+      const apiCity = cities.find((city) => city.id === updatedCity.id);
+
+      if (apiCity) {
+        const apiCity = cities.find((city) => city.id === updatedCity.id);
+
+        if (apiCity) {
+          setCities((prevCities) =>
+            prevCities.map((prevCity) => (prevCity.id === updatedCity.id ? updatedCity : prevCity)),
+          );
+        }
+      } else {
+        dispatch(updateCitiesAction(updatedCity));
+      }
+    },
+    [cities, dispatch],
+  );
+
   const data = useMemo<CitiesContextType>(() => {
     const allCities = getAllCities(currentPage);
-    return { cities: allCities, getCityByName, loading, loadNextPage };
-  }, [getCityByName, loading, currentPage, getAllCities, loadNextPage]);
+
+    return { cities: allCities, getCityById, loading, loadNextPage, deleteCity, updateCity };
+  }, [getCityById, loading, currentPage, getAllCities, loadNextPage, deleteCity, updateCity]);
 
   return <CitiesContext.Provider value={data}>{children}</CitiesContext.Provider>;
 }

@@ -6,7 +6,7 @@ import { useContext } from 'react';
 
 const WEATHER_SCREEN_OPTIONS = { title: 'Weather' };
 const DETAILS_SCREEN_OPTIONS = { title: 'Details' };
-const ADD_WEATHER_SCREEN_OPTIONS = { title: 'Add weather' };
+const ADD_OR_EDIT_WEATHER_SCREEN_OPTIONS = { title: 'Add weather', headerShown: false };
 const WEATHER_ICONS_SCREEN_OPTIONS = { title: 'Choose icon' };
 
 export default function HomeLayout() {
@@ -21,7 +21,7 @@ export default function HomeLayout() {
       <Stack screenOptions={HOME_LAYOUT_SCREEN_OPTIONS}>
         <Stack.Screen name="index" options={WEATHER_SCREEN_OPTIONS} />
         <Stack.Screen name="details" options={DETAILS_SCREEN_OPTIONS} />
-        <Stack.Screen name="newWeatherCity" options={ADD_WEATHER_SCREEN_OPTIONS} />
+        <Stack.Screen name="addOrEditCityWeather" options={ADD_OR_EDIT_WEATHER_SCREEN_OPTIONS} />
         <Stack.Screen name="chooseWeatherIcon" options={WEATHER_ICONS_SCREEN_OPTIONS} />
       </Stack>
     </CitiesContextProvider>
