@@ -7,7 +7,8 @@
       "@context/*": ["./context/*"],
       "@hooks/*": ["./hooks/*"],
       "@core/*": ["./core/*"],
-      "@store/*": ["./store/*"]
+      "@store/*": ["./store/*"],
+      "@constants/*": ["./constants/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],

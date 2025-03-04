@@ -1,10 +1,17 @@
 import { CityListItem } from '@components/CityListItem';
 import { useLocalSearchParams } from 'expo-router';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useContext } from 'react';
 import { CitiesContext } from '@context/CitiesContext';
+import { Theme, ThemeContext } from '@context/ThemeContext';
+import { Colors } from '@constants/Colors';
+import { Text } from '@components/Text';
 
 export default function WeatherDetailsScreen() {
+  const { theme } = useContext(ThemeContext);
+
+  const styles = themedStyles(theme);
+
   const searchParams = useLocalSearchParams();
   const cityName = searchParams.cityName as string;
 
@@ -22,9 +29,10 @@ export default function WeatherDetailsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
+const themedStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: Colors[theme].background,
+    },
+  });

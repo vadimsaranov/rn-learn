@@ -1,12 +1,17 @@
 import { Button } from '@components/Button';
+import { Text } from '@components/Text';
+import { TextInput } from '@components/TextInput';
+import { Colors } from '@constants/Colors';
 import { BiometricsContext } from '@context/BiometricsContext';
+import { Theme, ThemeContext } from '@context/ThemeContext';
 import { MaterialIcons } from '@expo/vector-icons';
 import { updateAuth } from '@store/slices/authSlice';
 import { updateSession } from '@store/slices/sessionSlice';
+import { updateUser } from '@store/slices/userSlice';
 import { useAppDispatch } from '@store/store';
 import { router } from 'expo-router';
 import { useCallback, useContext, useState } from 'react';
-import { StyleSheet, Switch, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Switch, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type InputValues = {
@@ -21,6 +26,10 @@ const hardCodedUser = {
 
 export default function Login() {
   const dispatch = useAppDispatch();
+
+  const { theme } = useContext(ThemeContext);
+
+  const styles = themedStyles(theme);
 
   const { enrolled, loginWithBiometrics } = useContext(BiometricsContext);
 
@@ -45,6 +54,7 @@ export default function Login() {
       } else {
         dispatch(updateSession({ loggedIn: true, token: 'token' }));
       }
+      dispatch(updateUser({ email: loginValues.email, rememberUser: rememberMe }));
       router.replace('/');
     }
   }, [loginValues, rememberMe, dispatch]);
@@ -59,12 +69,10 @@ export default function Login() {
         <TextInput
           onChangeText={(value) => onInputValuesChange(value, 'email')}
           value={loginValues.email}
-          style={styles.textInput}
         />
         <TextInput
           onChangeText={(value) => onInputValuesChange(value, 'password')}
           value={loginValues.password}
-          style={styles.textInput}
           secureTextEntry
         />
         {!!error && <Text style={styles.warningText}>{error}</Text>}
@@ -89,32 +97,30 @@ export default function Login() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    marginHorizontal: 16,
-  },
-  upperContainer: {
-    gap: 8,
-  },
-  textInput: {
-    borderWidth: 1,
-    padding: 8,
-    borderRadius: 8,
-  },
-  rememberMeBlock: {
-    flexDirection: 'row',
-    gap: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 16,
-  },
-  warningText: {
-    color: 'red',
-  },
-  bottomButtons: {
-    gap: 16,
-    marginBottom: 16,
-  },
-});
+const themedStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'space-between',
+      padding: 16,
+      backgroundColor: Colors[theme].background,
+    },
+    upperContainer: {
+      gap: 8,
+    },
+
+    rememberMeBlock: {
+      flexDirection: 'row',
+      gap: 8,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: 16,
+    },
+    warningText: {
+      color: Colors[theme].red,
+    },
+    bottomButtons: {
+      gap: 16,
+      marginBottom: 16,
+    },
+  });

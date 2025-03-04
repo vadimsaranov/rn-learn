@@ -1,15 +1,20 @@
 import { Button } from '@components/Button';
 import { CityListItem } from '@components/CityListItem';
 import { Loader } from '@components/Loader';
+import { Text } from '@components/Text';
+import { Colors } from '@constants/Colors';
 import { CitiesContext } from '@context/CitiesContext';
+import { Theme, ThemeContext } from '@context/ThemeContext';
 import { City } from '@core/City';
 import { AntDesign } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useCallback, useContext } from 'react';
-import { FlatList, ListRenderItem, StyleSheet, Text } from 'react-native';
+import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
 
 export default function HomeScreen() {
   const { cities, loading, loadNextPage } = useContext(CitiesContext);
+  const { theme } = useContext(ThemeContext);
+  const styles = themedStyles(theme);
 
   const renderItem: ListRenderItem<City> = useCallback(
     ({ item: city }) => <CityListItem city={city} />,
@@ -44,9 +49,10 @@ export default function HomeScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
+const themedStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: Colors[theme].background,
+    },
+  });

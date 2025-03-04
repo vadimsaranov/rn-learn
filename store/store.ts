@@ -3,6 +3,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { authReducer } from '@store/slices/authSlice';
 import { citiesReducer } from '@store/slices/citiesSlice';
 import { sessionReducer } from '@store/slices/sessionSlice';
+import { themeReducer } from '@store/slices/themeSlice';
 import { userReducer } from '@store/slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { persistReducer, persistStore } from 'redux-persist';
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   session: sessionReducer,
   cities: citiesReducer,
+  theme: themeReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
