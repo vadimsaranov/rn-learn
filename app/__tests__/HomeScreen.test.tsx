@@ -7,8 +7,8 @@ import HomeLayout from '../(tabs)/(home)/_layout';
 import WeatherIcons from '../(tabs)/(home)/chooseWeatherIcon';
 import WeatherDetailsScreen from '../(tabs)/(home)/details';
 import HomeScreen from '../(tabs)/(home)/index';
-import NewWeatherCity from '../(tabs)/(home)/newWeatherCity';
 import { PersistGate } from 'redux-persist/integration/react';
+import AddOrEditCityWeather from '../(tabs)/(home)/addOrEditCityWeather';
 
 describe('Home screen', () => {
   test('Cities renders correctly HomeScreen', async () => {
@@ -20,7 +20,7 @@ describe('Home screen', () => {
         _layout: HomeLayout,
         details: WeatherDetailsScreen,
         index: HomeScreen,
-        newWeatherCity: NewWeatherCity,
+        addOrEditCityWeather: AddOrEditCityWeather,
         chooseWeatherIcon: WeatherIcons,
       },
       {
@@ -45,7 +45,7 @@ describe('Home screen', () => {
         _layout: HomeLayout,
         details: WeatherDetailsScreen,
         index: HomeScreen,
-        newWeatherCity: NewWeatherCity,
+        addOrEditCityWeather: AddOrEditCityWeather,
         chooseWeatherIcon: WeatherIcons,
       },
       {
@@ -72,7 +72,7 @@ describe('Home screen', () => {
         _layout: HomeLayout,
         details: WeatherDetailsScreen,
         index: HomeScreen,
-        newWeatherCity: NewWeatherCity,
+        addOrEditCityWeather: AddOrEditCityWeather,
         chooseWeatherIcon: WeatherIcons,
       },
       {
@@ -93,6 +93,6 @@ describe('Home screen', () => {
     expect(addNewWeatherButton).toBeOnTheScreen();
     fireEvent(addNewWeatherButton, 'press');
 
-    expect(screen).toHavePathname('/newWeatherCity');
+    expect(screen).toHavePathname('/addOrEditCityWeather');
   });
 });

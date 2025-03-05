@@ -17,7 +17,7 @@ export const CityListItem = ({ city, fullInfo = false }: CityListItemProps) => {
   const styles = themedStyles(theme);
   const onCityPress = () => {
     if (!fullInfo) {
-      router.navigate({ pathname: '/details', params: { cityName: city.name } });
+      router.navigate({ pathname: '/details', params: { cityId: city.id } });
     }
   };
 

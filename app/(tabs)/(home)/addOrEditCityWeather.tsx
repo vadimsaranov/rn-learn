@@ -1,14 +1,17 @@
 import { Button } from '@components/Button';
 import { ControlledInput } from '@components/ControlledInput';
+import { Header } from '@components/Header';
+import { Modal } from '@components/Modal';
+import { Text } from '@components/Text';
+import { CitiesContext } from '@context/CitiesContext';
 import { Weather } from '@core/City';
-import { updateCities } from '@store/slices/citiesSlice';
-import { useAppDispatch } from '@store/store';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { router, useLocalSearchParams } from 'expo-router';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Image, StyleSheet, View } from 'react-native';
-import { zodResolver } from '@hookform/resolvers/zod';
+import uuid from 'react-native-uuid';
 import { z, ZodType } from 'zod';
-import { Text } from '@components/Text';
 
 const NO_ICON_ERROR_TEXT = 'Please select an icon';
 
@@ -68,30 +71,40 @@ const inputsList = [
   { inputName: 'cloudCover', placolder: 'Cloud cover' },
 ];
 
-export default function NewWeatherCity() {
-  const dispatch = useAppDispatch();
+export default function AddOrEditCityWeather() {
   const searchParams = useLocalSearchParams();
+
+  const cityId = searchParams.cityId as string;
+  const paramsIcon = searchParams.selectedIcon as string;
+
+  const { getCityById, updateCity } = useContext(CitiesContext);
+  const cityToEdit = getCityById(searchParams.cityId as string);
+
+  const selectedIcon = paramsIcon || cityToEdit?.icon || '';
+
+  const [modalVisible, setModalVisible] = useState(false);
 
   const {
     control,
     handleSubmit,
     formState: { errors },
     reset,
+    getValues,
   } = useForm<FormData>({
     resolver: zodResolver(WeatherSchema),
     defaultValues: {
-      cityName: '',
-      weatherType: '',
-      temperature: '',
-      humidity: '',
-      pressure: '',
-      windSpeed: '',
-      cloudCover: '',
+      cityName: cityToEdit?.name || '',
+      weatherType: cityToEdit?.weather.main || '',
+      temperature: cityToEdit?.temp.toString() || '',
+      humidity: cityToEdit?.humidity.toString() || '',
+      pressure: cityToEdit?.pressure.toString() || '',
+      windSpeed: cityToEdit?.wind?.toString() || '',
+      cloudCover: cityToEdit?.cloudCover?.toString() || '',
     },
   });
 
   const onSubmit = (data: FormData) => {
-    if (searchParams.selectedIcon === undefined) {
+    if (!cityId && selectedIcon === undefined) {
       return;
     }
     const weather: Weather = {
@@ -100,39 +113,58 @@ export default function NewWeatherCity() {
       id: 0,
       main: data.weatherType,
     };
+    const city = {
+      ...(data.cloudCover && { cloudCover: parseInt(data.cloudCover) }),
+      humidity: parseInt(data.humidity),
+      icon: searchParams.selectedIcon as string,
+      name: data.cityName,
+      pressure: parseInt(data.pressure),
+      temp: parseInt(data.temperature),
+      weather,
+      ...(data.windSpeed && { wind: parseInt(data.windSpeed) }),
+      id: cityId || uuid.v4(),
+    };
 
-    dispatch(
-      updateCities({
-        ...(data.cloudCover && { cloudCover: parseInt(data.cloudCover) }),
-        humidity: parseInt(data.humidity),
-        icon: searchParams.selectedIcon as string,
-        name: data.cityName,
-        pressure: parseInt(data.pressure),
-        temp: parseInt(data.temperature),
-        weather,
-        ...(data.windSpeed && { wind: parseInt(data.windSpeed) }),
-      }),
-    );
+    updateCity(city);
     reset();
+
     router.setParams({ selectedIcon: undefined });
-    router.back();
+    router.navigate('/(tabs)/(home)');
+  };
+
+  const onBackPress = () => {
+    const inputValues = getValues();
+
+    if (
+      inputValues.cityName !== cityToEdit?.name ||
+      inputValues.weatherType !== cityToEdit?.weather.main ||
+      inputValues.temperature !== cityToEdit?.temp.toString() ||
+      inputValues.humidity !== cityToEdit?.humidity.toString() ||
+      inputValues.pressure !== cityToEdit?.pressure.toString() ||
+      inputValues.windSpeed !== cityToEdit?.wind?.toString() ||
+      inputValues.cloudCover !== cityToEdit?.cloudCover?.toString() ||
+      selectedIcon !== cityToEdit?.icon
+    ) {
+      setModalVisible(true);
+    } else {
+      router.back();
+    }
   };
 
   return (
     <View style={styles.container}>
+      <Header onPress={onBackPress} title={cityId ? 'Edit city' : 'Add city'} />
       {inputsList.map((item, index) =>
         item.inputName === 'icon' ? (
           <View key={index}>
             <Button title="Choose image" onPress={() => router.navigate('/chooseWeatherIcon')} />
 
-            {!searchParams.selectedIcon && (
-              <Text style={styles.iconLabel}>{NO_ICON_ERROR_TEXT}</Text>
-            )}
+            {!selectedIcon && <Text style={styles.iconLabel}>{NO_ICON_ERROR_TEXT}</Text>}
 
-            {!!searchParams.selectedIcon && (
+            {!!selectedIcon && (
               <Image
                 source={{
-                  uri: `https://openweathermap.org/img/wn/${searchParams.selectedIcon}@2x.png`,
+                  uri: `https://openweathermap.org/img/wn/${selectedIcon}@2x.png`,
                 }}
                 style={styles.image}
               />
@@ -148,8 +180,16 @@ export default function NewWeatherCity() {
           />
         ),
       )}
-
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+      <Modal onClose={() => setModalVisible(false)} visible={modalVisible}>
+        <Text style={styles.warningText}>
+          Are you sure you want to leave without saving changes?
+        </Text>
+        <View style={styles.modalButtons}>
+          <Button onPress={router.back} title="Yes" />
+          <Button onPress={() => setModalVisible(false)} title="No" />
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -172,5 +212,12 @@ const styles = StyleSheet.create({
   },
   iconLabel: {
     alignSelf: 'center',
+  },
+  warningText: { fontSize: 20, textAlign: 'center' },
+  modalButtons: {
+    marginTop: 16,
+    flexDirection: 'column',
+    gap: 8,
+    width: '100%',
   },
 });

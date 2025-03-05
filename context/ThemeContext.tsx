@@ -1,5 +1,5 @@
-import { themeSelector } from '@store/slices/themeSlice';
-import { useAppSelector } from '@store/store';
+import { themeSelector, updateTheme } from '@store/slices/themeSlice';
+import { useAppDispatch, useAppSelector } from '@store/store';
 import { createContext, ReactNode, useEffect, useMemo, useState } from 'react';
 import { Appearance, useColorScheme } from 'react-native';
 
@@ -19,6 +19,7 @@ interface ThemeContextProps {
 }
 
 export default function ThemeContextProvider({ children }: ThemeContextProps) {
+  const dispatch = useAppDispatch();
   const [theme, setTheme] = useState<Theme>('light');
   const { currentTheme: storedTheme } = useAppSelector(themeSelector);
 
@@ -39,9 +40,10 @@ export default function ThemeContextProvider({ children }: ThemeContextProps) {
       theme,
       toggleTheme: () => {
         setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+        dispatch(updateTheme({ currentTheme: theme === 'light' ? 'dark' : 'light' }));
       },
     };
-  }, [theme]);
+  }, [theme, dispatch]);
 
   return <ThemeContext.Provider value={data}>{children}</ThemeContext.Provider>;
 }
