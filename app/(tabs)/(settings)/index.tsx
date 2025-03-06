@@ -12,6 +12,9 @@ import { useAppDispatch, useAppSelector } from '@store/store';
 import * as Linking from 'expo-linking';
 import { useCallback, useContext } from 'react';
 import { StyleSheet, Switch, View } from 'react-native';
+import { cityTable } from '@database/city';
+import { weatherTable } from '@database/weather';
+import { appDatabase } from '../../_layout';
 
 const CONTACT_BUTTON_TITLE = 'Contact Us';
 const LOGOUT_BUTTON_TITLE = 'Logout';
@@ -27,7 +30,9 @@ export default function SettingsTab() {
   const { email } = useAppSelector(userSelector);
   const dispatch = useAppDispatch();
 
-  const signOut = useCallback(() => {
+  const signOut = useCallback(async () => {
+    await appDatabase.delete(cityTable);
+    await appDatabase.delete(weatherTable);
     dispatch(resetAuthSlice());
     dispatch(resetSessionSlice());
     dispatch(resetThemeSlice());

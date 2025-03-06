@@ -1,7 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { authReducer } from '@store/slices/authSlice';
-import { citiesReducer } from '@store/slices/citiesSlice';
 import { sessionReducer } from '@store/slices/sessionSlice';
 import { themeReducer } from '@store/slices/themeSlice';
 import { userReducer } from '@store/slices/userSlice';
@@ -18,7 +17,6 @@ const rootReducer = combineReducers({
   user: userReducer,
   auth: authReducer,
   session: sessionReducer,
-  cities: citiesReducer,
   theme: themeReducer,
 });
 

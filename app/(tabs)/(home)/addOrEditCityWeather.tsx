@@ -4,12 +4,13 @@ import { Header } from '@components/Header';
 import { Modal } from '@components/Modal';
 import { Text } from '@components/Text';
 import { CitiesContext } from '@context/CitiesContext';
-import { Weather } from '@core/City';
+import { City, Weather } from '@core/City';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Image, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import uuid from 'react-native-uuid';
 import { z, ZodType } from 'zod';
 
@@ -78,7 +79,7 @@ export default function AddOrEditCityWeather() {
   const paramsIcon = searchParams.selectedIcon as string;
 
   const { getCityById, updateCity } = useContext(CitiesContext);
-  const cityToEdit = getCityById(searchParams.cityId as string);
+  const [cityToEdit, setCityToEdit] = useState<City | undefined>(undefined);
 
   const selectedIcon = paramsIcon || cityToEdit?.icon || '';
 
@@ -90,27 +91,28 @@ export default function AddOrEditCityWeather() {
     formState: { errors },
     reset,
     getValues,
+    setValue,
   } = useForm<FormData>({
     resolver: zodResolver(WeatherSchema),
     defaultValues: {
-      cityName: cityToEdit?.name || '',
-      weatherType: cityToEdit?.weather.main || '',
-      temperature: cityToEdit?.temp.toString() || '',
-      humidity: cityToEdit?.humidity.toString() || '',
-      pressure: cityToEdit?.pressure.toString() || '',
-      windSpeed: cityToEdit?.wind?.toString() || '',
-      cloudCover: cityToEdit?.cloudCover?.toString() || '',
+      cityName: '',
+      weatherType: '',
+      temperature: '',
+      humidity: '',
+      pressure: '',
+      windSpeed: '',
+      cloudCover: '',
     },
   });
 
   const onSubmit = (data: FormData) => {
-    if (!cityId && selectedIcon === undefined) {
+    if (!selectedIcon) {
       return;
     }
     const weather: Weather = {
       description: '',
       icon: '',
-      id: 0,
+      id: cityToEdit?.weather.id || 0,
       main: data.weatherType,
     };
     const city = {
@@ -136,14 +138,15 @@ export default function AddOrEditCityWeather() {
     const inputValues = getValues();
 
     if (
-      inputValues.cityName !== cityToEdit?.name ||
-      inputValues.weatherType !== cityToEdit?.weather.main ||
-      inputValues.temperature !== cityToEdit?.temp.toString() ||
-      inputValues.humidity !== cityToEdit?.humidity.toString() ||
-      inputValues.pressure !== cityToEdit?.pressure.toString() ||
-      inputValues.windSpeed !== cityToEdit?.wind?.toString() ||
-      inputValues.cloudCover !== cityToEdit?.cloudCover?.toString() ||
-      selectedIcon !== cityToEdit?.icon
+      cityToEdit &&
+      (inputValues.cityName !== cityToEdit?.name ||
+        inputValues.weatherType !== cityToEdit?.weather.main ||
+        inputValues.temperature !== cityToEdit?.temp.toString() ||
+        inputValues.humidity !== cityToEdit?.humidity.toString() ||
+        inputValues.pressure !== cityToEdit?.pressure.toString() ||
+        (inputValues.windSpeed || undefined) !== cityToEdit?.wind?.toString() ||
+        (inputValues.cloudCover || undefined) !== cityToEdit?.cloudCover?.toString() ||
+        selectedIcon !== cityToEdit?.icon)
     ) {
       setModalVisible(true);
     } else {
@@ -151,8 +154,25 @@ export default function AddOrEditCityWeather() {
     }
   };
 
+  const getCity = async () => {
+    const data = await getCityById(cityId);
+
+    setValue('cityName', data?.name || '');
+    setValue('weatherType', data?.weather.main || '');
+    setValue('temperature', data?.temp.toString() || '');
+    setValue('humidity', data?.humidity.toString() || '');
+    setValue('pressure', data?.pressure.toString() || '');
+    setValue('windSpeed', data?.wind?.toString() || '');
+    setValue('cloudCover', data?.cloudCover?.toString() || '');
+    setCityToEdit(data);
+  };
+
+  useEffect(() => {
+    getCity();
+  }, []);
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header onPress={onBackPress} title={cityId ? 'Edit city' : 'Add city'} />
       {inputsList.map((item, index) =>
         item.inputName === 'icon' ? (
@@ -190,7 +210,7 @@ export default function AddOrEditCityWeather() {
           <Button onPress={() => setModalVisible(false)} title="No" />
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 }
 
