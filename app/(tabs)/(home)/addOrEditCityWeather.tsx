@@ -94,15 +94,6 @@ export default function AddOrEditCityWeather() {
     setValue,
   } = useForm<FormData>({
     resolver: zodResolver(WeatherSchema),
-    defaultValues: {
-      cityName: '',
-      weatherType: '',
-      temperature: '',
-      humidity: '',
-      pressure: '',
-      windSpeed: '',
-      cloudCover: '',
-    },
   });
 
   const onSubmit = (data: FormData) => {
@@ -144,8 +135,8 @@ export default function AddOrEditCityWeather() {
         inputValues.temperature !== cityToEdit?.temp.toString() ||
         inputValues.humidity !== cityToEdit?.humidity.toString() ||
         inputValues.pressure !== cityToEdit?.pressure.toString() ||
-        (inputValues.windSpeed || undefined) !== cityToEdit?.wind?.toString() ||
-        (inputValues.cloudCover || undefined) !== cityToEdit?.cloudCover?.toString() ||
+        inputValues.windSpeed !== cityToEdit?.wind?.toString() ||
+        inputValues.cloudCover !== cityToEdit?.cloudCover?.toString() ||
         selectedIcon !== cityToEdit?.icon)
     ) {
       setModalVisible(true);
