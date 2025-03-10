@@ -1,7 +1,7 @@
 import { CityListItem } from '@components/CityListItem';
 import { router, useLocalSearchParams } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { CitiesContext } from '@context/CitiesContext';
 import { Theme, ThemeContext } from '@context/ThemeContext';
 import { Colors } from '@constants/Colors';
@@ -9,11 +9,14 @@ import { Text } from '@components/Text';
 import { Button } from '@components/Button';
 import { AntDesign } from '@expo/vector-icons';
 import { Modal } from '@components/Modal';
+import { City } from '@core/City';
 
 export default function WeatherDetailsScreen() {
   const { theme } = useContext(ThemeContext);
   const { deleteCity } = useContext(CitiesContext);
   const styles = themedStyles(theme);
+
+  const [city, setCity] = useState<City | undefined>(undefined);
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -21,7 +24,6 @@ export default function WeatherDetailsScreen() {
   const cityId = searchParams.cityId as string;
 
   const { getCityById } = useContext(CitiesContext);
-  const city = getCityById(cityId);
 
   const onDeletePress = useCallback(() => {
     setModalVisible(true);
@@ -35,6 +37,15 @@ export default function WeatherDetailsScreen() {
   const onEditPress = useCallback(() => {
     router.navigate({ pathname: '/addOrEditCityWeather', params: { cityId } });
   }, [cityId]);
+
+  const getCity = async () => {
+    const data = await getCityById(cityId);
+    setCity(data);
+  };
+
+  useEffect(() => {
+    getCity();
+  }, []);
 
   if (!city) {
     return <Text>No data found</Text>;
