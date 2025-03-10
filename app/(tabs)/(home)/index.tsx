@@ -8,16 +8,23 @@ import { Theme, ThemeContext } from '@context/ThemeContext';
 import { City } from '@core/City';
 import { AntDesign } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { useCallback, useContext } from 'react';
-import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
+import { useCallback, useContext, useRef, useState } from 'react';
+import { FlatList, ListRenderItem, StyleSheet, View } from 'react-native';
+import { TrueSheet } from '@lodev09/react-native-true-sheet';
+import { FavoriteCitySheet } from '@components/sheets/FavoriteCitySheet';
 
 export default function HomeScreen() {
-  const { cities, loading, loadNextPage } = useContext(CitiesContext);
+  const { cities, loading, loadNextPage, updateCityFavorite, favoriteCities } =
+    useContext(CitiesContext);
   const { theme } = useContext(ThemeContext);
   const styles = themedStyles(theme);
+  const sheetRef = useRef<TrueSheet>(null);
+  const [selectedCity, setSelectedCity] = useState<City | undefined>();
 
   const renderItem: ListRenderItem<City> = useCallback(
-    ({ item: city }) => <CityListItem city={city} />,
+    ({ item: city }) => (
+      <CityListItem city={city} onLongPress={() => openFavoriteCitySheet(city)} />
+    ),
     [],
   );
 
@@ -25,30 +32,48 @@ export default function HomeScreen() {
     return <Text>No data found</Text>;
   }, []);
 
-  const listHeaderComponent = useCallback(() => {
-    return (
-      <Button
-        onPress={() => router.navigate({ pathname: '/addOrEditCityWeather' })}
-        title={'Add new'}>
-        <AntDesign size={20} name="plus" />
-      </Button>
-    );
-  }, []);
+  const openFavoriteCitySheet = async (city: City) => {
+    setSelectedCity(city);
+    await sheetRef.current?.present();
+  };
+
+  const onSheetButtonPress = async (isFavorite: boolean) => {
+    if (selectedCity?.id) {
+      await updateCityFavorite(selectedCity.id, isFavorite);
+    }
+  };
 
   if (loading) {
     return <Loader />;
   }
 
   return (
-    <FlatList
-      style={styles.container}
-      data={cities}
-      renderItem={renderItem}
-      ListHeaderComponent={listHeaderComponent}
-      ListEmptyComponent={listEmptyComponent}
-      onEndReached={loadNextPage}
-      keyExtractor={(item) => item.id}
-    />
+    <View style={styles.container}>
+      <View>
+        <Button
+          onPress={() => router.navigate({ pathname: '/addOrEditCityWeather' })}
+          title={'Add new'}>
+          <AntDesign size={20} name="plus" />
+        </Button>
+      </View>
+      {favoriteCities?.length > 0 &&
+        favoriteCities.map((city) => (
+          <CityListItem key={city.id} city={city} onLongPress={() => openFavoriteCitySheet(city)} />
+        ))}
+      <FlatList
+        data={cities}
+        renderItem={renderItem}
+        ListEmptyComponent={listEmptyComponent}
+        onEndReached={loadNextPage}
+        keyExtractor={(item) => item.id}
+      />
+      <FavoriteCitySheet
+        ref={sheetRef}
+        onActionPress={onSheetButtonPress}
+        selectedCity={selectedCity}
+        limitReached={favoriteCities.length === 3}
+      />
+    </View>
   );
 }
 

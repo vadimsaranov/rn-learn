@@ -3,16 +3,17 @@ import { Text } from '@components/Text';
 import { Colors } from '@constants/Colors';
 import { Theme, ThemeContext } from '@context/ThemeContext';
 import { City } from '@core/City';
-import { SimpleLineIcons } from '@expo/vector-icons';
+import { AntDesign, SimpleLineIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useContext } from 'react';
-import { Image, Pressable, StyleSheet, View } from 'react-native';
+import { Image, Pressable, PressableProps, StyleSheet, View } from 'react-native';
 
 interface CityListItemProps {
   city: City;
   fullInfo?: boolean;
+  onLongPress?: PressableProps['onLongPress'];
 }
-export const CityListItem = ({ city, fullInfo = false }: CityListItemProps) => {
+export const CityListItem = ({ city, fullInfo = false, onLongPress }: CityListItemProps) => {
   const { theme } = useContext(ThemeContext);
   const styles = themedStyles(theme);
   const onCityPress = () => {
@@ -23,7 +24,7 @@ export const CityListItem = ({ city, fullInfo = false }: CityListItemProps) => {
 
   return (
     <View>
-      <Pressable style={styles.container} onPress={onCityPress}>
+      <Pressable style={styles.container} onPress={onCityPress} onLongPress={onLongPress}>
         <Image
           source={{
             uri: `https://openweathermap.org/img/wn/${city.icon}@2x.png`,
@@ -36,6 +37,7 @@ export const CityListItem = ({ city, fullInfo = false }: CityListItemProps) => {
           <Text style={styles.cityWeather}>{city?.weather.main}</Text>
         </View>
         <View style={styles.rightBlock}>
+          {!!city.isFavorite && <AntDesign size={20} name="star" color={Colors[theme].star} />}
           <View style={styles.temperatureIndicator}>
             <Text style={styles.temperatureText}>{city?.temp} °F</Text>
           </View>

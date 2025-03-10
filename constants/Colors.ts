@@ -8,6 +8,7 @@ export const Colors = {
     grey: '#8c8c8c',
     tempIndicator: '#90e0ef',
     placeholder: '#b8b8b8',
+    star: '#FFC107',
   },
   dark: {
     background: '#000',
@@ -18,5 +19,6 @@ export const Colors = {
     grey: '#8c8c8c',
     tempIndicator: '#90e0ef',
     placeholder: '#b8b8b8',
+    star: '#FFC107',
   },
 };

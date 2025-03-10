@@ -8,6 +8,7 @@ export interface City {
   pressure: number;
   wind?: number;
   cloudCover?: number;
+  isFavorite?: boolean;
 }
 
 export interface Weather {
