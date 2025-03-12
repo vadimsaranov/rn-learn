@@ -1,21 +1,17 @@
-import { Slot } from 'expo-router';
-import { Provider } from 'react-redux';
 import { Loader } from '@components/Loader';
-import { persistor, store } from '@store/store';
-import { PersistGate } from 'redux-persist/integration/react';
 import { BiometricsContextProvider } from '@context/BiometricsContext';
 import ThemeContextProvider from '@context/ThemeContext';
+import { persistor, store } from '@store/store';
+import { Slot } from 'expo-router';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
+import { appDatabase } from '@database/client';
 import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
-import migrations from '../drizzle/migrations';
-import { SafeAreaView, Text, View } from 'react-native';
 import { Suspense } from 'react';
-import { openDatabaseSync } from 'expo-sqlite';
-import { drizzle } from 'drizzle-orm/expo-sqlite/driver';
-
-const DATABASE_NAME = 'rn-learn.db';
-export const expoDb = openDatabaseSync(DATABASE_NAME, { enableChangeListener: true });
-export const appDatabase = drizzle(expoDb);
+import { SafeAreaView, Text } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import migrations from '../drizzle/migrations';
 
 export default function RootLayout() {
   const { success, error } = useMigrations(appDatabase, migrations);
@@ -29,9 +25,9 @@ export default function RootLayout() {
   }
   if (!success) {
     return (
-      <View>
+      <SafeAreaView>
         <Text>Migration is in progress...</Text>
-      </View>
+      </SafeAreaView>
     );
   }
 
@@ -39,11 +35,13 @@ export default function RootLayout() {
     <Suspense fallback={<Loader />}>
       <Provider store={store}>
         <PersistGate loading={<Loader />} persistor={persistor}>
-          <ThemeContextProvider>
-            <BiometricsContextProvider>
-              <Slot />
-            </BiometricsContextProvider>
-          </ThemeContextProvider>
+          <GestureHandlerRootView>
+            <ThemeContextProvider>
+              <BiometricsContextProvider>
+                <Slot />
+              </BiometricsContextProvider>
+            </ThemeContextProvider>
+          </GestureHandlerRootView>
         </PersistGate>
       </Provider>
     </Suspense>

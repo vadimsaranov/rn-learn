@@ -7,6 +7,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { TrueSheet } from '@lodev09/react-native-true-sheet';
 import { forwardRef, useContext, useImperativeHandle, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 interface FavoriteCitySheetProps {
   onActionPress: (isFavorite: boolean) => Promise<void>;
@@ -34,7 +35,7 @@ export const FavoriteCitySheet = forwardRef<TrueSheet, FavoriteCitySheetProps>(
 
     return (
       <TrueSheet ref={sheetRef} sizes={['small']} cornerRadius={24}>
-        <View style={styles.sheetContent}>
+        <GestureHandlerRootView style={styles.sheetContent}>
           <Text style={styles.sheetTitle}>Add city to favorites</Text>
           <View style={styles.sheetButtons}>
             <Button
@@ -50,7 +51,7 @@ export const FavoriteCitySheet = forwardRef<TrueSheet, FavoriteCitySheetProps>(
               <AntDesign size={20} name="close" color={Colors[theme].red} />
             </Button>
           </View>
-        </View>
+        </GestureHandlerRootView>
       </TrueSheet>
     );
   },

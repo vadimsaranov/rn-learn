@@ -3,6 +3,7 @@ import { Button } from '@components/Button';
 import { Text } from '@components/Text';
 import { Colors } from '@constants/Colors';
 import { Theme, ThemeContext } from '@context/ThemeContext';
+import { wipeDatabase } from '@database/utils';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { resetAuthSlice } from '@store/slices/authSlice';
 import { resetSessionSlice } from '@store/slices/sessionSlice';
@@ -12,9 +13,6 @@ import { useAppDispatch, useAppSelector } from '@store/store';
 import * as Linking from 'expo-linking';
 import { useCallback, useContext } from 'react';
 import { StyleSheet, Switch, View } from 'react-native';
-import { cityTable } from '@database/cityTable';
-import { weatherTable } from '@database/weatherTable';
-import { appDatabase } from '../../_layout';
 
 const CONTACT_BUTTON_TITLE = 'Contact Us';
 const LOGOUT_BUTTON_TITLE = 'Logout';
@@ -31,8 +29,7 @@ export default function SettingsTab() {
   const dispatch = useAppDispatch();
 
   const signOut = useCallback(async () => {
-    await appDatabase.delete(cityTable);
-    await appDatabase.delete(weatherTable);
+    await wipeDatabase();
     dispatch(resetAuthSlice());
     dispatch(resetSessionSlice());
     dispatch(resetThemeSlice());

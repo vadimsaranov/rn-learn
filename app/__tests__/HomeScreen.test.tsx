@@ -1,16 +1,28 @@
 import CitiesContextProvider from '@context/CitiesContext';
 import { cityFixture } from '@core/CityFixtures';
+import { appDatabase } from '@database/client';
+import { wipeDatabase } from '@database/utils';
 import { persistor, store } from '@store/store';
+import { migrate } from 'drizzle-orm/expo-sqlite/migrator';
 import { fireEvent, renderRouter, screen, waitFor } from 'expo-router/testing-library';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import HomeLayout from '../(tabs)/(home)/_layout';
+import AddOrEditCityWeather from '../(tabs)/(home)/addOrEditCityWeather';
 import WeatherIcons from '../(tabs)/(home)/chooseWeatherIcon';
 import WeatherDetailsScreen from '../(tabs)/(home)/details';
 import HomeScreen from '../(tabs)/(home)/index';
-import { PersistGate } from 'redux-persist/integration/react';
-import AddOrEditCityWeather from '../(tabs)/(home)/addOrEditCityWeather';
+import migrations from '../../drizzle/migrations';
 
 describe('Home screen', () => {
+  beforeAll(async () => {
+    await migrate(appDatabase, migrations);
+  });
+
+  afterAll(async () => {
+    await wipeDatabase();
+  });
+
   test('Cities renders correctly HomeScreen', async () => {
     global.fetch = jest.fn().mockResolvedValue({
       json: jest.fn().mockResolvedValue(cityFixture),
@@ -40,6 +52,8 @@ describe('Home screen', () => {
     global.fetch = jest.fn().mockRejectedValue({
       json: jest.fn().mockRejectedValueOnce(new Error('Network error')),
     });
+
+    await wipeDatabase();
     const render = renderRouter(
       {
         _layout: HomeLayout,

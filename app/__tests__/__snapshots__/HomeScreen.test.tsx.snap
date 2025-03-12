@@ -101,1504 +101,427 @@ exports[`Home screen Cities renders correctly HomeScreen 1`] = `
             ]
           }
         >
-          <RCTScrollView
-            ListEmptyComponent={[Function]}
-            ListHeaderComponent={[Function]}
-            data={
-              [
-                {
-                  "cloudCover": 100,
-                  "humidity": 80,
-                  "icon": "04d",
-                  "id": "593116",
-                  "name": "Vilnius",
-                  "pressure": 1021,
-                  "temp": 276.87,
-                  "weather": {
-                    "description": "overcast clouds",
-                    "icon": "04d",
-                    "id": 804,
-                    "main": "Clouds",
-                  },
-                  "wind": 3.6,
-                },
-                {
-                  "cloudCover": 100,
-                  "humidity": 80,
-                  "icon": "04d",
-                  "id": "593116",
-                  "name": "Vilnius",
-                  "pressure": 1021,
-                  "temp": 276.87,
-                  "weather": {
-                    "description": "overcast clouds",
-                    "icon": "04d",
-                    "id": 804,
-                    "main": "Clouds",
-                  },
-                  "wind": 3.6,
-                },
-                {
-                  "cloudCover": 100,
-                  "humidity": 80,
-                  "icon": "04d",
-                  "id": "593116",
-                  "name": "Vilnius",
-                  "pressure": 1021,
-                  "temp": 276.87,
-                  "weather": {
-                    "description": "overcast clouds",
-                    "icon": "04d",
-                    "id": 804,
-                    "main": "Clouds",
-                  },
-                  "wind": 3.6,
-                },
-                {
-                  "cloudCover": 100,
-                  "humidity": 80,
-                  "icon": "04d",
-                  "id": "593116",
-                  "name": "Vilnius",
-                  "pressure": 1021,
-                  "temp": 276.87,
-                  "weather": {
-                    "description": "overcast clouds",
-                    "icon": "04d",
-                    "id": 804,
-                    "main": "Clouds",
-                  },
-                  "wind": 3.6,
-                },
-                {
-                  "cloudCover": 100,
-                  "humidity": 80,
-                  "icon": "04d",
-                  "id": "593116",
-                  "name": "Vilnius",
-                  "pressure": 1021,
-                  "temp": 276.87,
-                  "weather": {
-                    "description": "overcast clouds",
-                    "icon": "04d",
-                    "id": 804,
-                    "main": "Clouds",
-                  },
-                  "wind": 3.6,
-                },
-                {
-                  "cloudCover": 100,
-                  "humidity": 80,
-                  "icon": "04d",
-                  "id": "593116",
-                  "name": "Vilnius",
-                  "pressure": 1021,
-                  "temp": 276.87,
-                  "weather": {
-                    "description": "overcast clouds",
-                    "icon": "04d",
-                    "id": 804,
-                    "main": "Clouds",
-                  },
-                  "wind": 3.6,
-                },
-                {
-                  "cloudCover": 100,
-                  "humidity": 80,
-                  "icon": "04d",
-                  "id": "593116",
-                  "name": "Vilnius",
-                  "pressure": 1021,
-                  "temp": 276.87,
-                  "weather": {
-                    "description": "overcast clouds",
-                    "icon": "04d",
-                    "id": 804,
-                    "main": "Clouds",
-                  },
-                  "wind": 3.6,
-                },
-                {
-                  "cloudCover": 100,
-                  "humidity": 80,
-                  "icon": "04d",
-                  "id": "593116",
-                  "name": "Vilnius",
-                  "pressure": 1021,
-                  "temp": 276.87,
-                  "weather": {
-                    "description": "overcast clouds",
-                    "icon": "04d",
-                    "id": 804,
-                    "main": "Clouds",
-                  },
-                  "wind": 3.6,
-                },
-                {
-                  "cloudCover": 100,
-                  "humidity": 80,
-                  "icon": "04d",
-                  "id": "593116",
-                  "name": "Vilnius",
-                  "pressure": 1021,
-                  "temp": 276.87,
-                  "weather": {
-                    "description": "overcast clouds",
-                    "icon": "04d",
-                    "id": 804,
-                    "main": "Clouds",
-                  },
-                  "wind": 3.6,
-                },
-              ]
-            }
-            getItem={[Function]}
-            getItemCount={[Function]}
-            keyExtractor={[Function]}
-            onContentSizeChange={[Function]}
-            onEndReached={[Function]}
-            onLayout={[Function]}
-            onMomentumScrollBegin={[Function]}
-            onMomentumScrollEnd={[Function]}
-            onScroll={[Function]}
-            onScrollBeginDrag={[Function]}
-            onScrollEndDrag={[Function]}
-            removeClippedSubviews={false}
-            renderItem={[Function]}
-            scrollEventThrottle={0.0001}
-            stickyHeaderIndices={[]}
+          <View
             style={
               {
                 "backgroundColor": "#fff",
                 "flex": 1,
               }
             }
-            viewabilityConfigCallbackPairs={[]}
           >
             <View>
-              <View
+              <RNGestureHandlerButton
                 collapsable={false}
-                onLayout={[Function]}
+                enabled={true}
+                hitSlop={
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "right": 0,
+                    "top": 0,
+                  }
+                }
+                rippleColor={0}
+                style={
+                  [
+                    {},
+                    [
+                      {
+                        "alignItems": "center",
+                        "backgroundColor": "#fff",
+                        "borderColor": "#b8b8b8",
+                        "borderRadius": 12,
+                        "borderWidth": 1,
+                        "flexDirection": "row",
+                        "gap": 4,
+                        "justifyContent": "center",
+                        "padding": 8,
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
               >
-                <View
-                  accessibilityState={
-                    {
-                      "busy": undefined,
-                      "checked": undefined,
-                      "disabled": undefined,
-                      "expanded": undefined,
-                      "selected": undefined,
-                    }
-                  }
-                  accessibilityValue={
-                    {
-                      "max": undefined,
-                      "min": undefined,
-                      "now": undefined,
-                      "text": undefined,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={true}
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
+                <Text
                   style={
-                    {
-                      "alignItems": "center",
-                      "backgroundColor": "#fff",
-                      "borderColor": "#b8b8b8",
-                      "borderRadius": 12,
-                      "borderWidth": 1,
-                      "flexDirection": "row",
-                      "gap": 4,
-                      "justifyContent": "center",
-                      "opacity": 1,
-                      "padding": 8,
-                    }
+                    [
+                      {
+                        "color": "#000",
+                      },
+                      undefined,
+                    ]
                   }
                 >
-                  <Text
-                    style={
-                      [
-                        {
-                          "color": "#000",
-                        },
-                        undefined,
-                      ]
-                    }
-                  >
-                    Add new
-                  </Text>
-                </View>
-              </View>
-              <View
-                onFocusCapture={[Function]}
-                onLayout={[Function]}
-                style={null}
-              >
-                <View>
-                  <View
-                    accessibilityState={
-                      {
-                        "busy": undefined,
-                        "checked": undefined,
-                        "disabled": undefined,
-                        "expanded": undefined,
-                        "selected": undefined,
-                      }
-                    }
-                    accessibilityValue={
-                      {
-                        "max": undefined,
-                        "min": undefined,
-                        "now": undefined,
-                        "text": undefined,
-                      }
-                    }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={true}
-                    onBlur={[Function]}
-                    onClick={[Function]}
-                    onFocus={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
-                    style={
-                      {
-                        "alignItems": "center",
-                        "borderBottomColor": "#b8b8b8",
-                        "borderBottomWidth": 1,
-                        "flexDirection": "row",
-                        "gap": 30,
-                        "justifyContent": "space-between",
-                        "paddingHorizontal": 16,
-                        "paddingVertical": 8,
-                      }
-                    }
-                  >
-                    <Image
-                      source={
-                        {
-                          "cache": "only-if-cached",
-                          "uri": "https://openweathermap.org/img/wn/04d@2x.png",
-                        }
-                      }
-                      style={
-                        {
-                          "height": 30,
-                          "width": 30,
-                        }
-                      }
-                    />
-                    <View
-                      style={
-                        {
-                          "flex": 1,
-                        }
-                      }
-                    >
-                      <Text
-                        style={
-                          [
-                            {
-                              "color": "#000",
-                            },
-                            {
-                              "color": "#000",
-                              "fontSize": 17,
-                            },
-                          ]
-                        }
-                      >
-                        Vilnius
-                      </Text>
-                      <Text
-                        style={
-                          [
-                            {
-                              "color": "#000",
-                            },
-                            {
-                              "color": "#8c8c8c",
-                              "fontSize": 12,
-                            },
-                          ]
-                        }
-                      >
-                        Clouds
-                      </Text>
-                    </View>
-                    <View
-                      style={
-                        {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "gap": 12,
-                        }
-                      }
-                    >
-                      <View
-                        style={
-                          {
-                            "backgroundColor": "#90e0ef",
-                            "borderRadius": 20,
-                            "paddingHorizontal": 12,
-                            "paddingVertical": 4,
-                          }
-                        }
-                      >
-                        <Text
-                          style={
-                            [
-                              {
-                                "color": "#000",
-                              },
-                              {
-                                "color": "#fff",
-                              },
-                            ]
-                          }
-                        >
-                          276.87
-                           °F
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                onFocusCapture={[Function]}
-                onLayout={[Function]}
-                style={null}
-              >
-                <View>
-                  <View
-                    accessibilityState={
-                      {
-                        "busy": undefined,
-                        "checked": undefined,
-                        "disabled": undefined,
-                        "expanded": undefined,
-                        "selected": undefined,
-                      }
-                    }
-                    accessibilityValue={
-                      {
-                        "max": undefined,
-                        "min": undefined,
-                        "now": undefined,
-                        "text": undefined,
-                      }
-                    }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={true}
-                    onBlur={[Function]}
-                    onClick={[Function]}
-                    onFocus={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
-                    style={
-                      {
-                        "alignItems": "center",
-                        "borderBottomColor": "#b8b8b8",
-                        "borderBottomWidth": 1,
-                        "flexDirection": "row",
-                        "gap": 30,
-                        "justifyContent": "space-between",
-                        "paddingHorizontal": 16,
-                        "paddingVertical": 8,
-                      }
-                    }
-                  >
-                    <Image
-                      source={
-                        {
-                          "cache": "only-if-cached",
-                          "uri": "https://openweathermap.org/img/wn/04d@2x.png",
-                        }
-                      }
-                      style={
-                        {
-                          "height": 30,
-                          "width": 30,
-                        }
-                      }
-                    />
-                    <View
-                      style={
-                        {
-                          "flex": 1,
-                        }
-                      }
-                    >
-                      <Text
-                        style={
-                          [
-                            {
-                              "color": "#000",
-                            },
-                            {
-                              "color": "#000",
-                              "fontSize": 17,
-                            },
-                          ]
-                        }
-                      >
-                        Vilnius
-                      </Text>
-                      <Text
-                        style={
-                          [
-                            {
-                              "color": "#000",
-                            },
-                            {
-                              "color": "#8c8c8c",
-                              "fontSize": 12,
-                            },
-                          ]
-                        }
-                      >
-                        Clouds
-                      </Text>
-                    </View>
-                    <View
-                      style={
-                        {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "gap": 12,
-                        }
-                      }
-                    >
-                      <View
-                        style={
-                          {
-                            "backgroundColor": "#90e0ef",
-                            "borderRadius": 20,
-                            "paddingHorizontal": 12,
-                            "paddingVertical": 4,
-                          }
-                        }
-                      >
-                        <Text
-                          style={
-                            [
-                              {
-                                "color": "#000",
-                              },
-                              {
-                                "color": "#fff",
-                              },
-                            ]
-                          }
-                        >
-                          276.87
-                           °F
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                onFocusCapture={[Function]}
-                onLayout={[Function]}
-                style={null}
-              >
-                <View>
-                  <View
-                    accessibilityState={
-                      {
-                        "busy": undefined,
-                        "checked": undefined,
-                        "disabled": undefined,
-                        "expanded": undefined,
-                        "selected": undefined,
-                      }
-                    }
-                    accessibilityValue={
-                      {
-                        "max": undefined,
-                        "min": undefined,
-                        "now": undefined,
-                        "text": undefined,
-                      }
-                    }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={true}
-                    onBlur={[Function]}
-                    onClick={[Function]}
-                    onFocus={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
-                    style={
-                      {
-                        "alignItems": "center",
-                        "borderBottomColor": "#b8b8b8",
-                        "borderBottomWidth": 1,
-                        "flexDirection": "row",
-                        "gap": 30,
-                        "justifyContent": "space-between",
-                        "paddingHorizontal": 16,
-                        "paddingVertical": 8,
-                      }
-                    }
-                  >
-                    <Image
-                      source={
-                        {
-                          "cache": "only-if-cached",
-                          "uri": "https://openweathermap.org/img/wn/04d@2x.png",
-                        }
-                      }
-                      style={
-                        {
-                          "height": 30,
-                          "width": 30,
-                        }
-                      }
-                    />
-                    <View
-                      style={
-                        {
-                          "flex": 1,
-                        }
-                      }
-                    >
-                      <Text
-                        style={
-                          [
-                            {
-                              "color": "#000",
-                            },
-                            {
-                              "color": "#000",
-                              "fontSize": 17,
-                            },
-                          ]
-                        }
-                      >
-                        Vilnius
-                      </Text>
-                      <Text
-                        style={
-                          [
-                            {
-                              "color": "#000",
-                            },
-                            {
-                              "color": "#8c8c8c",
-                              "fontSize": 12,
-                            },
-                          ]
-                        }
-                      >
-                        Clouds
-                      </Text>
-                    </View>
-                    <View
-                      style={
-                        {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "gap": 12,
-                        }
-                      }
-                    >
-                      <View
-                        style={
-                          {
-                            "backgroundColor": "#90e0ef",
-                            "borderRadius": 20,
-                            "paddingHorizontal": 12,
-                            "paddingVertical": 4,
-                          }
-                        }
-                      >
-                        <Text
-                          style={
-                            [
-                              {
-                                "color": "#000",
-                              },
-                              {
-                                "color": "#fff",
-                              },
-                            ]
-                          }
-                        >
-                          276.87
-                           °F
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                onFocusCapture={[Function]}
-                onLayout={[Function]}
-                style={null}
-              >
-                <View>
-                  <View
-                    accessibilityState={
-                      {
-                        "busy": undefined,
-                        "checked": undefined,
-                        "disabled": undefined,
-                        "expanded": undefined,
-                        "selected": undefined,
-                      }
-                    }
-                    accessibilityValue={
-                      {
-                        "max": undefined,
-                        "min": undefined,
-                        "now": undefined,
-                        "text": undefined,
-                      }
-                    }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={true}
-                    onBlur={[Function]}
-                    onClick={[Function]}
-                    onFocus={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
-                    style={
-                      {
-                        "alignItems": "center",
-                        "borderBottomColor": "#b8b8b8",
-                        "borderBottomWidth": 1,
-                        "flexDirection": "row",
-                        "gap": 30,
-                        "justifyContent": "space-between",
-                        "paddingHorizontal": 16,
-                        "paddingVertical": 8,
-                      }
-                    }
-                  >
-                    <Image
-                      source={
-                        {
-                          "cache": "only-if-cached",
-                          "uri": "https://openweathermap.org/img/wn/04d@2x.png",
-                        }
-                      }
-                      style={
-                        {
-                          "height": 30,
-                          "width": 30,
-                        }
-                      }
-                    />
-                    <View
-                      style={
-                        {
-                          "flex": 1,
-                        }
-                      }
-                    >
-                      <Text
-                        style={
-                          [
-                            {
-                              "color": "#000",
-                            },
-                            {
-                              "color": "#000",
-                              "fontSize": 17,
-                            },
-                          ]
-                        }
-                      >
-                        Vilnius
-                      </Text>
-                      <Text
-                        style={
-                          [
-                            {
-                              "color": "#000",
-                            },
-                            {
-                              "color": "#8c8c8c",
-                              "fontSize": 12,
-                            },
-                          ]
-                        }
-                      >
-                        Clouds
-                      </Text>
-                    </View>
-                    <View
-                      style={
-                        {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "gap": 12,
-                        }
-                      }
-                    >
-                      <View
-                        style={
-                          {
-                            "backgroundColor": "#90e0ef",
-                            "borderRadius": 20,
-                            "paddingHorizontal": 12,
-                            "paddingVertical": 4,
-                          }
-                        }
-                      >
-                        <Text
-                          style={
-                            [
-                              {
-                                "color": "#000",
-                              },
-                              {
-                                "color": "#fff",
-                              },
-                            ]
-                          }
-                        >
-                          276.87
-                           °F
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                onFocusCapture={[Function]}
-                onLayout={[Function]}
-                style={null}
-              >
-                <View>
-                  <View
-                    accessibilityState={
-                      {
-                        "busy": undefined,
-                        "checked": undefined,
-                        "disabled": undefined,
-                        "expanded": undefined,
-                        "selected": undefined,
-                      }
-                    }
-                    accessibilityValue={
-                      {
-                        "max": undefined,
-                        "min": undefined,
-                        "now": undefined,
-                        "text": undefined,
-                      }
-                    }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={true}
-                    onBlur={[Function]}
-                    onClick={[Function]}
-                    onFocus={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
-                    style={
-                      {
-                        "alignItems": "center",
-                        "borderBottomColor": "#b8b8b8",
-                        "borderBottomWidth": 1,
-                        "flexDirection": "row",
-                        "gap": 30,
-                        "justifyContent": "space-between",
-                        "paddingHorizontal": 16,
-                        "paddingVertical": 8,
-                      }
-                    }
-                  >
-                    <Image
-                      source={
-                        {
-                          "cache": "only-if-cached",
-                          "uri": "https://openweathermap.org/img/wn/04d@2x.png",
-                        }
-                      }
-                      style={
-                        {
-                          "height": 30,
-                          "width": 30,
-                        }
-                      }
-                    />
-                    <View
-                      style={
-                        {
-                          "flex": 1,
-                        }
-                      }
-                    >
-                      <Text
-                        style={
-                          [
-                            {
-                              "color": "#000",
-                            },
-                            {
-                              "color": "#000",
-                              "fontSize": 17,
-                            },
-                          ]
-                        }
-                      >
-                        Vilnius
-                      </Text>
-                      <Text
-                        style={
-                          [
-                            {
-                              "color": "#000",
-                            },
-                            {
-                              "color": "#8c8c8c",
-                              "fontSize": 12,
-                            },
-                          ]
-                        }
-                      >
-                        Clouds
-                      </Text>
-                    </View>
-                    <View
-                      style={
-                        {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "gap": 12,
-                        }
-                      }
-                    >
-                      <View
-                        style={
-                          {
-                            "backgroundColor": "#90e0ef",
-                            "borderRadius": 20,
-                            "paddingHorizontal": 12,
-                            "paddingVertical": 4,
-                          }
-                        }
-                      >
-                        <Text
-                          style={
-                            [
-                              {
-                                "color": "#000",
-                              },
-                              {
-                                "color": "#fff",
-                              },
-                            ]
-                          }
-                        >
-                          276.87
-                           °F
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                onFocusCapture={[Function]}
-                onLayout={[Function]}
-                style={null}
-              >
-                <View>
-                  <View
-                    accessibilityState={
-                      {
-                        "busy": undefined,
-                        "checked": undefined,
-                        "disabled": undefined,
-                        "expanded": undefined,
-                        "selected": undefined,
-                      }
-                    }
-                    accessibilityValue={
-                      {
-                        "max": undefined,
-                        "min": undefined,
-                        "now": undefined,
-                        "text": undefined,
-                      }
-                    }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={true}
-                    onBlur={[Function]}
-                    onClick={[Function]}
-                    onFocus={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
-                    style={
-                      {
-                        "alignItems": "center",
-                        "borderBottomColor": "#b8b8b8",
-                        "borderBottomWidth": 1,
-                        "flexDirection": "row",
-                        "gap": 30,
-                        "justifyContent": "space-between",
-                        "paddingHorizontal": 16,
-                        "paddingVertical": 8,
-                      }
-                    }
-                  >
-                    <Image
-                      source={
-                        {
-                          "cache": "only-if-cached",
-                          "uri": "https://openweathermap.org/img/wn/04d@2x.png",
-                        }
-                      }
-                      style={
-                        {
-                          "height": 30,
-                          "width": 30,
-                        }
-                      }
-                    />
-                    <View
-                      style={
-                        {
-                          "flex": 1,
-                        }
-                      }
-                    >
-                      <Text
-                        style={
-                          [
-                            {
-                              "color": "#000",
-                            },
-                            {
-                              "color": "#000",
-                              "fontSize": 17,
-                            },
-                          ]
-                        }
-                      >
-                        Vilnius
-                      </Text>
-                      <Text
-                        style={
-                          [
-                            {
-                              "color": "#000",
-                            },
-                            {
-                              "color": "#8c8c8c",
-                              "fontSize": 12,
-                            },
-                          ]
-                        }
-                      >
-                        Clouds
-                      </Text>
-                    </View>
-                    <View
-                      style={
-                        {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "gap": 12,
-                        }
-                      }
-                    >
-                      <View
-                        style={
-                          {
-                            "backgroundColor": "#90e0ef",
-                            "borderRadius": 20,
-                            "paddingHorizontal": 12,
-                            "paddingVertical": 4,
-                          }
-                        }
-                      >
-                        <Text
-                          style={
-                            [
-                              {
-                                "color": "#000",
-                              },
-                              {
-                                "color": "#fff",
-                              },
-                            ]
-                          }
-                        >
-                          276.87
-                           °F
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                onFocusCapture={[Function]}
-                onLayout={[Function]}
-                style={null}
-              >
-                <View>
-                  <View
-                    accessibilityState={
-                      {
-                        "busy": undefined,
-                        "checked": undefined,
-                        "disabled": undefined,
-                        "expanded": undefined,
-                        "selected": undefined,
-                      }
-                    }
-                    accessibilityValue={
-                      {
-                        "max": undefined,
-                        "min": undefined,
-                        "now": undefined,
-                        "text": undefined,
-                      }
-                    }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={true}
-                    onBlur={[Function]}
-                    onClick={[Function]}
-                    onFocus={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
-                    style={
-                      {
-                        "alignItems": "center",
-                        "borderBottomColor": "#b8b8b8",
-                        "borderBottomWidth": 1,
-                        "flexDirection": "row",
-                        "gap": 30,
-                        "justifyContent": "space-between",
-                        "paddingHorizontal": 16,
-                        "paddingVertical": 8,
-                      }
-                    }
-                  >
-                    <Image
-                      source={
-                        {
-                          "cache": "only-if-cached",
-                          "uri": "https://openweathermap.org/img/wn/04d@2x.png",
-                        }
-                      }
-                      style={
-                        {
-                          "height": 30,
-                          "width": 30,
-                        }
-                      }
-                    />
-                    <View
-                      style={
-                        {
-                          "flex": 1,
-                        }
-                      }
-                    >
-                      <Text
-                        style={
-                          [
-                            {
-                              "color": "#000",
-                            },
-                            {
-                              "color": "#000",
-                              "fontSize": 17,
-                            },
-                          ]
-                        }
-                      >
-                        Vilnius
-                      </Text>
-                      <Text
-                        style={
-                          [
-                            {
-                              "color": "#000",
-                            },
-                            {
-                              "color": "#8c8c8c",
-                              "fontSize": 12,
-                            },
-                          ]
-                        }
-                      >
-                        Clouds
-                      </Text>
-                    </View>
-                    <View
-                      style={
-                        {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "gap": 12,
-                        }
-                      }
-                    >
-                      <View
-                        style={
-                          {
-                            "backgroundColor": "#90e0ef",
-                            "borderRadius": 20,
-                            "paddingHorizontal": 12,
-                            "paddingVertical": 4,
-                          }
-                        }
-                      >
-                        <Text
-                          style={
-                            [
-                              {
-                                "color": "#000",
-                              },
-                              {
-                                "color": "#fff",
-                              },
-                            ]
-                          }
-                        >
-                          276.87
-                           °F
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                onFocusCapture={[Function]}
-                onLayout={[Function]}
-                style={null}
-              >
-                <View>
-                  <View
-                    accessibilityState={
-                      {
-                        "busy": undefined,
-                        "checked": undefined,
-                        "disabled": undefined,
-                        "expanded": undefined,
-                        "selected": undefined,
-                      }
-                    }
-                    accessibilityValue={
-                      {
-                        "max": undefined,
-                        "min": undefined,
-                        "now": undefined,
-                        "text": undefined,
-                      }
-                    }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={true}
-                    onBlur={[Function]}
-                    onClick={[Function]}
-                    onFocus={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
-                    style={
-                      {
-                        "alignItems": "center",
-                        "borderBottomColor": "#b8b8b8",
-                        "borderBottomWidth": 1,
-                        "flexDirection": "row",
-                        "gap": 30,
-                        "justifyContent": "space-between",
-                        "paddingHorizontal": 16,
-                        "paddingVertical": 8,
-                      }
-                    }
-                  >
-                    <Image
-                      source={
-                        {
-                          "cache": "only-if-cached",
-                          "uri": "https://openweathermap.org/img/wn/04d@2x.png",
-                        }
-                      }
-                      style={
-                        {
-                          "height": 30,
-                          "width": 30,
-                        }
-                      }
-                    />
-                    <View
-                      style={
-                        {
-                          "flex": 1,
-                        }
-                      }
-                    >
-                      <Text
-                        style={
-                          [
-                            {
-                              "color": "#000",
-                            },
-                            {
-                              "color": "#000",
-                              "fontSize": 17,
-                            },
-                          ]
-                        }
-                      >
-                        Vilnius
-                      </Text>
-                      <Text
-                        style={
-                          [
-                            {
-                              "color": "#000",
-                            },
-                            {
-                              "color": "#8c8c8c",
-                              "fontSize": 12,
-                            },
-                          ]
-                        }
-                      >
-                        Clouds
-                      </Text>
-                    </View>
-                    <View
-                      style={
-                        {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "gap": 12,
-                        }
-                      }
-                    >
-                      <View
-                        style={
-                          {
-                            "backgroundColor": "#90e0ef",
-                            "borderRadius": 20,
-                            "paddingHorizontal": 12,
-                            "paddingVertical": 4,
-                          }
-                        }
-                      >
-                        <Text
-                          style={
-                            [
-                              {
-                                "color": "#000",
-                              },
-                              {
-                                "color": "#fff",
-                              },
-                            ]
-                          }
-                        >
-                          276.87
-                           °F
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                onFocusCapture={[Function]}
-                onLayout={[Function]}
-                style={null}
-              >
-                <View>
-                  <View
-                    accessibilityState={
-                      {
-                        "busy": undefined,
-                        "checked": undefined,
-                        "disabled": undefined,
-                        "expanded": undefined,
-                        "selected": undefined,
-                      }
-                    }
-                    accessibilityValue={
-                      {
-                        "max": undefined,
-                        "min": undefined,
-                        "now": undefined,
-                        "text": undefined,
-                      }
-                    }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={true}
-                    onBlur={[Function]}
-                    onClick={[Function]}
-                    onFocus={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
-                    style={
-                      {
-                        "alignItems": "center",
-                        "borderBottomColor": "#b8b8b8",
-                        "borderBottomWidth": 1,
-                        "flexDirection": "row",
-                        "gap": 30,
-                        "justifyContent": "space-between",
-                        "paddingHorizontal": 16,
-                        "paddingVertical": 8,
-                      }
-                    }
-                  >
-                    <Image
-                      source={
-                        {
-                          "cache": "only-if-cached",
-                          "uri": "https://openweathermap.org/img/wn/04d@2x.png",
-                        }
-                      }
-                      style={
-                        {
-                          "height": 30,
-                          "width": 30,
-                        }
-                      }
-                    />
-                    <View
-                      style={
-                        {
-                          "flex": 1,
-                        }
-                      }
-                    >
-                      <Text
-                        style={
-                          [
-                            {
-                              "color": "#000",
-                            },
-                            {
-                              "color": "#000",
-                              "fontSize": 17,
-                            },
-                          ]
-                        }
-                      >
-                        Vilnius
-                      </Text>
-                      <Text
-                        style={
-                          [
-                            {
-                              "color": "#000",
-                            },
-                            {
-                              "color": "#8c8c8c",
-                              "fontSize": 12,
-                            },
-                          ]
-                        }
-                      >
-                        Clouds
-                      </Text>
-                    </View>
-                    <View
-                      style={
-                        {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "gap": 12,
-                        }
-                      }
-                    >
-                      <View
-                        style={
-                          {
-                            "backgroundColor": "#90e0ef",
-                            "borderRadius": 20,
-                            "paddingHorizontal": 12,
-                            "paddingVertical": 4,
-                          }
-                        }
-                      >
-                        <Text
-                          style={
-                            [
-                              {
-                                "color": "#000",
-                              },
-                              {
-                                "color": "#fff",
-                              },
-                            ]
-                          }
-                        >
-                          276.87
-                           °F
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
+                  Add new
+                </Text>
+              </RNGestureHandlerButton>
             </View>
-          </RCTScrollView>
+            <RCTScrollView
+              ListEmptyComponent={[Function]}
+              data={
+                [
+                  {
+                    "cloudCover": 100,
+                    "humidity": 80,
+                    "icon": "04d",
+                    "id": "1",
+                    "isFavorite": false,
+                    "name": "Vilnius",
+                    "pressure": 1021,
+                    "temp": 276.87,
+                    "weather": {
+                      "description": "overcast clouds",
+                      "icon": "Clouds",
+                      "id": undefined,
+                      "main": undefined,
+                    },
+                    "weather_id": 1,
+                    "wind": 3.6,
+                  },
+                ]
+              }
+              getItem={[Function]}
+              getItemCount={[Function]}
+              keyExtractor={[Function]}
+              onContentSizeChange={[Function]}
+              onEndReached={[Function]}
+              onLayout={[Function]}
+              onMomentumScrollBegin={[Function]}
+              onMomentumScrollEnd={[Function]}
+              onScroll={[Function]}
+              onScrollBeginDrag={[Function]}
+              onScrollEndDrag={[Function]}
+              removeClippedSubviews={false}
+              renderItem={[Function]}
+              scrollEventThrottle={0.0001}
+              stickyHeaderIndices={[]}
+              viewabilityConfigCallbackPairs={[]}
+            >
+              <View>
+                <View
+                  onFocusCapture={[Function]}
+                  onLayout={[Function]}
+                  style={null}
+                >
+                  <View>
+                    <View
+                      accessibilityState={
+                        {
+                          "busy": undefined,
+                          "checked": undefined,
+                          "disabled": undefined,
+                          "expanded": undefined,
+                          "selected": undefined,
+                        }
+                      }
+                      accessibilityValue={
+                        {
+                          "max": undefined,
+                          "min": undefined,
+                          "now": undefined,
+                          "text": undefined,
+                        }
+                      }
+                      accessible={true}
+                      collapsable={false}
+                      focusable={true}
+                      onBlur={[Function]}
+                      onClick={[Function]}
+                      onFocus={[Function]}
+                      onResponderGrant={[Function]}
+                      onResponderMove={[Function]}
+                      onResponderRelease={[Function]}
+                      onResponderTerminate={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
+                      style={
+                        {
+                          "alignItems": "center",
+                          "borderBottomColor": "#b8b8b8",
+                          "borderBottomWidth": 1,
+                          "flexDirection": "row",
+                          "gap": 30,
+                          "justifyContent": "space-between",
+                          "paddingHorizontal": 16,
+                          "paddingVertical": 8,
+                        }
+                      }
+                    >
+                      <Image
+                        source={
+                          {
+                            "cache": "only-if-cached",
+                            "uri": "https://openweathermap.org/img/wn/04d@2x.png",
+                          }
+                        }
+                        style={
+                          {
+                            "height": 30,
+                            "width": 30,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
+                            "flex": 1,
+                          }
+                        }
+                      >
+                        <Text
+                          style={
+                            [
+                              {
+                                "color": "#000",
+                              },
+                              {
+                                "color": "#000",
+                                "fontSize": 17,
+                              },
+                            ]
+                          }
+                        >
+                          Vilnius
+                        </Text>
+                        <Text
+                          style={
+                            [
+                              {
+                                "color": "#000",
+                              },
+                              {
+                                "color": "#8c8c8c",
+                                "fontSize": 12,
+                              },
+                            ]
+                          }
+                        />
+                      </View>
+                      <View
+                        style={
+                          {
+                            "alignItems": "center",
+                            "flexDirection": "row",
+                            "gap": 12,
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            {
+                              "backgroundColor": "#90e0ef",
+                              "borderRadius": 20,
+                              "paddingHorizontal": 12,
+                              "paddingVertical": 4,
+                            }
+                          }
+                        >
+                          <Text
+                            style={
+                              [
+                                {
+                                  "color": "#000",
+                                },
+                                {
+                                  "color": "#fff",
+                                },
+                              ]
+                            }
+                          >
+                            276.87
+                             °F
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </RCTScrollView>
+            <TrueSheetView
+              background={4294967295}
+              cornerRadius={24}
+              dimmed={true}
+              dismissible={true}
+              edgeToEdge={false}
+              grabber={true}
+              initialIndexAnimated={true}
+              keyboardMode="resize"
+              onContainerSizeChange={[Function]}
+              onDismiss={[Function]}
+              onDragBegin={[Function]}
+              onDragChange={[Function]}
+              onDragEnd={[Function]}
+              onMount={[Function]}
+              onPresent={[Function]}
+              onSizeChange={[Function]}
+              scrollableHandle={null}
+              sizes={
+                [
+                  "small",
+                ]
+              }
+              style={
+                {
+                  "left": -9999,
+                  "position": "absolute",
+                  "width": "100%",
+                  "zIndex": -9999,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                style={
+                  [
+                    {
+                      "height": undefined,
+                      "overflow": undefined,
+                      "width": undefined,
+                    },
+                    undefined,
+                  ]
+                }
+              >
+                <View
+                  collapsable={false}
+                  onLayout={[Function]}
+                >
+                  <View
+                    style={
+                      {
+                        "gap": 12,
+                        "justifyContent": "center",
+                        "paddingHorizontal": 16,
+                        "paddingTop": 32,
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        [
+                          {
+                            "color": "#000",
+                          },
+                          {
+                            "fontSize": 24,
+                            "textAlign": "center",
+                          },
+                        ]
+                      }
+                    >
+                      Add city to favorites
+                    </Text>
+                    <View
+                      style={
+                        {
+                          "flexDirection": "row",
+                          "justifyContent": "space-around",
+                        }
+                      }
+                    >
+                      <RNGestureHandlerButton
+                        collapsable={false}
+                        enabled={true}
+                        hitSlop={
+                          {
+                            "bottom": 0,
+                            "left": 0,
+                            "right": 0,
+                            "top": 0,
+                          }
+                        }
+                        rippleColor={0}
+                        style={
+                          [
+                            {},
+                            [
+                              {
+                                "alignItems": "center",
+                                "backgroundColor": "#fff",
+                                "borderColor": "#b8b8b8",
+                                "borderRadius": 12,
+                                "borderWidth": 1,
+                                "flexDirection": "row",
+                                "gap": 4,
+                                "justifyContent": "center",
+                                "padding": 8,
+                              },
+                              false,
+                            ],
+                          ]
+                        }
+                      >
+                        <Text
+                          style={
+                            [
+                              {
+                                "color": "#000",
+                              },
+                              undefined,
+                            ]
+                          }
+                        >
+                          Add to favorites
+                        </Text>
+                      </RNGestureHandlerButton>
+                      <RNGestureHandlerButton
+                        collapsable={false}
+                        enabled={false}
+                        hitSlop={
+                          {
+                            "bottom": 0,
+                            "left": 0,
+                            "right": 0,
+                            "top": 0,
+                          }
+                        }
+                        rippleColor={0}
+                        style={
+                          [
+                            {},
+                            [
+                              {
+                                "alignItems": "center",
+                                "backgroundColor": "#fff",
+                                "borderColor": "#b8b8b8",
+                                "borderRadius": 12,
+                                "borderWidth": 1,
+                                "flexDirection": "row",
+                                "gap": 4,
+                                "justifyContent": "center",
+                                "padding": 8,
+                              },
+                              {
+                                "opacity": 0.4,
+                              },
+                            ],
+                          ]
+                        }
+                      >
+                        <Text
+                          style={
+                            [
+                              {
+                                "color": "#000",
+                              },
+                              undefined,
+                            ]
+                          }
+                        >
+                          Remove from favorites
+                        </Text>
+                      </RNGestureHandlerButton>
+                    </View>
+                  </View>
+                </View>
+                <View
+                  collapsable={false}
+                  onLayout={[Function]}
+                />
+              </View>
+            </TrueSheetView>
+          </View>
         </RNSScreenContentWrapper>
         <RNSScreenStackHeaderConfig
           backButtonInCustomView={false}
@@ -1738,109 +661,280 @@ exports[`Home screen Should display no data found when no cities are found 1`] =
             ]
           }
         >
-          <RCTScrollView
-            ListEmptyComponent={[Function]}
-            ListHeaderComponent={[Function]}
-            data={[]}
-            getItem={[Function]}
-            getItemCount={[Function]}
-            keyExtractor={[Function]}
-            onContentSizeChange={[Function]}
-            onEndReached={[Function]}
-            onLayout={[Function]}
-            onMomentumScrollBegin={[Function]}
-            onMomentumScrollEnd={[Function]}
-            onScroll={[Function]}
-            onScrollBeginDrag={[Function]}
-            onScrollEndDrag={[Function]}
-            removeClippedSubviews={false}
-            renderItem={[Function]}
-            scrollEventThrottle={0.0001}
-            stickyHeaderIndices={[]}
+          <View
             style={
               {
                 "backgroundColor": "#fff",
                 "flex": 1,
               }
             }
-            viewabilityConfigCallbackPairs={[]}
           >
             <View>
-              <View
+              <RNGestureHandlerButton
                 collapsable={false}
-                onLayout={[Function]}
+                enabled={true}
+                hitSlop={
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "right": 0,
+                    "top": 0,
+                  }
+                }
+                rippleColor={0}
+                style={
+                  [
+                    {},
+                    [
+                      {
+                        "alignItems": "center",
+                        "backgroundColor": "#fff",
+                        "borderColor": "#b8b8b8",
+                        "borderRadius": 12,
+                        "borderWidth": 1,
+                        "flexDirection": "row",
+                        "gap": 4,
+                        "justifyContent": "center",
+                        "padding": 8,
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
               >
-                <View
-                  accessibilityState={
-                    {
-                      "busy": undefined,
-                      "checked": undefined,
-                      "disabled": undefined,
-                      "expanded": undefined,
-                      "selected": undefined,
-                    }
-                  }
-                  accessibilityValue={
-                    {
-                      "max": undefined,
-                      "min": undefined,
-                      "now": undefined,
-                      "text": undefined,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={true}
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
+                <Text
                   style={
-                    {
-                      "alignItems": "center",
-                      "backgroundColor": "#fff",
-                      "borderColor": "#b8b8b8",
-                      "borderRadius": 12,
-                      "borderWidth": 1,
-                      "flexDirection": "row",
-                      "gap": 4,
-                      "justifyContent": "center",
-                      "opacity": 1,
-                      "padding": 8,
-                    }
+                    [
+                      {
+                        "color": "#000",
+                      },
+                      undefined,
+                    ]
                   }
                 >
-                  <Text
-                    style={
-                      [
-                        {
-                          "color": "#000",
-                        },
-                        undefined,
-                      ]
-                    }
-                  >
-                    Add new
-                  </Text>
-                </View>
+                  Add new
+                </Text>
+              </RNGestureHandlerButton>
+            </View>
+            <RCTScrollView
+              ListEmptyComponent={[Function]}
+              data={[]}
+              getItem={[Function]}
+              getItemCount={[Function]}
+              keyExtractor={[Function]}
+              onContentSizeChange={[Function]}
+              onEndReached={[Function]}
+              onLayout={[Function]}
+              onMomentumScrollBegin={[Function]}
+              onMomentumScrollEnd={[Function]}
+              onScroll={[Function]}
+              onScrollBeginDrag={[Function]}
+              onScrollEndDrag={[Function]}
+              removeClippedSubviews={false}
+              renderItem={[Function]}
+              scrollEventThrottle={0.0001}
+              stickyHeaderIndices={[]}
+              viewabilityConfigCallbackPairs={[]}
+            >
+              <View>
+                <Text
+                  style={
+                    [
+                      {
+                        "color": "#000",
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                  No data found
+                </Text>
               </View>
-              <Text
+            </RCTScrollView>
+            <TrueSheetView
+              background={4294967295}
+              cornerRadius={24}
+              dimmed={true}
+              dismissible={true}
+              edgeToEdge={false}
+              grabber={true}
+              initialIndexAnimated={true}
+              keyboardMode="resize"
+              onContainerSizeChange={[Function]}
+              onDismiss={[Function]}
+              onDragBegin={[Function]}
+              onDragChange={[Function]}
+              onDragEnd={[Function]}
+              onMount={[Function]}
+              onPresent={[Function]}
+              onSizeChange={[Function]}
+              scrollableHandle={null}
+              sizes={
+                [
+                  "small",
+                ]
+              }
+              style={
+                {
+                  "left": -9999,
+                  "position": "absolute",
+                  "width": "100%",
+                  "zIndex": -9999,
+                }
+              }
+            >
+              <View
+                collapsable={false}
                 style={
                   [
                     {
-                      "color": "#000",
+                      "height": undefined,
+                      "overflow": undefined,
+                      "width": undefined,
                     },
                     undefined,
                   ]
                 }
               >
-                No data found
-              </Text>
-            </View>
-          </RCTScrollView>
+                <View
+                  collapsable={false}
+                  onLayout={[Function]}
+                >
+                  <View
+                    style={
+                      {
+                        "gap": 12,
+                        "justifyContent": "center",
+                        "paddingHorizontal": 16,
+                        "paddingTop": 32,
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        [
+                          {
+                            "color": "#000",
+                          },
+                          {
+                            "fontSize": 24,
+                            "textAlign": "center",
+                          },
+                        ]
+                      }
+                    >
+                      Add city to favorites
+                    </Text>
+                    <View
+                      style={
+                        {
+                          "flexDirection": "row",
+                          "justifyContent": "space-around",
+                        }
+                      }
+                    >
+                      <RNGestureHandlerButton
+                        collapsable={false}
+                        enabled={true}
+                        hitSlop={
+                          {
+                            "bottom": 0,
+                            "left": 0,
+                            "right": 0,
+                            "top": 0,
+                          }
+                        }
+                        rippleColor={0}
+                        style={
+                          [
+                            {},
+                            [
+                              {
+                                "alignItems": "center",
+                                "backgroundColor": "#fff",
+                                "borderColor": "#b8b8b8",
+                                "borderRadius": 12,
+                                "borderWidth": 1,
+                                "flexDirection": "row",
+                                "gap": 4,
+                                "justifyContent": "center",
+                                "padding": 8,
+                              },
+                              false,
+                            ],
+                          ]
+                        }
+                      >
+                        <Text
+                          style={
+                            [
+                              {
+                                "color": "#000",
+                              },
+                              undefined,
+                            ]
+                          }
+                        >
+                          Add to favorites
+                        </Text>
+                      </RNGestureHandlerButton>
+                      <RNGestureHandlerButton
+                        collapsable={false}
+                        enabled={false}
+                        hitSlop={
+                          {
+                            "bottom": 0,
+                            "left": 0,
+                            "right": 0,
+                            "top": 0,
+                          }
+                        }
+                        rippleColor={0}
+                        style={
+                          [
+                            {},
+                            [
+                              {
+                                "alignItems": "center",
+                                "backgroundColor": "#fff",
+                                "borderColor": "#b8b8b8",
+                                "borderRadius": 12,
+                                "borderWidth": 1,
+                                "flexDirection": "row",
+                                "gap": 4,
+                                "justifyContent": "center",
+                                "padding": 8,
+                              },
+                              {
+                                "opacity": 0.4,
+                              },
+                            ],
+                          ]
+                        }
+                      >
+                        <Text
+                          style={
+                            [
+                              {
+                                "color": "#000",
+                              },
+                              undefined,
+                            ]
+                          }
+                        >
+                          Remove from favorites
+                        </Text>
+                      </RNGestureHandlerButton>
+                    </View>
+                  </View>
+                </View>
+                <View
+                  collapsable={false}
+                  onLayout={[Function]}
+                />
+              </View>
+            </TrueSheetView>
+          </View>
         </RNSScreenContentWrapper>
         <RNSScreenStackHeaderConfig
           backButtonInCustomView={false}

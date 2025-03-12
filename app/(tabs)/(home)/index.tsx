@@ -1,17 +1,17 @@
 import { Button } from '@components/Button';
 import { CityListItem } from '@components/CityListItem';
 import { Loader } from '@components/Loader';
+import { FavoriteCitySheet } from '@components/sheets/FavoriteCitySheet';
 import { Text } from '@components/Text';
 import { Colors } from '@constants/Colors';
 import { CitiesContext } from '@context/CitiesContext';
 import { Theme, ThemeContext } from '@context/ThemeContext';
 import { City } from '@core/City';
 import { AntDesign } from '@expo/vector-icons';
+import { TrueSheet } from '@lodev09/react-native-true-sheet';
 import { router } from 'expo-router';
 import { useCallback, useContext, useRef, useState } from 'react';
 import { FlatList, ListRenderItem, StyleSheet, View } from 'react-native';
-import { TrueSheet } from '@lodev09/react-native-true-sheet';
-import { FavoriteCitySheet } from '@components/sheets/FavoriteCitySheet';
 
 export default function HomeScreen() {
   const { cities, loading, loadNextPage, updateCityFavorite, favoriteCities } =

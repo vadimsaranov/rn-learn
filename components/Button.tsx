@@ -2,8 +2,9 @@ import { Text } from '@components/Text';
 import { Colors } from '@constants/Colors';
 import { Theme, ThemeContext } from '@context/ThemeContext';
 import { ReactNode, useContext } from 'react';
-import { StyleSheet, TouchableOpacity, TouchableOpacityProps } from 'react-native';
-interface ButtonProps extends TouchableOpacityProps {
+import { StyleSheet } from 'react-native';
+import { Pressable, PressableProps } from 'react-native-gesture-handler';
+interface ButtonProps extends PressableProps {
   title: string;
   children?: ReactNode;
 }
@@ -12,13 +13,13 @@ export const Button = ({ title, children, disabled, ...otherProps }: ButtonProps
   const styles = themedStyles(theme);
 
   return (
-    <TouchableOpacity
+    <Pressable
       {...otherProps}
       disabled={disabled}
       style={[styles.container, disabled && styles.disabled]}>
       <Text>{title}</Text>
       {children}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

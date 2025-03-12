@@ -124,7 +124,6 @@ export default function AddOrEditCityWeather() {
     router.setParams({ selectedIcon: undefined });
     router.navigate('/(tabs)/(home)');
   };
-
   const onBackPress = () => {
     const inputValues = getValues();
 
@@ -153,13 +152,15 @@ export default function AddOrEditCityWeather() {
     setValue('temperature', data?.temp.toString() || '');
     setValue('humidity', data?.humidity.toString() || '');
     setValue('pressure', data?.pressure.toString() || '');
-    setValue('windSpeed', data?.wind?.toString() || '');
-    setValue('cloudCover', data?.cloudCover?.toString() || '');
+    setValue('windSpeed', data?.wind?.toString());
+    setValue('cloudCover', data?.cloudCover?.toString());
     setCityToEdit(data);
   };
 
   useEffect(() => {
-    getCity();
+    if (cityId) {
+      getCity();
+    }
   }, []);
 
   return (
@@ -191,7 +192,7 @@ export default function AddOrEditCityWeather() {
           />
         ),
       )}
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+      <Button title="Submit" onPress={() => handleSubmit(onSubmit)()} />
       <Modal onClose={() => setModalVisible(false)} visible={modalVisible}>
         <Text style={styles.warningText}>
           Are you sure you want to leave without saving changes?
