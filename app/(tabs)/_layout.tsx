@@ -4,9 +4,7 @@ import { BiometricsContext } from '@context/BiometricsContext';
 import { ThemeContext } from '@context/ThemeContext';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import useAppStateCheck from '@hooks/useAppStateCheck';
-import { authSelector } from '@store/slices/authSlice';
-import { sessionSelector } from '@store/slices/sessionSlice';
-import { useAppSelector } from '@store/store';
+import { useUser } from '@hooks/useUser';
 import { Redirect, Tabs } from 'expo-router';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { AppStateStatus, StyleSheet, View } from 'react-native';
@@ -22,6 +20,7 @@ const SETTING_TAB_OPTIONS = {
 };
 
 export default function TabLayout() {
+  const { user, userLoading } = useUser();
   const { theme } = useContext(ThemeContext);
 
   const TABS_SCREEN_OPTIONS = {
@@ -36,9 +35,6 @@ export default function TabLayout() {
     enrolled: biometricsEnrolled,
     loading: biometricsLoading,
   } = useContext(BiometricsContext);
-
-  const { loggedIn } = useAppSelector(authSelector);
-  const { loggedIn: session } = useAppSelector(sessionSelector);
 
   const [appStateStatus, setAppStateStatus] = useState<AppStateStatus | undefined>(undefined);
   useAppStateCheck({ setAppStateStatus });
@@ -60,7 +56,7 @@ export default function TabLayout() {
     }
   }, [biometricsEnrolled, biometricsLoading, promptBiometrics]);
 
-  if (!loggedIn && !session) {
+  if (!userLoading && !user.id) {
     return <Redirect href={'/login'} />;
   }
 

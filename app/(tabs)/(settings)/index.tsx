@@ -5,10 +5,7 @@ import { Colors } from '@constants/Colors';
 import { Theme, ThemeContext } from '@context/ThemeContext';
 import { wipeDatabase } from '@database/utils';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
-import { resetAuthSlice } from '@store/slices/authSlice';
-import { resetSessionSlice } from '@store/slices/sessionSlice';
-import { resetThemeSlice } from '@store/slices/themeSlice';
-import { userSelector } from '@store/slices/userSlice';
+import { resetUser, userSelector } from '@store/slices/userSlice';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import * as Linking from 'expo-linking';
 import { useCallback, useContext } from 'react';
@@ -30,9 +27,7 @@ export default function SettingsTab() {
 
   const signOut = useCallback(async () => {
     await wipeDatabase();
-    dispatch(resetAuthSlice());
-    dispatch(resetSessionSlice());
-    dispatch(resetThemeSlice());
+    dispatch(resetUser());
   }, [dispatch]);
 
   const openLink = useCallback(async (url: string) => {

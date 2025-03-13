@@ -2,11 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@store/store';
 
 export interface UserState {
+  id: string;
   email: string;
   rememberUser: boolean;
 }
 
 const initialState: UserState = {
+  id: '',
   email: '',
   rememberUser: false,
 };
@@ -25,7 +27,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { update: updateUser } = userSlice.actions;
+export const { update: updateUser, reset: resetUser } = userSlice.actions;
 
 export const userSelector = (state: RootState) => state.user;
 

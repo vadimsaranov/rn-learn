@@ -183,7 +183,7 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
 
   const deleteCity = useCallback(
     async (cityId: string) => {
-      deleteCityMutation(cityId);
+      await deleteCityMutation(cityId);
       getAllData(currentPage);
     },
     [currentPage, getAllData],

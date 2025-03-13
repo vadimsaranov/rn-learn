@@ -10,10 +10,11 @@ import {
 } from 'react';
 import * as LocalAuthentication from 'expo-local-authentication';
 import { useAppDispatch } from '@store/store';
-import { updateAuth } from '@store/slices/authSlice';
-import { updateSession } from '@store/slices/sessionSlice';
 import { router } from 'expo-router';
 import * as Device from 'expo-device';
+import uuid from 'react-native-uuid';
+import { updateUser } from '@store/slices/userSlice';
+import { saveUserMutation } from '@database/mutations/userMutations';
 
 type BiometricsContextType = {
   enrolled: boolean;
@@ -77,16 +78,16 @@ export const BiometricsContextProvider = ({ children }: BiometricsContextProps) 
   }, []);
 
   const loginWithBiometrics = useCallback(
-    async (rememberUser: boolean) => {
+    async (rememberMe: boolean) => {
       const authentication = await LocalAuthentication.authenticateAsync({
         biometricsSecurityLevel: 'strong',
         promptMessage: 'Set up biometrics',
       });
       if (authentication.success) {
-        if (rememberUser) {
-          dispatch(updateAuth({ loggedIn: true, token: 'token' }));
+        if (rememberMe) {
+          saveUserMutation({ email: 'test@example.com', id: uuid.v4(), rememberUser: true });
         } else {
-          dispatch(updateSession({ loggedIn: true, token: 'token' }));
+          dispatch(updateUser({ email: 'test@example.com', id: uuid.v4(), rememberUser: false }));
         }
         router.replace('/');
       }
