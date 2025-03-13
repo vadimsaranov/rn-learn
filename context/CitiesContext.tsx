@@ -147,10 +147,9 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
 
       if (dbCities.length === 0) {
         return;
-      } else {
-        const remappedCities: City[] = dbCities.map((city) => cityRemapper(city));
-        setCities(remappedCities);
       }
+      const remappedCities: City[] = dbCities.map(cityRemapper);
+      setCities(remappedCities);
     },
     [cityRemapper],
   );
@@ -158,7 +157,7 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
   const getFavoriteCities = useCallback(async () => {
     const dbCities = await getAllCitiesQuery(currentPage, true);
 
-    const remappedCities: City[] = dbCities.map((city) => cityRemapper(city));
+    const remappedCities: City[] = dbCities.map(cityRemapper);
 
     setFavoriteCities(remappedCities);
   }, [cityRemapper, currentPage]);

@@ -1,5 +1,6 @@
 import { Button } from '@components/Button';
 import { CityListItem } from '@components/CityListItem';
+import { FavouriteCities } from '@components/FavouriteCities';
 import { Loader } from '@components/Loader';
 import { FavoriteCitySheet } from '@components/sheets/FavoriteCitySheet';
 import { Text } from '@components/Text';
@@ -56,10 +57,7 @@ export default function HomeScreen() {
           <AntDesign size={20} name="plus" />
         </Button>
       </View>
-      {favoriteCities?.length > 0 &&
-        favoriteCities.map((city) => (
-          <CityListItem key={city.id} city={city} onLongPress={() => openFavoriteCitySheet(city)} />
-        ))}
+      <FavouriteCities cities={favoriteCities} onLongPress={openFavoriteCitySheet} />
       <FlatList
         data={cities}
         renderItem={renderItem}
