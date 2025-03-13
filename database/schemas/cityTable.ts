@@ -1,5 +1,5 @@
 import { int, sqliteTable, text } from 'drizzle-orm/sqlite-core';
-import { weatherTable } from './weather';
+import { weatherTable } from './weatherTable';
 
 export const cityTable = sqliteTable('city_table', {
   id: text().primaryKey(),
@@ -13,4 +13,7 @@ export const cityTable = sqliteTable('city_table', {
   pressure: int().notNull(),
   wind: int(),
   cloudCover: int(),
+  isFavorite: int({ mode: 'boolean' }).notNull().default(false),
 });
+
+export type CityTable = typeof cityTable.$inferSelect;

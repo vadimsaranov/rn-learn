@@ -2042,6 +2042,27 @@ PODS:
     - ReactCommon/turbomodule/core
     - Yoga
   - SocketRocket (0.7.1)
+  - TrueSheet (2.0.5):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -2141,6 +2162,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - "TrueSheet (from `../node_modules/@lodev09/react-native-true-sheet`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -2337,6 +2359,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  TrueSheet:
+    :path: "../node_modules/@lodev09/react-native-true-sheet"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -2436,6 +2460,7 @@ SPEC CHECKSUMS:
   RNReanimated: 9ee6347ca0aa3cf78cae715455e781728ae142e2
   RNScreens: d022507f2b6d76c73335e9e35aedcf7bb2f791b0
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
+  TrueSheet: 9a6d4261e3ab3989a0ddc93ceb011b33105847c1
   Yoga: 90d80701b27946c4b23461c00a7207f300a6ff71
 
 PODFILE CHECKSUM: 600da819fa2664599cc58e136bfc5dd89ed4b19f

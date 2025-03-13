@@ -6,3 +6,5 @@ export const weatherTable = sqliteTable('weather_table', {
   id: int().primaryKey({ autoIncrement: true }),
   main: text().notNull(),
 });
+
+export type WeatherTable = typeof weatherTable.$inferSelect;

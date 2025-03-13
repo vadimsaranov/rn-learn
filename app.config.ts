@@ -59,6 +59,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     eas: {
       projectId: '6f91dbcc-3bd9-4d40-bc78-d5542db0ca85',
     },
+    updates: {
+      assetPatternsToBeBundled: ['./drizzle'],
+    },
   },
   owner: 'vadimsaranov',
 });

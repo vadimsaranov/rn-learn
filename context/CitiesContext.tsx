@@ -1,9 +1,15 @@
 import { City } from '@core/City';
-import { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import { appDatabase } from '@database/client';
+import {
+  deleteCityMutation,
+  saveCityMutation,
+  updateCityMutation,
+} from '@database/mutations/cityMutations';
+import { getAllCitiesQuery, getCityByIdQuery } from '@database/queries/cityQueries';
+import { CityTable, cityTable } from '@database/schemas/cityTable';
+import { WeatherTable } from '@database/schemas/weatherTable';
 import { count, eq } from 'drizzle-orm';
-import { appDatabase } from '../app/_layout';
-import { cityTable } from '@database/city';
-import { weatherTable } from '@database/weather';
+import { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
 const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
@@ -24,20 +30,24 @@ export const IconNamesList = ['01d', '02d', '03d', '04d', '09d', '10d', '11d', '
 
 type CitiesContextType = {
   cities: City[];
+  favoriteCities: City[];
   getCityById: (cityName: string) => Promise<City | undefined>;
   loading: boolean;
   loadNextPage: () => void;
   deleteCity: (id: string) => void;
   updateCity: (city: City) => void;
+  updateCityFavorite: (cityId: string, isFavorite: boolean) => Promise<void>;
 };
 
 export const CitiesContext = createContext<CitiesContextType>({
   cities: [],
+  favoriteCities: [],
   getCityById: () => Promise.resolve(undefined),
   loading: false,
   loadNextPage: () => {},
   deleteCity: () => {},
   updateCity: () => {},
+  updateCityFavorite: () => Promise.resolve(),
 });
 
 interface CitiesContextProps {
@@ -47,6 +57,7 @@ interface CitiesContextProps {
 export default function CitiesContextProvider({ children }: CitiesContextProps) {
   const [loading, setLoading] = useState(false);
   const [cities, setCities] = useState<City[]>([]);
+  const [favoriteCities, setFavoriteCities] = useState<City[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
   const fetchCities = useCallback(async () => {
@@ -69,74 +80,17 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
   }, []);
 
   const getCityById = useCallback(async (cityId: string) => {
-    const city = await appDatabase
-      .select()
-      .from(cityTable)
-      .where(eq(cityTable.id, cityId))
-      .innerJoin(weatherTable, eq(cityTable.weather_id, weatherTable.id));
-
-    const { city_table, weather_table } = city[0];
-
-    return {
-      ...city_table,
-      id: city_table.id.toString(),
-      wind: city_table.wind || undefined,
-      cloudCover: city_table.cloudCover || undefined,
-      weather: {
-        description: weather_table.description,
-        icon: weather_table.icon,
-        id: weather_table.id,
-        main: weather_table.main,
-      },
-    };
+    const city = await getCityByIdQuery(cityId);
+    return cityRemapper(city[0]);
   }, []);
 
   const saveCity = useCallback(async (city: City) => {
-    const existingCity = await appDatabase
-      .select()
-      .from(cityTable)
-      .where(eq(cityTable.id, city.id));
+    const existingCity = await getCityByIdQuery(city.id);
 
     if (existingCity.length > 0) {
-      await appDatabase
-        .update(cityTable)
-        .set({
-          cloudCover: city.cloudCover,
-          wind: city.wind,
-          humidity: city.humidity,
-          pressure: city.pressure,
-          temp: city.temp,
-          icon: city.icon,
-          name: city.name,
-          weather_id: existingCity[0].weather_id,
-        })
-        .where(eq(cityTable.id, city.id));
-      await appDatabase
-        .update(weatherTable)
-        .set({
-          description: city.weather.description,
-          icon: city.icon,
-          main: city.weather.main,
-        })
-        .where(eq(weatherTable.id, city.weather.id));
+      await updateCityMutation(city, existingCity[0].weather_table.id);
     } else {
-      const weatherData = await appDatabase.insert(weatherTable).values({
-        description: city.weather.description,
-        icon: city.icon,
-        main: city.weather.main,
-      });
-
-      await appDatabase.insert(cityTable).values({
-        id: city.id,
-        name: city.name,
-        temp: city.temp,
-        icon: city.icon,
-        humidity: city.humidity,
-        pressure: city.pressure,
-        wind: city.wind,
-        cloudCover: city.cloudCover,
-        weather_id: weatherData.lastInsertRowId,
-      });
+      await saveCityMutation(city);
     }
   }, []);
 
@@ -166,14 +120,9 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
     [saveCity],
   );
 
-  const getAllCities = useCallback(async (page = 1) => {
-    const dbCities = await appDatabase
-      .select()
-      .from(cityTable)
-      .innerJoin(weatherTable, eq(cityTable.weather_id, weatherTable.id))
-      .limit(page * 15);
-    const remappedCities: City[] = dbCities.map((city) => {
-      const { city_table, weather_table } = city;
+  const cityRemapper = useCallback(
+    (dbCity: { city_table: CityTable; weather_table: WeatherTable }) => {
+      const { city_table, weather_table } = dbCity;
 
       return {
         ...city_table,
@@ -186,11 +135,40 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
           id: weather_table.id,
           main: weather_table.main,
         },
+        isFavorite: city_table.isFavorite,
       };
-    });
+    },
+    [],
+  );
 
-    setCities(remappedCities);
-  }, []);
+  const getAllCities = useCallback(
+    async (page = 1) => {
+      const dbCities = await getAllCitiesQuery(page);
+
+      if (dbCities.length === 0) {
+        return;
+      }
+      const remappedCities: City[] = dbCities.map(cityRemapper);
+      setCities(remappedCities);
+    },
+    [cityRemapper],
+  );
+
+  const getFavoriteCities = useCallback(async () => {
+    const dbCities = await getAllCitiesQuery(currentPage, true);
+
+    const remappedCities: City[] = dbCities.map(cityRemapper);
+
+    setFavoriteCities(remappedCities);
+  }, [cityRemapper, currentPage]);
+
+  const getAllData = useCallback(
+    async (page: number) => {
+      await getAllCities(page);
+      await getFavoriteCities();
+    },
+    [getAllCities, getFavoriteCities],
+  );
 
   const loadNextPage = useCallback(async () => {
     const countRows = await appDatabase.select({ count: count() }).from(cityTable);
@@ -205,32 +183,38 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
 
   const deleteCity = useCallback(
     async (cityId: string) => {
-      const city = await appDatabase
-        .select()
-        .from(cityTable)
-        .where(eq(cityTable.id, cityId))
-        .execute();
-
-      if (city.length > 0) {
-        await appDatabase.delete(cityTable).where(eq(cityTable.id, cityId));
-        await appDatabase.delete(weatherTable).where(eq(weatherTable.id, city[0].weather_id));
-      }
-
-      getAllCities(currentPage);
+      deleteCityMutation(cityId);
+      getAllData(currentPage);
     },
-    [currentPage, getAllCities],
+    [currentPage, getAllData],
   );
 
   const updateCity = useCallback(
     async (updatedCity: City) => {
       await saveCity(updatedCity);
-      await getAllCities(currentPage);
+      await getAllData(currentPage);
     },
-    [saveCity, getAllCities, currentPage],
+    [saveCity, getAllData, currentPage],
+  );
+
+  const updateCityFavorite = useCallback(
+    async (cityId: string, isFavorite: boolean) => {
+      await appDatabase
+        .update(cityTable)
+        .set({
+          isFavorite,
+        })
+        .where(eq(cityTable.id, cityId));
+
+      await getAllData(currentPage);
+    },
+    [currentPage, getAllData],
   );
 
   useEffect(() => {
-    fetchCities().then(() => getAllCities(currentPage));
+    fetchCities().then(() => {
+      getAllData(currentPage);
+    });
   }, []);
 
   useEffect(() => {
@@ -238,8 +222,26 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
   }, [currentPage, getAllCities]);
 
   const data = useMemo<CitiesContextType>(() => {
-    return { cities, getCityById, loading, loadNextPage, deleteCity, updateCity };
-  }, [getCityById, loading, loadNextPage, deleteCity, updateCity, cities]);
+    return {
+      cities,
+      getCityById,
+      loading,
+      loadNextPage,
+      deleteCity,
+      updateCity,
+      updateCityFavorite,
+      favoriteCities,
+    };
+  }, [
+    getCityById,
+    loading,
+    loadNextPage,
+    deleteCity,
+    updateCity,
+    cities,
+    updateCityFavorite,
+    favoriteCities,
+  ]);
 
   return <CitiesContext.Provider value={data}>{children}</CitiesContext.Provider>;
 }
