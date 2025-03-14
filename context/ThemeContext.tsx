@@ -1,5 +1,7 @@
-import { themeSelector, updateTheme } from '@store/slices/themeSlice';
-import { useAppDispatch, useAppSelector } from '@store/store';
+import { appDatabase } from '@database/client';
+import { toggleThemeMutation } from '@database/mutations/themeMutations';
+import { themeTable } from '@database/schemas/themeTable';
+import { useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { createContext, ReactNode, useEffect, useMemo, useState } from 'react';
 import { Appearance, useColorScheme } from 'react-native';
 
@@ -19,31 +21,30 @@ interface ThemeContextProps {
 }
 
 export default function ThemeContextProvider({ children }: ThemeContextProps) {
-  const dispatch = useAppDispatch();
   const [theme, setTheme] = useState<Theme>('light');
-  const { currentTheme: storedTheme } = useAppSelector(themeSelector);
+  const { data: storedTheme } = useLiveQuery(appDatabase.select().from(themeTable));
 
   const phoneTheme = useColorScheme();
 
   useEffect(() => {
-    if (storedTheme) {
-      setTheme(storedTheme);
-      Appearance.setColorScheme(storedTheme);
+    if (storedTheme.length > 0 && storedTheme[0].currentTheme) {
+      setTheme(storedTheme[0].currentTheme);
+      Appearance.setColorScheme(storedTheme[0].currentTheme);
     } else if (phoneTheme) {
       setTheme(phoneTheme);
-      Appearance.setColorScheme(storedTheme);
+      Appearance.setColorScheme(phoneTheme);
     }
-  }, []);
+  }, [storedTheme, phoneTheme]);
 
   const data = useMemo(() => {
     return {
       theme,
       toggleTheme: () => {
         setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
-        dispatch(updateTheme({ currentTheme: theme === 'light' ? 'dark' : 'light' }));
+        toggleThemeMutation(theme === 'light' ? 'dark' : 'light');
       },
     };
-  }, [theme, dispatch]);
+  }, [theme]);
 
   return <ThemeContext.Provider value={data}>{children}</ThemeContext.Provider>;
 }

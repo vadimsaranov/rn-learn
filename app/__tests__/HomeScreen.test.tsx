@@ -2,11 +2,10 @@ import CitiesContextProvider from '@context/CitiesContext';
 import { cityFixture } from '@core/CityFixtures';
 import { appDatabase } from '@database/client';
 import { wipeDatabase } from '@database/utils';
-import { persistor, store } from '@store/store';
+import { store } from '@store/store';
 import { migrate } from 'drizzle-orm/expo-sqlite/migrator';
 import { fireEvent, renderRouter, screen, waitFor } from 'expo-router/testing-library';
 import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
 import HomeLayout from '../(tabs)/(home)/_layout';
 import AddOrEditCityWeather from '../(tabs)/(home)/addOrEditCityWeather';
 import WeatherIcons from '../(tabs)/(home)/chooseWeatherIcon';
@@ -93,9 +92,7 @@ describe('Home screen', () => {
         initialUrl: '/',
         wrapper: ({ children }) => (
           <Provider store={store}>
-            <PersistGate persistor={persistor}>
-              <CitiesContextProvider>{children}</CitiesContextProvider>
-            </PersistGate>
+            <CitiesContextProvider>{children}</CitiesContextProvider>
           </Provider>
         ),
       },

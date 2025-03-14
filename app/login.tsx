@@ -4,15 +4,15 @@ import { TextInput } from '@components/TextInput';
 import { Colors } from '@constants/Colors';
 import { BiometricsContext } from '@context/BiometricsContext';
 import { Theme, ThemeContext } from '@context/ThemeContext';
+import { saveUserMutation } from '@database/mutations/userMutations';
 import { MaterialIcons } from '@expo/vector-icons';
-import { updateAuth } from '@store/slices/authSlice';
-import { updateSession } from '@store/slices/sessionSlice';
 import { updateUser } from '@store/slices/userSlice';
 import { useAppDispatch } from '@store/store';
 import { router } from 'expo-router';
 import { useCallback, useContext, useState } from 'react';
 import { StyleSheet, Switch, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import uuid from 'react-native-uuid';
 
 type InputValues = {
   email: string;
@@ -50,11 +50,10 @@ export default function Login() {
       }, 2000);
     } else {
       if (rememberMe) {
-        dispatch(updateAuth({ loggedIn: true, token: 'token' }));
+        saveUserMutation({ email: loginValues.email, id: uuid.v4(), rememberUser: true });
       } else {
-        dispatch(updateSession({ loggedIn: true, token: 'token' }));
+        dispatch(updateUser({ email: loginValues.email, id: uuid.v4(), rememberUser: false }));
       }
-      dispatch(updateUser({ email: loginValues.email, rememberUser: rememberMe }));
       router.replace('/');
     }
   }, [loginValues, rememberMe, dispatch]);
