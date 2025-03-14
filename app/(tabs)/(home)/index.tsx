@@ -21,6 +21,7 @@ export default function HomeScreen() {
   const styles = themedStyles(theme);
   const sheetRef = useRef<TrueSheet>(null);
   const [selectedCity, setSelectedCity] = useState<City | undefined>();
+  const [shouldHideFavorites, setShouldHideFavorites] = useState(false);
 
   const renderItem: ListRenderItem<City> = useCallback(
     ({ item: city }) => (
@@ -43,7 +44,6 @@ export default function HomeScreen() {
       await updateCityFavorite(selectedCity.id, isFavorite);
     }
   };
-
   if (loading) {
     return <Loader />;
   }
@@ -57,13 +57,30 @@ export default function HomeScreen() {
           <AntDesign size={20} name="plus" />
         </Button>
       </View>
-      <FavouriteCities cities={favoriteCities} onLongPress={openFavoriteCitySheet} />
+
+      <FavouriteCities
+        cities={favoriteCities}
+        onLongPress={openFavoriteCitySheet}
+        collapsed={shouldHideFavorites}
+      />
+
       <FlatList
         data={cities}
         renderItem={renderItem}
         ListEmptyComponent={listEmptyComponent}
         onEndReached={loadNextPage}
         keyExtractor={(item) => item.id}
+        onViewableItemsChanged={({ viewableItems }) => {
+          if (favoriteCities.length < 3) {
+            shouldHideFavorites && setShouldHideFavorites(false);
+            return;
+          }
+          if (viewableItems.length > 0 && viewableItems[0].index && viewableItems[0].index > 1) {
+            setShouldHideFavorites(true);
+            return;
+          }
+          setShouldHideFavorites(false);
+        }}
       />
       <FavoriteCitySheet
         ref={sheetRef}
