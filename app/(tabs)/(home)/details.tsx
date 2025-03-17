@@ -48,25 +48,25 @@ export default function WeatherDetailsScreen() {
   }, []);
 
   if (!city) {
-    return <Text>No data found</Text>;
+    return <Text i18nKey="common.noDataFound" />;
   }
 
   return (
     <View style={styles.container}>
       <CityListItem city={city} fullInfo />
       <View style={styles.bottomButtons}>
-        <Button title="Edit" onPress={onEditPress}>
+        <Button i18nKey="common.edit" onPress={onEditPress}>
           <AntDesign size={20} name="edit" />
         </Button>
-        <Button onPress={onDeletePress} title="Delete">
+        <Button onPress={onDeletePress} i18nKey="common.delete">
           <AntDesign size={20} name="delete" color={Colors[theme].red} />
         </Button>
       </View>
       <Modal onClose={() => setModalVisible(false)} visible={modalVisible}>
-        <Text style={styles.warningText}>Are you sure you want to delete this?</Text>
+        <Text style={styles.warningText} i18nKey="home.addOrEditCityWeather.areYousureDelete" />
         <View style={styles.modalButtons}>
-          <Button onPress={onConfirmDeletePress} title="Yes" />
-          <Button onPress={() => setModalVisible(false)} title="No" />
+          <Button onPress={onConfirmDeletePress} i18nKey="common.yes" />
+          <Button onPress={() => setModalVisible(false)} i18nKey="common.no" />
         </View>
       </Modal>
     </View>

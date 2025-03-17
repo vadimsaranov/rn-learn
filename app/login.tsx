@@ -77,17 +77,19 @@ export default function Login() {
         {!!error && <Text style={styles.warningText}>{error}</Text>}
         <View style={styles.rememberMeBlock}>
           <Switch value={rememberMe} onValueChange={setRememberMe} />
-          <Text>Remember me</Text>
+          <Text i18nKey="login.rememeberMe" />
         </View>
       </View>
       <View style={styles.bottomButtons}>
         <Button
           onPress={onButtonPress}
-          title="Login"
+          i18nKey="login"
           disabled={!(loginValues.email || loginValues.password)}
         />
         {!!enrolled && (
-          <Button onPress={() => loginWithBiometrics(rememberMe)} title="Login with biometrics">
+          <Button
+            onPress={() => loginWithBiometrics(rememberMe)}
+            i18nKey="login.loginWithBiometrics">
             <MaterialIcons name="touch-app" size={24} color="black" />
           </Button>
         )}

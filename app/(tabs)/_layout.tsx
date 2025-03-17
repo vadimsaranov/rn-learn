@@ -4,24 +4,17 @@ import { BiometricsContext } from '@context/BiometricsContext';
 import { ThemeContext } from '@context/ThemeContext';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import useAppStateCheck from '@hooks/useAppStateCheck';
+import { useLocales } from '@hooks/useLocales';
 import { useUser } from '@hooks/useUser';
 import { Redirect, Tabs } from 'expo-router';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { AppStateStatus, StyleSheet, View } from 'react-native';
 
-const HOME_TAB_OPTIONS = {
-  title: 'Home',
-  tabBarIcon: ({ color }: { color: string }) => <FontAwesome size={28} name="home" color={color} />,
-};
-
-const SETTING_TAB_OPTIONS = {
-  title: 'Settings',
-  tabBarIcon: ({ color }: { color: string }) => <FontAwesome size={28} name="cog" color={color} />,
-};
-
 export default function TabLayout() {
   const { user, userLoading } = useUser();
   const { theme } = useContext(ThemeContext);
+
+  const { t } = useLocales();
 
   const TABS_SCREEN_OPTIONS = {
     headerShown: false,
@@ -63,14 +56,30 @@ export default function TabLayout() {
   if (!biometricsEnrolled) {
     return (
       <View style={styles.biometrics}>
-        <Button title="Unlock screen" onPress={promptBiometrics} />
+        <Button i18nKey="common.unlockScreen" onPress={promptBiometrics} />
       </View>
     );
   }
   return (
     <Tabs screenOptions={TABS_SCREEN_OPTIONS}>
-      <Tabs.Screen name="(home)" options={HOME_TAB_OPTIONS} />
-      <Tabs.Screen name="(settings)" options={SETTING_TAB_OPTIONS} />
+      <Tabs.Screen
+        name="(home)"
+        options={{
+          title: t('common.home'),
+          tabBarIcon: ({ color }: { color: string }) => (
+            <FontAwesome size={28} name="home" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="(settings)"
+        options={{
+          title: t('common.settings'),
+          tabBarIcon: ({ color }: { color: string }) => (
+            <FontAwesome size={28} name="cog" color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }

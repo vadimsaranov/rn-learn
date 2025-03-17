@@ -6,6 +6,7 @@ import { Text } from '@components/Text';
 import { CitiesContext } from '@context/CitiesContext';
 import { City, Weather } from '@core/City';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { I18nKeyPath } from '@hooks/useLocales';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -13,8 +14,6 @@ import { Image, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import uuid from 'react-native-uuid';
 import { z, ZodType } from 'zod';
-
-const NO_ICON_ERROR_TEXT = 'Please select an icon';
 
 interface FormData {
   cityName: string;
@@ -61,15 +60,21 @@ const WeatherSchema: ZodType<FormData> = z.object({
     }),
 });
 
-const inputsList = [
-  { inputName: 'cityName', placolder: 'City name' },
-  { inputName: 'weatherType', placolder: 'Weather type' },
-  { inputName: 'icon', placolder: 'Choose image' },
-  { inputName: 'temperature', placolder: 'Temperature' },
-  { inputName: 'humidity', placolder: 'Humidity' },
-  { inputName: 'pressure', placolder: 'Pressure' },
-  { inputName: 'windSpeed', placolder: 'Wind speed' },
-  { inputName: 'cloudCover', placolder: 'Cloud cover' },
+type InputName<T extends string> = T | Omit<string, T>;
+interface Input {
+  inputName: InputName<keyof FormData>;
+  placolder: I18nKeyPath;
+}
+
+const inputsList: Input[] = [
+  { inputName: 'cityName', placolder: 'home.cityName' },
+  { inputName: 'weatherType', placolder: 'home.weatherType' },
+  { inputName: 'icon', placolder: 'home.chooseImage' },
+  { inputName: 'temperature', placolder: 'home.temperature' },
+  { inputName: 'humidity', placolder: 'home.humidity' },
+  { inputName: 'pressure', placolder: 'home.pressure' },
+  { inputName: 'windSpeed', placolder: 'home.windSpeed' },
+  { inputName: 'cloudCover', placolder: 'home.cloudCover' },
 ];
 
 export default function AddOrEditCityWeather() {
@@ -165,13 +170,21 @@ export default function AddOrEditCityWeather() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header onPress={onBackPress} title={cityId ? 'Edit city' : 'Add city'} />
+      <Header
+        onPress={onBackPress}
+        title={cityId ? 'home.addOrEditCityWeather.editCity' : 'home.addOrEditCityWeather.addCity'}
+      />
       {inputsList.map((item, index) =>
         item.inputName === 'icon' ? (
           <View key={index}>
-            <Button title="Choose image" onPress={() => router.navigate('/chooseWeatherIcon')} />
+            <Button
+              i18nKey="home.chooseImage"
+              onPress={() => router.navigate('/chooseWeatherIcon')}
+            />
 
-            {!selectedIcon && <Text style={styles.iconLabel}>{NO_ICON_ERROR_TEXT}</Text>}
+            {!selectedIcon && (
+              <Text style={styles.iconLabel} i18nKey="home.addOrEditCityWeather.pleaseSelectIcon" />
+            )}
 
             {!!selectedIcon && (
               <Image
@@ -192,14 +205,13 @@ export default function AddOrEditCityWeather() {
           />
         ),
       )}
-      <Button title="Submit" onPress={() => handleSubmit(onSubmit)()} />
+      <Button i18nKey="common.submit" onPress={() => handleSubmit(onSubmit)()} />
       <Modal onClose={() => setModalVisible(false)} visible={modalVisible}>
-        <Text style={styles.warningText}>
-          Are you sure you want to leave without saving changes?
-        </Text>
+        <Text i18nKey="home.addOrEditCityWeather.leavingWithoutSaving" style={styles.warningText} />
+
         <View style={styles.modalButtons}>
-          <Button onPress={router.back} title="Yes" />
-          <Button onPress={() => setModalVisible(false)} title="No" />
+          <Button onPress={router.back} i18nKey="common.yes" />
+          <Button onPress={() => setModalVisible(false)} i18nKey="common.no" />
         </View>
       </Modal>
     </SafeAreaView>
