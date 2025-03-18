@@ -20,11 +20,11 @@ jobs:
           node-version: '20.x'
       - name: Install dependencies
         run: yarn --frozen-lockfile
+      - name: Generate database migrations
+        run: yarn drizzle
       - name: Typescript compiler
         run: yarn tsc
       - name: Lint
         run: yarn lint
-      - name: Generate database migrations
-        run: yarn drizzle
       - name: Run unit tests
         run: yarn test --silent
