@@ -36,16 +36,16 @@ export const FavoriteCitySheet = forwardRef<TrueSheet, FavoriteCitySheetProps>(
     return (
       <TrueSheet ref={sheetRef} sizes={['small']} cornerRadius={24}>
         <GestureHandlerRootView style={styles.sheetContent}>
-          <Text style={styles.sheetTitle}>Add city to favorites</Text>
+          <Text style={styles.sheetTitle} i18nKey="home.favoritesSheet.addCityToFavorites" />
           <View style={styles.sheetButtons}>
             <Button
-              title="Add to favorites"
+              i18nKey="home.favoritesSheet.addToFavorites"
               onPress={() => onButtonPress(true)}
               disabled={limitReached || !!selectedCity?.isFavorite}>
               <AntDesign size={20} name="star" color={Colors[theme].star} />
             </Button>
             <Button
-              title="Remove from favorites"
+              i18nKey="home.favoritesSheet.removeFromFavorites"
               onPress={() => onButtonPress(false)}
               disabled={!selectedCity?.isFavorite}>
               <AntDesign size={20} name="close" color={Colors[theme].red} />

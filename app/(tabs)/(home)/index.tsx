@@ -31,7 +31,7 @@ export default function HomeScreen() {
   );
 
   const listEmptyComponent = useCallback(() => {
-    return <Text>No data found</Text>;
+    return <Text i18nKey="common.noDataFound" />;
   }, []);
 
   const openFavoriteCitySheet = async (city: City) => {
@@ -53,7 +53,7 @@ export default function HomeScreen() {
       <View>
         <Button
           onPress={() => router.navigate({ pathname: '/addOrEditCityWeather' })}
-          title={'Add new'}>
+          i18nKey="home.addNew">
           <AntDesign size={20} name="plus" />
         </Button>
       </View>

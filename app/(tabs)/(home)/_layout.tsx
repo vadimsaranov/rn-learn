@@ -1,16 +1,17 @@
 import { Colors } from '@constants/Colors';
 import CitiesContextProvider from '@context/CitiesContext';
 import { ThemeContext } from '@context/ThemeContext';
+import { useLocales } from '@hooks/useLocales';
 import { Stack } from 'expo-router';
 import { useContext } from 'react';
 
-const WEATHER_SCREEN_OPTIONS = { title: 'Weather' };
-const DETAILS_SCREEN_OPTIONS = { title: 'Details' };
-const ADD_OR_EDIT_WEATHER_SCREEN_OPTIONS = { title: 'Add weather', headerShown: false };
-const WEATHER_ICONS_SCREEN_OPTIONS = { title: 'Choose icon' };
-
 export default function HomeLayout() {
   const { theme } = useContext(ThemeContext);
+  const { t } = useLocales();
+  const WEATHER_SCREEN_OPTIONS = { title: t('home.weather') };
+  const DETAILS_SCREEN_OPTIONS = { title: t('home.details') };
+  const ADD_OR_EDIT_WEATHER_SCREEN_OPTIONS = { title: t('home.addWeather'), headerShown: false };
+  const WEATHER_ICONS_SCREEN_OPTIONS = { title: t('home.chooseIcon') };
   const HOME_LAYOUT_SCREEN_OPTIONS = {
     headerTintColor: Colors[theme].text,
     headerStyle: { backgroundColor: Colors[theme].background },
