@@ -38,7 +38,7 @@ export const FavouriteCities = ({ cities, onLongPress, collapsed }: FavouriteCit
       duration: 300,
       useNativeDriver: false,
     }).start();
-  }, [collapsed, citiesHeight]);
+  }, [collapsed, citiesHeight, citiesOpacityValue, pinnedOpacityValue, heightValue]);
 
   if (cities.length === 0) {
     return null;

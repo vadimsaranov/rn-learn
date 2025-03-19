@@ -40,8 +40,12 @@ class NativeDatabase {
   private readonly sqlite3Db: sqlite3.Database;
 
   constructor(_databaseName: string, _options?: SQLiteOpenOptions, serializedData?: Uint8Array) {
-    if (serializedData != null) {
-      this.sqlite3Db = new sqlite3(Buffer.from(serializedData));
+    if (serializedData !== null) {
+      this.sqlite3Db = new sqlite3(
+        serializedData
+          ? Buffer.from(serializedData).toString('utf8')
+          : process.env.EXPO_SQLITE_MOCK || ':memory:',
+      );
     } else {
       this.sqlite3Db = new sqlite3(process.env.EXPO_SQLITE_MOCK || ':memory:');
     }
