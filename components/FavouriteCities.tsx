@@ -17,7 +17,7 @@ export const FavouriteCities = ({ cities, onLongPress, collapsed }: FavouriteCit
   const { theme } = useContext(ThemeContext);
   const styles = themedStyles(theme);
 
-  const [citiesHeight, setCitiesHeight] = useState(0);
+  const [citiesHeight, setCitiesHeight] = useState(50);
   const heightValue = useAnimatedValue(50);
   const citiesOpacityValue = useAnimatedValue(0);
   const pinnedOpacityValue = useAnimatedValue(0);

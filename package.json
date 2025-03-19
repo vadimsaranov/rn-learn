@@ -10,6 +10,8 @@
     "start:local": "expo start --localhost",
     "prebuild": "expo prebuild",
     "drizzle": "drizzle-kit generate",
+    "ios:beta": "bundle exec fastlane ios beta",
+    "android:beta": "bundle exec fastlane android beta",
     "web": "expo start --web",
     "test": "jest",
     "lint": "expo lint"
