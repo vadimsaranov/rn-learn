@@ -48,7 +48,7 @@ export const FavouriteCities = ({ cities, onLongPress, collapsed }: FavouriteCit
     <Animated.View style={[{ height: heightValue }, styles.container]}>
       {collapsed ? (
         <Animated.View style={[styles.pinned, { opacity: pinnedOpacityValue }]}>
-          <Text>Pinned Items</Text>
+          <Text i18nKey="home.pinnedItems" />
           <Ionicons name="star" size={18} color={Colors[theme].star} />
         </Animated.View>
       ) : (

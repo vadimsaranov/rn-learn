@@ -237,6 +237,8 @@ PODS:
     - ExpoModulesCore
   - ExpoLocalAuthentication (15.0.2):
     - ExpoModulesCore
+  - ExpoLocalization (16.0.1):
+    - ExpoModulesCore
   - ExpoModulesCore (2.2.2):
     - DoubleConversion
     - glog
@@ -2087,6 +2089,7 @@ DEPENDENCIES:
   - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - ExpoLinking (from `../node_modules/expo-linking/ios`)
   - ExpoLocalAuthentication (from `../node_modules/expo-local-authentication/ios`)
+  - ExpoLocalization (from `../node_modules/expo-localization/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core`)
   - ExpoSplashScreen (from `../node_modules/expo-splash-screen/ios`)
   - ExpoSQLite (from `../node_modules/expo-sqlite/ios`)
@@ -2212,6 +2215,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-linking/ios"
   ExpoLocalAuthentication:
     :path: "../node_modules/expo-local-authentication/ios"
+  ExpoLocalization:
+    :path: "../node_modules/expo-localization/ios"
   ExpoModulesCore:
     :path: "../node_modules/expo-modules-core"
   ExpoSplashScreen:
@@ -2386,6 +2391,7 @@ SPEC CHECKSUMS:
   ExpoKeepAwake: 2a5f15dd4964cba8002c9a36676319a3394c85c7
   ExpoLinking: 0381341519ca7180a3a057d20edb1cf6a908aaf4
   ExpoLocalAuthentication: 64bf2cbee456f5639d69a853684c285afc0602d8
+  ExpoLocalization: e36b911e04d371c6c6624ef818e56229bf51c498
   ExpoModulesCore: 561a787bc626ab9bcfee2a688bd588bf2667405f
   ExpoSplashScreen: 643666b96a84e8d97d55fac43926fb4183c692d9
   ExpoSQLite: 120519a7bc76d95265b7ace13ac18aea98c4f000

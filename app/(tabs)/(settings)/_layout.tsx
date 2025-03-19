@@ -1,13 +1,11 @@
 import { Colors } from '@constants/Colors';
 import { ThemeContext } from '@context/ThemeContext';
+import { useLocales } from '@hooks/useLocales';
 import { Stack } from 'expo-router';
 import { useContext } from 'react';
 
-const SETTING_TAB_OPTIONS = {
-  title: 'Settings',
-};
-
 export default function SettingsLayout() {
+  const { t } = useLocales();
   const { theme } = useContext(ThemeContext);
 
   const SETTINGS_LAYOUT_SCREEN_OPTIONS = {
@@ -17,7 +15,12 @@ export default function SettingsLayout() {
   };
   return (
     <Stack screenOptions={SETTINGS_LAYOUT_SCREEN_OPTIONS}>
-      <Stack.Screen name="index" options={SETTING_TAB_OPTIONS} />
+      <Stack.Screen
+        name="index"
+        options={{
+          title: t('common.settings'),
+        }}
+      />
     </Stack>
   );
 }

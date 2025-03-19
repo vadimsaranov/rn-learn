@@ -47,7 +47,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         faceIDPermission: 'Allow $(PRODUCT_NAME) to use Face ID.',
       },
     ],
-    ['expo-sqlite'],
+    'expo-sqlite',
+    'expo-localization',
   ],
   experiments: {
     typedRoutes: true,

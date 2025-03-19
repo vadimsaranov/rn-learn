@@ -32,7 +32,7 @@ export default function WeatherIcons() {
         numColumns={3}
       />
       <Button
-        title="Select"
+        i18nKey="common.select"
         onPress={() => {
           router.back();
           router.setParams({ selectedIcon });

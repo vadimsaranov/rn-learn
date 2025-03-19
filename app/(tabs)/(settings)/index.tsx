@@ -5,20 +5,20 @@ import { Colors } from '@constants/Colors';
 import { Theme, ThemeContext } from '@context/ThemeContext';
 import { wipeDatabase } from '@database/utils';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import { Locales, useLocales } from '@hooks/useLocales';
 import { resetUser, userSelector } from '@store/slices/userSlice';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import * as Linking from 'expo-linking';
 import { useCallback, useContext } from 'react';
 import { StyleSheet, Switch, View } from 'react-native';
 
-const CONTACT_BUTTON_TITLE = 'Contact Us';
-const LOGOUT_BUTTON_TITLE = 'Logout';
-
 const MAIL_SCHEMA = 'mailto:support@expo.dev';
 const PHONE_SCHEMA = 'tel:+123456789';
 const SMS_SCHEMA = 'sms:+123456789';
 
 export default function SettingsTab() {
+  const { i18n, changeLocale } = useLocales();
+
   const { theme, toggleTheme } = useContext(ThemeContext);
   const styles = themedStyles(theme);
 
@@ -44,26 +44,38 @@ export default function SettingsTab() {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        <Text>{`Theme: ${theme}`}</Text>
+        <Text i18nKey="settings.theme" i18nOptions={{ theme }} />
         <Switch value={theme === 'dark'} onValueChange={toggleTheme} />
       </View>
-      <Text style={styles.email}>Email: {email}</Text>
+      <Text style={styles.email} i18nKey="settings.email" i18nOptions={{ email }} />
       <View style={styles.buttonsContainer}>
-        <Button onPress={() => openLink(MAIL_SCHEMA)} title={CONTACT_BUTTON_TITLE}>
+        <Button onPress={() => openLink(MAIL_SCHEMA)} i18nKey="settings.contactUs">
           <AntDesign size={20} name="mail" color={Colors[theme].grey} />
         </Button>
-        <Button onPress={() => openLink(PHONE_SCHEMA)} title={CONTACT_BUTTON_TITLE}>
+        <Button onPress={() => openLink(PHONE_SCHEMA)} i18nKey="settings.contactUs">
           <FontAwesome size={20} name="phone" color={Colors[theme].grey} />
         </Button>
-        <Button onPress={() => openLink(SMS_SCHEMA)} title={CONTACT_BUTTON_TITLE}>
+        <Button onPress={() => openLink(SMS_SCHEMA)} i18nKey="settings.contactUs">
           <AntDesign size={20} name="message1" color={Colors[theme].grey} />
         </Button>
       </View>
       <View style={styles.bottomContainer}>
-        <Button title={LOGOUT_BUTTON_TITLE} onPress={signOut}>
+        <Button i18nKey="settings.logout" onPress={signOut}>
           <AntDesign size={20} name={'logout'} color={Colors[theme].grey} />
         </Button>
         <AppInformation />
+      </View>
+      <View>
+        <Button
+          disabled={i18n.locale === Locales.EN}
+          onPress={() => changeLocale(Locales.EN)}
+          title="English"
+        />
+        <Button
+          disabled={i18n.locale === Locales.ES}
+          onPress={() => changeLocale(Locales.ES)}
+          title="Spanish"
+        />
       </View>
     </View>
   );

@@ -2,11 +2,12 @@ import { Text } from '@components/Text';
 import { Colors } from '@constants/Colors';
 import { Theme, ThemeContext } from '@context/ThemeContext';
 import { AntDesign } from '@expo/vector-icons';
+import { I18nKeyPath } from '@hooks/useLocales';
 import { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 interface HeaderProps {
-  title: string;
+  title: I18nKeyPath;
   onPress: () => void;
 }
 export const Header = ({ onPress, title }: HeaderProps) => {
@@ -16,7 +17,7 @@ export const Header = ({ onPress, title }: HeaderProps) => {
   return (
     <View style={styles.container}>
       <AntDesign onPress={onPress} size={20} name="arrowleft" color={Colors[theme].text} />
-      <Text style={styles.text}>{title}</Text>
+      <Text style={styles.text} i18nKey={title} />
     </View>
   );
 };

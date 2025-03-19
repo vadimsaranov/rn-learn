@@ -22,23 +22,31 @@ export const CityAdditionalInfo = ({
   return (
     <View>
       <View style={styles.block}>
-        <Text>Humidity</Text>
-        <Text style={styles.greyText}>{humidity}%</Text>
+        <Text i18nKey="home.humidity" />
+        <Text style={styles.greyText} i18nKey="home.cityInfo.humidity" i18nOptions={{ humidity }} />
       </View>
       <View style={styles.block}>
-        <Text>Pressure</Text>
-        <Text style={styles.greyText}>{pressure} hPa </Text>
+        <Text i18nKey="home.pressure" />
+        <Text style={styles.greyText} i18nKey="home.cityInfo.pressure" i18nOptions={{ pressure }} />
       </View>
       {!!windSpeed && (
         <View style={styles.block}>
-          <Text>Wind Speed</Text>
-          <Text style={styles.greyText}>{windSpeed} mph</Text>
+          <Text i18nKey="home.windSpeed" />
+          <Text
+            style={styles.greyText}
+            i18nKey="home.cityInfo.windSpeed"
+            i18nOptions={{ windSpeed }}
+          />
         </View>
       )}
       {!!cloudCover && (
         <View style={styles.block}>
-          <Text>Cloud Cover</Text>
-          <Text style={styles.greyText}>{cloudCover}%</Text>
+          <Text i18nKey="home.cloudCover" />
+          <Text
+            style={styles.greyText}
+            i18nKey="home.cityInfo.cloudCover"
+            i18nOptions={{ cloudCover }}
+          />
         </View>
       )}
     </View>
