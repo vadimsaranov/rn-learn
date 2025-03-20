@@ -83,7 +83,7 @@ export default function Login() {
       <View style={styles.bottomButtons}>
         <Button
           onPress={onButtonPress}
-          i18nKey="login"
+          i18nKey="login.login"
           disabled={!(loginValues.email || loginValues.password)}
         />
         {!!enrolled && (
