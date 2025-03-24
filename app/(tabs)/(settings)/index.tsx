@@ -9,6 +9,7 @@ import { Locales, useLocales } from '@hooks/useLocales';
 import { resetUser, userSelector } from '@store/slices/userSlice';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import * as Linking from 'expo-linking';
+import { router } from 'expo-router';
 import { useCallback, useContext } from 'react';
 import { StyleSheet, Switch, View } from 'react-native';
 
@@ -76,6 +77,9 @@ export default function SettingsTab() {
           onPress={() => changeLocale(Locales.ES)}
           title="Spanish"
         />
+      </View>
+      <View>
+        <Button onPress={() => router.navigate('/turboModuleTest')} title="Turbo modules" />
       </View>
     </View>
   );

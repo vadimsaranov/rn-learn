@@ -1,5 +1,5 @@
 import { TextInput } from '@components/TextInput';
-import { I18nKeyPath, useLocales } from '@hooks/useLocales';
+import { I18nKeyPath } from '@hooks/useLocales';
 import React from 'react';
 import {
   Control,
@@ -30,14 +30,13 @@ export const ControlledInput = <TfieldValues extends FieldValues>({
   placeholder,
   rules,
 }: ControlledInputProps<TfieldValues>) => {
-  const { t } = useLocales();
   return (
     <Controller
       control={control}
       rules={rules}
       render={({ field: { onChange, onBlur, value } }) => (
         <TextInput
-          placeholder={t(placeholder)}
+          placeholder={placeholder}
           onBlur={onBlur}
           onChangeText={onChange}
           value={value}
