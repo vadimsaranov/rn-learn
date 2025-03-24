@@ -8,7 +8,7 @@ import { City, Weather } from '@core/City';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { I18nKeyPath } from '@hooks/useLocales';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Image, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -149,7 +149,7 @@ export default function AddOrEditCityWeather() {
     }
   };
 
-  const getCity = async () => {
+  const getCity = useCallback(async () => {
     const data = await getCityById(cityId);
 
     setValue('cityName', data?.name || '');
@@ -160,13 +160,13 @@ export default function AddOrEditCityWeather() {
     setValue('windSpeed', data?.wind?.toString());
     setValue('cloudCover', data?.cloudCover?.toString());
     setCityToEdit(data);
-  };
+  }, [cityId, getCityById, setValue]);
 
   useEffect(() => {
     if (cityId) {
       getCity();
     }
-  }, []);
+  }, [cityId, getCity]);
 
   return (
     <SafeAreaView style={styles.container}>

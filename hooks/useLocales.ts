@@ -1,10 +1,9 @@
 import { appDatabase } from '@database/client';
 import { updateLanguageMutation } from '@database/mutations/languageMutations';
 import { languageTable } from '@database/schemas/languageTable';
-import { useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { getLocales } from 'expo-localization';
 import { I18n, TranslateOptions } from 'i18n-js';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { en } from '../i18n/translations/en';
 import { es } from '../i18n/translations/es';
 
@@ -12,20 +11,24 @@ export enum Locales {
   EN = 'en',
   ES = 'es',
 }
-type NestedKeyOf<T> =
+type NestedKeyOf<T, Prefix extends string = ''> =
   T extends Record<string, any>
-    ? { [K in keyof T]: `${K & string}` | `${K & string}.${NestedKeyOf<T[K]>}` }[keyof T]
+    ? {
+        [K in keyof T]: T[K] extends Record<string, any>
+          ? NestedKeyOf<T[K], `${Prefix}${K & string}.`>
+          : `${Prefix}${K & string}`;
+      }[keyof T]
     : never;
 
 export type I18nKeyPath = NestedKeyOf<typeof en>;
 
 const DEFAULT_LANGUAEGE = Locales.EN;
 export const useLocales = () => {
-  const { data } = useLiveQuery(appDatabase.select().from(languageTable));
+  const [currentLocale, setCurrentLocale] = useState(DEFAULT_LANGUAEGE);
 
   const i18n = new I18n({ en, es });
   i18n.enableFallback = true;
-  i18n.locale = data[0]?.language || DEFAULT_LANGUAEGE;
+  i18n.locale = currentLocale;
 
   const t = (key: I18nKeyPath, options?: TranslateOptions) => {
     if (options) {
@@ -39,13 +42,21 @@ export const useLocales = () => {
   };
 
   useEffect(() => {
-    if (data[0]?.language.length === 0) {
-      const phoneLang = getLocales()[0].languageCode;
-      if (phoneLang) {
-        updateLanguageMutation(phoneLang);
-      }
-    }
-  }, [data]);
+    appDatabase
+      .select()
+      .from(languageTable)
+      .then((data) => {
+        if (data[0]?.language.length > 0) {
+          setCurrentLocale(data[0].language as Locales);
+          return;
+        }
+        const phoneLang = getLocales()[0]?.languageCode;
+        if (phoneLang) {
+          setCurrentLocale(phoneLang as Locales);
+          updateLanguageMutation(phoneLang);
+        }
+      });
+  }, []);
 
   return { i18n, t, changeLocale };
 };

@@ -191,11 +191,19 @@ exports[`Home screen Cities renders correctly HomeScreen 1`] = `
               onScroll={[Function]}
               onScrollBeginDrag={[Function]}
               onScrollEndDrag={[Function]}
+              onViewableItemsChanged={[Function]}
               removeClippedSubviews={false}
               renderItem={[Function]}
               scrollEventThrottle={0.0001}
               stickyHeaderIndices={[]}
-              viewabilityConfigCallbackPairs={[]}
+              viewabilityConfigCallbackPairs={
+                [
+                  {
+                    "onViewableItemsChanged": [Function],
+                    "viewabilityConfig": undefined,
+                  },
+                ]
+              }
             >
               <View>
                 <View
@@ -730,11 +738,19 @@ exports[`Home screen Should display no data found when no cities are found 1`] =
               onScroll={[Function]}
               onScrollBeginDrag={[Function]}
               onScrollEndDrag={[Function]}
+              onViewableItemsChanged={[Function]}
               removeClippedSubviews={false}
               renderItem={[Function]}
               scrollEventThrottle={0.0001}
               stickyHeaderIndices={[]}
-              viewabilityConfigCallbackPairs={[]}
+              viewabilityConfigCallbackPairs={
+                [
+                  {
+                    "onViewableItemsChanged": [Function],
+                    "viewabilityConfig": undefined,
+                  },
+                ]
+              }
             >
               <View>
                 <Text

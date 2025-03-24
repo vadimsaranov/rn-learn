@@ -60,30 +60,6 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
   const [favoriteCities, setFavoriteCities] = useState<City[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const fetchCities = useCallback(async () => {
-    try {
-      setLoading(true);
-      const result: City[] = [];
-      const promises = citiesList.map(async (cityName) => {
-        const city = await fetchCity(cityName);
-        if (city) {
-          result.push(city);
-        }
-      });
-
-      await Promise.all(promises);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  const getCityById = useCallback(async (cityId: string) => {
-    const city = await getCityByIdQuery(cityId);
-    return cityRemapper(city[0]);
-  }, []);
-
   const saveCity = useCallback(async (city: City) => {
     const existingCity = await getCityByIdQuery(city.id);
 
@@ -120,6 +96,25 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
     [saveCity],
   );
 
+  const fetchCities = useCallback(async () => {
+    try {
+      setLoading(true);
+      const result: City[] = [];
+      const promises = citiesList.map(async (cityName) => {
+        const city = await fetchCity(cityName);
+        if (city) {
+          result.push(city);
+        }
+      });
+
+      await Promise.all(promises);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }, [fetchCity]);
+
   const cityRemapper = useCallback(
     (dbCity: { city_table: CityTable; weather_table: WeatherTable }) => {
       const { city_table, weather_table } = dbCity;
@@ -139,6 +134,14 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
       };
     },
     [],
+  );
+
+  const getCityById = useCallback(
+    async (cityId: string) => {
+      const city = await getCityByIdQuery(cityId);
+      return cityRemapper(city[0]);
+    },
+    [cityRemapper],
   );
 
   const getAllCities = useCallback(
@@ -215,7 +218,7 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
     fetchCities().then(() => {
       getAllData(currentPage);
     });
-  }, []);
+  }, [currentPage, fetchCities, getAllData]);
 
   useEffect(() => {
     getAllCities(currentPage);

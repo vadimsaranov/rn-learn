@@ -42,6 +42,10 @@ export const BiometricsContextProvider = ({ children }: BiometricsContextProps) 
 
   const dispatch = useAppDispatch();
 
+  const checkBiometricsCompatibility = useCallback(async () => {
+    return await LocalAuthentication.hasHardwareAsync();
+  }, []);
+
   const promptBiometrics = useCallback(async () => {
     if (!Device.isDevice) {
       setEnrolled(true);
@@ -65,11 +69,8 @@ export const BiometricsContextProvider = ({ children }: BiometricsContextProps) 
     } catch (error) {
       console.log(error, 'error');
     }
-  }, []);
+  }, [checkBiometricsCompatibility]);
 
-  const checkBiometricsCompatibility = useCallback(async () => {
-    return await LocalAuthentication.hasHardwareAsync();
-  }, []);
   const checkSavedBiometrics = useCallback(async () => {
     setLoading(true);
     const result = await LocalAuthentication.isEnrolledAsync();
@@ -97,7 +98,7 @@ export const BiometricsContextProvider = ({ children }: BiometricsContextProps) 
 
   useEffect(() => {
     checkSavedBiometrics();
-  }, []);
+  }, [checkSavedBiometrics]);
 
   const value = useMemo<BiometricsContextType>(
     () => ({

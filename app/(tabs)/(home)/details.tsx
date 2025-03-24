@@ -38,14 +38,14 @@ export default function WeatherDetailsScreen() {
     router.navigate({ pathname: '/addOrEditCityWeather', params: { cityId } });
   }, [cityId]);
 
-  const getCity = async () => {
+  const getCity = useCallback(async () => {
     const data = await getCityById(cityId);
     setCity(data);
-  };
+  }, [cityId, getCityById]);
 
   useEffect(() => {
     getCity();
-  }, []);
+  }, [getCity]);
 
   if (!city) {
     return <Text i18nKey="common.noDataFound" />;

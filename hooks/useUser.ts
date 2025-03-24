@@ -1,14 +1,14 @@
 import { getUserQuery } from '@database/queries/userQueries';
 import { updateUser, userSelector } from '@store/slices/userSlice';
 import { useAppDispatch, useAppSelector } from '@store/store';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export const useUser = () => {
   const [loading, setLoading] = useState(false);
   const user = useAppSelector(userSelector);
   const dispatch = useAppDispatch();
 
-  const getUser = async () => {
+  const getUser = useCallback(async () => {
     try {
       setLoading(true);
       const dbUser = await getUserQuery();
@@ -20,10 +20,10 @@ export const useUser = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [getUser]);
   return { user, userLoading: loading };
 };
