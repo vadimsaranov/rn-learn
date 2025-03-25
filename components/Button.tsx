@@ -3,12 +3,13 @@ import { Colors } from '@constants/Colors';
 import { Theme, ThemeContext } from '@context/ThemeContext';
 import { I18nKeyPath } from '@hooks/useLocales';
 import { ReactNode, useContext } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import { Pressable, PressableProps } from 'react-native-gesture-handler';
 interface ButtonProps extends PressableProps {
   title?: string;
   i18nKey?: I18nKeyPath;
   children?: ReactNode;
+  style?: StyleProp<ViewStyle>;
 }
 export const Button = ({ title, i18nKey, children, disabled, ...otherProps }: ButtonProps) => {
   const { theme } = useContext(ThemeContext);
@@ -18,7 +19,7 @@ export const Button = ({ title, i18nKey, children, disabled, ...otherProps }: Bu
     <Pressable
       {...otherProps}
       disabled={disabled}
-      style={[styles.container, disabled && styles.disabled]}>
+      style={[styles.container, disabled && styles.disabled, otherProps.style && otherProps.style]}>
       <Text i18nKey={i18nKey}>{title}</Text>
       {children}
     </Pressable>

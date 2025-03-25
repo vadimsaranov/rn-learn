@@ -13,11 +13,19 @@ export const getCityByIdQuery = async (cityId: string) => {
   return city;
 };
 
-export const getAllCitiesQuery = async (page: number, isFavorite = false) => {
+export const getCitiesByFilterQuery = async (page: number, isFavorite = false) => {
   const cities = await appDatabase
     .select()
     .from(cityTable)
     .where(eq(cityTable.isFavorite, isFavorite))
+    .innerJoin(weatherTable, eq(cityTable.weather_id, weatherTable.id))
+    .limit(page * 15);
+  return cities;
+};
+export const getAllCitiesQuery = async (page: number) => {
+  const cities = await appDatabase
+    .select()
+    .from(cityTable)
     .innerJoin(weatherTable, eq(cityTable.weather_id, weatherTable.id))
     .limit(page * 15);
   return cities;

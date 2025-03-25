@@ -54,6 +54,13 @@ export const en = {
       removeFromFavorites: 'Remove from favorites',
       addToFavorites: 'Add to favorites',
     },
+    charts: {
+      charts: 'Charts',
+      bar: 'Bar',
+      line: 'Line',
+      area: 'Area',
+      selectFilter: 'Select filter',
+    },
   },
   settings: {
     theme: 'Theme is {{theme}}',

@@ -17,6 +17,7 @@ export default function HomeLayout() {
     headerStyle: { backgroundColor: Colors[theme].background },
     contentStyle: { backgroundColor: Colors[theme].background },
   };
+  const CHARTS_SCREEN_OPTIONS = { title: t('home.charts.charts') };
   return (
     <CitiesContextProvider>
       <Stack screenOptions={HOME_LAYOUT_SCREEN_OPTIONS}>
@@ -24,6 +25,7 @@ export default function HomeLayout() {
         <Stack.Screen name="details" options={DETAILS_SCREEN_OPTIONS} />
         <Stack.Screen name="addOrEditCityWeather" options={ADD_OR_EDIT_WEATHER_SCREEN_OPTIONS} />
         <Stack.Screen name="chooseWeatherIcon" options={WEATHER_ICONS_SCREEN_OPTIONS} />
+        <Stack.Screen name="charts" options={CHARTS_SCREEN_OPTIONS} />
       </Stack>
     </CitiesContextProvider>
   );
