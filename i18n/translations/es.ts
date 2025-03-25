@@ -54,6 +54,13 @@ export const es = {
       removeFromFavorites: 'Eliminar de favoritos',
       addToFavorites: 'Agregar a favoritos',
     },
+    charts: {
+      charts: 'Gráficos',
+      bar: 'Barra',
+      line: 'Línea',
+      area: 'Área',
+      selectFilter: 'Seleccionar filtro',
+    },
   },
   settings: {
     theme: 'El tema es {{theme}}',

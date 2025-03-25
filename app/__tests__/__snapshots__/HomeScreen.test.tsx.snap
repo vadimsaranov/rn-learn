@@ -138,6 +138,7 @@ exports[`Home screen Cities renders correctly HomeScreen 1`] = `
                         "padding": 8,
                       },
                       undefined,
+                      undefined,
                     ],
                   ]
                 }
@@ -153,6 +154,52 @@ exports[`Home screen Cities renders correctly HomeScreen 1`] = `
                   }
                 >
                   Add new
+                </Text>
+              </RNGestureHandlerButton>
+              <RNGestureHandlerButton
+                collapsable={false}
+                enabled={true}
+                hitSlop={
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "right": 0,
+                    "top": 0,
+                  }
+                }
+                rippleColor={0}
+                style={
+                  [
+                    {},
+                    [
+                      {
+                        "alignItems": "center",
+                        "backgroundColor": "#fff",
+                        "borderColor": "#b8b8b8",
+                        "borderRadius": 12,
+                        "borderWidth": 1,
+                        "flexDirection": "row",
+                        "gap": 4,
+                        "justifyContent": "center",
+                        "padding": 8,
+                      },
+                      undefined,
+                      undefined,
+                    ],
+                  ]
+                }
+              >
+                <Text
+                  style={
+                    [
+                      {
+                        "color": "#000",
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                  Charts
                 </Text>
               </RNGestureHandlerButton>
             </View>
@@ -456,6 +503,7 @@ exports[`Home screen Cities renders correctly HomeScreen 1`] = `
                                 "padding": 8,
                               },
                               false,
+                              undefined,
                             ],
                           ]
                         }
@@ -503,6 +551,7 @@ exports[`Home screen Cities renders correctly HomeScreen 1`] = `
                               {
                                 "opacity": 0.4,
                               },
+                              undefined,
                             ],
                           ]
                         }
@@ -706,6 +755,7 @@ exports[`Home screen Should display no data found when no cities are found 1`] =
                         "padding": 8,
                       },
                       undefined,
+                      undefined,
                     ],
                   ]
                 }
@@ -721,6 +771,52 @@ exports[`Home screen Should display no data found when no cities are found 1`] =
                   }
                 >
                   Add new
+                </Text>
+              </RNGestureHandlerButton>
+              <RNGestureHandlerButton
+                collapsable={false}
+                enabled={true}
+                hitSlop={
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "right": 0,
+                    "top": 0,
+                  }
+                }
+                rippleColor={0}
+                style={
+                  [
+                    {},
+                    [
+                      {
+                        "alignItems": "center",
+                        "backgroundColor": "#fff",
+                        "borderColor": "#b8b8b8",
+                        "borderRadius": 12,
+                        "borderWidth": 1,
+                        "flexDirection": "row",
+                        "gap": 4,
+                        "justifyContent": "center",
+                        "padding": 8,
+                      },
+                      undefined,
+                      undefined,
+                    ],
+                  ]
+                }
+              >
+                <Text
+                  style={
+                    [
+                      {
+                        "color": "#000",
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                  Charts
                 </Text>
               </RNGestureHandlerButton>
             </View>
@@ -877,6 +973,7 @@ exports[`Home screen Should display no data found when no cities are found 1`] =
                                 "padding": 8,
                               },
                               false,
+                              undefined,
                             ],
                           ]
                         }
@@ -924,6 +1021,7 @@ exports[`Home screen Should display no data found when no cities are found 1`] =
                               {
                                 "opacity": 0.4,
                               },
+                              undefined,
                             ],
                           ]
                         }

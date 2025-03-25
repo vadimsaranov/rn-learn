@@ -22,3 +22,22 @@ export const Colors = {
     star: '#FFC107',
   },
 };
+
+export const chartColors = {
+  light: {
+    frontColor: '#000',
+    xAxisColor: '#000',
+    yAxisColor: '#000',
+    yAxisTextColor: '#000',
+    dataPointsColor: '#000',
+    lineColor: '#000',
+  },
+  dark: {
+    frontColor: '#fff',
+    xAxisColor: '#fff',
+    yAxisColor: '#fff',
+    yAxisTextColor: '#fff',
+    dataPointsColor: '#fff',
+    lineColor: '#fff',
+  },
+};

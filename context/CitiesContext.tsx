@@ -5,7 +5,11 @@ import {
   saveCityMutation,
   updateCityMutation,
 } from '@database/mutations/cityMutations';
-import { getAllCitiesQuery, getCityByIdQuery } from '@database/queries/cityQueries';
+import {
+  getCityByIdQuery,
+  getCitiesByFilterQuery,
+  getAllCitiesQuery,
+} from '@database/queries/cityQueries';
 import { CityTable, cityTable } from '@database/schemas/cityTable';
 import { WeatherTable } from '@database/schemas/weatherTable';
 import { count, eq } from 'drizzle-orm';
@@ -29,6 +33,7 @@ const citiesList = [
 export const IconNamesList = ['01d', '02d', '03d', '04d', '09d', '10d', '11d', '13d', '50d'];
 
 type CitiesContextType = {
+  allCities: City[];
   cities: City[];
   favoriteCities: City[];
   getCityById: (cityName: string) => Promise<City | undefined>;
@@ -40,6 +45,7 @@ type CitiesContextType = {
 };
 
 export const CitiesContext = createContext<CitiesContextType>({
+  allCities: [],
   cities: [],
   favoriteCities: [],
   getCityById: () => Promise.resolve(undefined),
@@ -56,6 +62,7 @@ interface CitiesContextProps {
 
 export default function CitiesContextProvider({ children }: CitiesContextProps) {
   const [loading, setLoading] = useState(false);
+  const [allCities, setAllCities] = useState<City[]>([]);
   const [cities, setCities] = useState<City[]>([]);
   const [favoriteCities, setFavoriteCities] = useState<City[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -152,13 +159,25 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
         return;
       }
       const remappedCities: City[] = dbCities.map(cityRemapper);
+      setAllCities(remappedCities);
+    },
+    [cityRemapper],
+  );
+  const getCitiesByFilter = useCallback(
+    async (page = 1) => {
+      const dbCities = await getCitiesByFilterQuery(page, false);
+
+      if (dbCities.length === 0) {
+        return;
+      }
+      const remappedCities: City[] = dbCities.map(cityRemapper);
       setCities(remappedCities);
     },
     [cityRemapper],
   );
 
   const getFavoriteCities = useCallback(async () => {
-    const dbCities = await getAllCitiesQuery(currentPage, true);
+    const dbCities = await getCitiesByFilterQuery(currentPage, true);
 
     const remappedCities: City[] = dbCities.map(cityRemapper);
 
@@ -167,10 +186,11 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
 
   const getAllData = useCallback(
     async (page: number) => {
-      await getAllCities(page);
+      await getCitiesByFilter(page);
       await getFavoriteCities();
+      await getAllCities(page);
     },
-    [getAllCities, getFavoriteCities],
+    [getCitiesByFilter, getFavoriteCities, getAllCities],
   );
 
   const loadNextPage = useCallback(async () => {
@@ -220,12 +240,9 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
     });
   }, [currentPage, fetchCities, getAllData]);
 
-  useEffect(() => {
-    getAllCities(currentPage);
-  }, [currentPage, getAllCities]);
-
   const data = useMemo<CitiesContextType>(() => {
     return {
+      allCities,
       cities,
       getCityById,
       loading,
@@ -236,6 +253,7 @@ export default function CitiesContextProvider({ children }: CitiesContextProps) 
       favoriteCities,
     };
   }, [
+    allCities,
     getCityById,
     loading,
     loadNextPage,

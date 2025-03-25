@@ -27,7 +27,6 @@ export const useLocales = () => {
   const [currentLocale, setCurrentLocale] = useState(DEFAULT_LANGUAEGE);
 
   const i18n = new I18n({ en, es });
-  i18n.enableFallback = true;
   i18n.locale = currentLocale;
 
   const t = (key: I18nKeyPath, options?: TranslateOptions) => {

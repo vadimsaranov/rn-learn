@@ -56,6 +56,10 @@ export default function HomeScreen() {
           i18nKey="home.addNew">
           <AntDesign size={20} name="plus" />
         </Button>
+        <Button
+          onPress={() => router.navigate({ pathname: '/(tabs)/(home)/charts' })}
+          i18nKey="home.charts.charts"
+        />
       </View>
 
       <FavouriteCities
