@@ -5,13 +5,12 @@ import { Text } from '@components/Text';
 import { Colors } from '@constants/Colors';
 import { CitiesContext } from '@context/CitiesContext';
 import { Theme, ThemeContext } from '@context/ThemeContext';
+import { Chart } from '@core/Chart';
 import { City } from '@core/City';
 import { I18nKeyPath } from '@hooks/useLocales';
 import React, { useContext, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { barDataItem } from 'react-native-gifted-charts';
-
-type Chart = 'bar' | 'line' | 'area';
 
 type DropDownOption = {
   label: I18nKeyPath;
