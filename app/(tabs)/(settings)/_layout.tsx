@@ -21,6 +21,12 @@ export default function SettingsLayout() {
           title: t('common.settings'),
         }}
       />
+      <Stack.Screen
+        name="turboModuleTest"
+        options={{
+          title: t('common.turboModule'),
+        }}
+      />
     </Stack>
   );
 }

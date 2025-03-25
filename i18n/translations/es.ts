@@ -10,6 +10,9 @@ export const es = {
     select: 'Seleccionar',
     home: 'Inicio',
     settings: 'Ajustes',
+    turboModule: 'TurboModule',
+    save: 'Guardar',
+    clearAll: 'Limpiar todo',
   },
   login: {
     login: 'Iniciar sesión',
@@ -58,5 +61,9 @@ export const es = {
     contactUs: 'Contáctanos',
     logout: 'Cerrar sesión',
     version: 'Versión: {{buildVersion}} ({{applicationVersion}})',
+    turboModules: {
+      currentStoredValue: 'El valor actual almacenado es: {{value}}',
+      enterTextYouWantToStore: 'Ingresa el texto que deseas almacenar',
+    },
   },
 };
